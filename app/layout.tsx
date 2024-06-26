@@ -30,6 +30,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="en">
+      <head>
+        <title>The Real Deal</title>
+      </head>
       <body id={'root'}>
         <AppWrappers>
           {/* <ChakraProvider theme={theme}> */}
