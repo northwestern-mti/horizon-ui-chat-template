@@ -16,16 +16,27 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { MdAutoAwesome, MdBolt, MdEdit, MdPerson } from 'react-icons/md';
+
+import { streamAIMessage } from '../src/utils/streaming'
 import Bg from '../public/img/chat/bg-image.png';
 
+
+
+const APIDOMAIN = 'https://localhost:8082'
+
+
+
 export default function Chat(props: { apiKeyApp: string }) {
-  // Input States
-  const [inputOnSubmit, setInputOnSubmit] = useState<string>('');
-  const [inputCode, setInputCode] = useState<string>('');
+
+  // Input text
+  const [ inputCode,  setInputCode  ] = useState<string>('');
+
   // Response message
-  const [outputCode, setOutputCode] = useState<string>('');
-  // Loading state
-  const [loading, setLoading] = useState<boolean>(false);
+  const [ outputCode, setOutputCode ] = useState<string[]>([]);
+
+  // Chat states
+  const [ loading,    setLoading    ] = useState<boolean>(false);
+  const [ nowTyping,  setNowTyping  ] = useState<string>('');
 
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
@@ -48,82 +59,76 @@ export default function Chat(props: { apiKeyApp: string }) {
     { color: 'gray.500' },
     { color: 'whiteAlpha.600' },
   );
-  const handleTranslate = async () => {
-    let apiKey = localStorage.getItem('apiKey');
-    setInputOnSubmit(inputCode);
 
-    const model = 'gpt-3.5-turbo';
+
+  const appendMessage = async (newMessage: any) => {
+    setOutputCode((prevCode) => [...prevCode, newMessage]);
+  }
+
+  const handleTranslate = async () => {
 
     // Chat post conditions(maximum number of characters, valid message etc.)
     const maxCodeLength = 700;
 
-    if (!apiKey?.includes('sk-')) {
-      alert('Please enter an API key.');
-      return;
-    }
-
+    // Validate input message
     if (!inputCode) {
       alert('Please enter your message.');
       return;
     }
-
     if (inputCode.length > maxCodeLength) {
       alert(
         `Please enter code less than ${maxCodeLength} characters. You are currently at ${inputCode.length} characters.`,
       );
       return;
     }
-    setOutputCode(' ');
+
+    // Add the user's message to the chat
+    appendMessage({name: 'Me', text: inputCode})
+
     setLoading(true);
     const controller = new AbortController();
-    const body: ChatBody = {
-      inputCode,
-      model,
-      apiKey,
-    };
+
 
     // -------------- Fetch --------------
-    const response = await fetch('./api/chatAPI', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+
+    // Send the user message to the API and stream the results
+    streamAIMessage(
+      `${APIDOMAIN}/api/message`,
+      inputCode,
+
+      // Additional request options
+      {
+        signal: controller.signal,
       },
-      signal: controller.signal,
-      body: JSON.stringify(body),
-    });
 
-    if (!response.ok) {
-      setLoading(false);
-      if (response) {
-        alert(
-          'Something went wrong went fetching from the API. Make sure to use a valid API key.',
-        );
+      // The callback to process values as they stream in
+      (value: any) => {
+        if (value['type'] === 'DialogueMarker') {
+          setNowTyping(() => value['name']);
+        }
+        else if (value['type'] === 'DialogueInstance') {
+          appendMessage(value);
+          setNowTyping(() => '');
+        }
+        else {
+          console.warn('Unrecognized dialogue token: ', value)
+        }
       }
-      return;
-    }
+    )
+      // Runs after stream finishes
+      .then(() => {
+        setLoading(false);
+      })
 
-    const data = response.body;
-
-    if (!data) {
-      setLoading(false);
-      alert('Something went wrong');
-      return;
-    }
-
-    const reader = data.getReader();
-    const decoder = new TextDecoder();
-    let done = false;
-
-    while (!done) {
-      setLoading(true);
-      const { value, done: doneReading } = await reader.read();
-      done = doneReading;
-      const chunkValue = decoder.decode(value);
-      setOutputCode((prevCode) => prevCode + chunkValue);
-    }
-
-    setLoading(false);
+      // Runs if stream encounters an error
+      .catch((error) => {
+        setLoading(false);
+        alert('Something went wrong.');
+        console.error(error);
+      })
   };
+
+
   // -------------- Copy Response --------------
   // const copyToClipboard = (text: string) => {
   //   const el = document.createElement('textarea');
