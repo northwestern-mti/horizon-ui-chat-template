@@ -202,7 +202,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
                     activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
                   }
                 >
-                  {route.name === 'Chat UI' ? (
+                  {(
                     <NavLink
                       href={
                         route.layout ? route.layout + route.path : route.path
@@ -245,60 +245,6 @@ export function SidebarLinks(props: SidebarLinksProps) {
                         </Text>
                       </Flex>
                     </NavLink>
-                  ) : (
-                    <Flex
-                      w="100%"
-                      alignItems="center"
-                      justifyContent="center"
-                      cursor="not-allowed"
-                    >
-                      <Box
-                        opacity="0.4"
-                        color={
-                          route.disabled
-                            ? gray
-                            : activeRoute(route.path.toLowerCase())
-                            ? activeIcon
-                            : inactiveColor
-                        }
-                        me="12px"
-                        mt="6px"
-                      >
-                        {route.icon}
-                      </Box>
-                      <Text
-                        opacity="0.4"
-                        me="auto"
-                        color={
-                          route.disabled
-                            ? gray
-                            : activeRoute(route.path.toLowerCase())
-                            ? activeColor
-                            : 'gray.500'
-                        }
-                        fontWeight="500"
-                        letterSpacing="0px"
-                        fontSize="sm"
-                      >
-                        {route.name}
-                      </Text>
-                      <Link
-                        isExternal
-                        href="https://horizon-ui.com/ai-template"
-                      >
-                        <Badge
-                          display={{ base: 'flex', lg: 'none', xl: 'flex' }}
-                          colorScheme="brand"
-                          borderRadius="25px"
-                          color="brand.500"
-                          textTransform={'none'}
-                          letterSpacing="0px"
-                          px="8px"
-                        >
-                          PRO
-                        </Badge>
-                      </Link>
-                    </Flex>
                   )}
                 </HStack>
               </Flex>
