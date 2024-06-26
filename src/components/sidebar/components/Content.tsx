@@ -80,8 +80,8 @@ function SidebarContent(props: SidebarContent) {
         p="14px"
       >
         <NextAvatar h="34px" w="34px" src={avatar4} me="10px" />
-        <Text color={textColor} fontSize="xs" fontWeight="600" me="10px">
-          Adela Parkson
+        <Text color={textColor} fontSize="xs" fontWeight="600" me="10px" flexGrow={1}>
+          Username
         </Text>
 
         <Menu>
