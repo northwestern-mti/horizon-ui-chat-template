@@ -226,7 +226,7 @@ export default function Chat(props: { apiKeyApp: string }) {
         </Flex>
 
         {/* Chat Input */}
-        <Flex
+        <Box
           ms={{ base: '0px', xl: '60px' }}
           mt="20px"
           justifySelf={'flex-end'}
@@ -237,7 +237,7 @@ export default function Chat(props: { apiKeyApp: string }) {
             loading={loading}
             colorPalette={colorPalettes.input}
           />
-        </Flex>
+        </Box>
 
         <Flex
           justify="center"

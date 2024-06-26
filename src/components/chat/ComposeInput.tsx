@@ -34,7 +34,7 @@ export function ComposeInput({placeholderText, onChange, onSubmit, loading, colo
   if (!placeholderText) placeholderText = "Type your message here..."
 
   return (
-    <>
+    <Flex>
       <Input
         minH="54px"
         h="100%"
@@ -78,7 +78,7 @@ export function ComposeInput({placeholderText, onChange, onSubmit, loading, colo
           height="24px"
         />
       </Button>
-    </>
+    </Flex>
   )
 }
 
