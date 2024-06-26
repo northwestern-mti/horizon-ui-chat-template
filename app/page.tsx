@@ -6,6 +6,7 @@ import Link from '@/components/link/Link';
 import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
 import Message from '@/components/chat/Message';
+import { HSeparator } from '@/components/separator/Separator';
 import { ColorPalette } from '@/types/types';
 
 // Chakra imports
@@ -216,6 +217,7 @@ export default function Chat(props: { apiKeyApp: string }) {
 
           {/* Beginning of conversation */}
           <ChatBeginning colorPalette={colorPalettes.annotations} names={['Olivia M. Gold', 'Andrew Orlando']} />
+          <HSeparator mx="auto" my="8px" w="75%" />
 
           {/* Message history */}
           {
