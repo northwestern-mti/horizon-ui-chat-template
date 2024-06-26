@@ -30,7 +30,7 @@ export function NowTyping({ name, colorPalette, ...props }: NowTypingProps) {
   return (
     <Text
       as='i'
-      color={colorPalette.annotations}
+      color={colorPalette.text}
       fontWeight="500"
       fontSize="sm"
       textAlign={'left'}
@@ -64,7 +64,7 @@ export function ChatBeginning({ names, colorPalette, ...props }: ChatBeginningPr
     )
 
   return (
-    <Text fontSize="xs" textAlign="center" color={colorPalette.annotations} {...props}>
+    <Text fontSize="xs" textAlign="center" color={colorPalette.text} {...props}>
       This is the beginning of your conversation with { formatted_names }.
     </Text>
   );

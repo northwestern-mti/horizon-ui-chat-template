@@ -17,6 +17,7 @@ export default function MessageBox(props: { output: string, colorPalette: ColorP
       display={output ? 'flex' : 'none'}
       px="22px !important"
       pl="22px !important"
+      bgColor={ colorPalette.bg }
       color={ colorPalette.text }
       fontSize={{ base: 'sm', md: 'md' }}
       lineHeight={{ base: '24px', md: '26px' }}

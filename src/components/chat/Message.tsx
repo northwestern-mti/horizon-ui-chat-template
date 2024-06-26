@@ -20,11 +20,11 @@ import {
  */
 
 export type MessageProps = {
-  message:      ChatMessage;
-  colorPalette: ColorPalette;
+  message:       ChatMessage;
+  colorPalettes: Record<string, ColorPalette>;
 }
 
-export function Message({ message, colorPalette }: MessageProps) {
+export function Message({ message, colorPalettes }: MessageProps) {
 
   const isUserMessage = message['name'] == 'Me';
 
@@ -58,12 +58,12 @@ export function Message({ message, colorPalette }: MessageProps) {
     >
       <MessageIcon
         message      = { message }
-        colorPalette = { colorPalette }
+        colorPalette = { colorPalettes.annotations }
         { ...iconProps }
       />
       <MessageBox
         output       = { message['text'] }
-        colorPalette = { colorPalette }
+        colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
         { ...textProps }
       />
     </Flex>

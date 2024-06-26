@@ -48,24 +48,36 @@ export default function Chat(props: { apiKeyApp: string }) {
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
 
-  const colorPalette: ColorPalette = {
-    annotations: useColorModeValue('gray.500',  'white'),
-    border:      useColorModeValue('gray.200',  'whiteAlpha.200'),
-    input:       useColorModeValue('navy.700',  'white'),
-    icon:        useColorModeValue('brand.500', 'white'),
-    brand:       useColorModeValue('brand.500', 'white'),
-    button:      useColorModeValue('white',     'whiteAlpha.100'),
-    gray:        useColorModeValue('gray.500',  'white'),
-    text:        useColorModeValue('navy.700',  'white'),
-    placeholder: useColorModeValue('gray.500',  'whiteAlpha.600'),
-    bgIcon:      useColorModeValue(
-      'linear-gradient(180deg, #FBFBFF 0%, #CACAFF 100%)',
-      'whiteAlpha.200',
-    ),
-    buttonShadow: useColorModeValue(
-      '14px 27px 45px rgba(112, 144, 176, 0.2)',
-      'none',
-    ),
+  const colors: ColorPalette = {
+    brand:         useColorModeValue('brand.500', 'white'),
+    gray:          useColorModeValue('gray.500',  'white'),
+  }
+
+  const colorPalettes: Record<string, ColorPalette> = {
+
+    // Chat annotations
+    annotations: {
+      text:        useColorModeValue('gray.500',  'white'),
+    },
+
+    // Input bar
+    input: {
+      border:      useColorModeValue('gray.200',  'whiteAlpha.200'),
+      text:        useColorModeValue('navy.700',  'white'),
+      placeholder: useColorModeValue('gray.500',  'whiteAlpha.600'),
+    },
+
+    // AI chat messages
+    messages_ai: {
+      bg:          useColorModeValue('white',     'navy.800'),
+      text:        useColorModeValue('navy.700',  'white'),
+    },
+
+    // User chat messages
+    messages_user: {
+      bg:          useColorModeValue('navy.100',  'gray.100'),
+      text:        useColorModeValue('navy.700',  'navy.700'),
+    }
   }
 
 
@@ -194,17 +206,17 @@ export default function Chat(props: { apiKeyApp: string }) {
         >
 
           {/* Beginning of conversation */}
-          <ChatBeginning colorPalette={colorPalette} names={['Olivia M. Gold', 'Andrew Orlando']} />
+          <ChatBeginning colorPalette={colorPalettes.annotations} names={['Olivia M. Gold', 'Andrew Orlando']} />
 
           {/* Message history */}
           {
             outputCode.map((msg: any) => (
-              <Message colorPalette={colorPalette} message={msg} />
+              <Message colorPalettes={colorPalettes} message={msg} />
             ))
           }
 
           {/* "Now Typing" notification */}
-          <NowTyping colorPalette={colorPalette} name={ nowTyping } />
+          <NowTyping colorPalette={colorPalettes.annotations} name={ nowTyping } />
         </Flex>
 
         {/* Chat Input */}
@@ -217,7 +229,7 @@ export default function Chat(props: { apiKeyApp: string }) {
             onChange={handleChange}
             onSubmit={handleTranslate}
             loading={loading}
-            colorPalette={colorPalette}
+            colorPalette={colorPalettes.input}
           />
         </Flex>
 

@@ -46,7 +46,7 @@ export function ComposeInput({placeholderText, onChange, onSubmit, loading, colo
         fontSize="sm"
         fontWeight="500"
         _focus={{ borderColor: 'none' }}
-        color={ colorPalette.input }
+        color={ colorPalette.text }
         _placeholder={{ color: colorPalette.placeholder }}
         placeholder={placeholderText}
         onChange={onChange}
