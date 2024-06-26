@@ -52,6 +52,7 @@ export function MessageIcon({ message, icon, colorPalette, ...props }: ChatMessa
     <Flex
       direction="column"
       align="center"
+      justify="end"
       mx="20px"
       mt="8px"
       gap="2px"
@@ -74,15 +75,6 @@ export function MessageIcon({ message, icon, colorPalette, ...props }: ChatMessa
         { displayIcon }
       </Flex>
       {/* /Icon */}
-
-      {/* Name */}
-      <Text
-        color={ colorPalette.text }
-        fontSize="x-small"
-      >
-        { message['name'] }
-      </Text>
-      {/* /Name */}
 
     </Flex>
   );

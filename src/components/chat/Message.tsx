@@ -37,15 +37,35 @@ export function Message({ message, colorPalettes }: MessageProps) {
       direction={ isUserMessage ? 'row-reverse' : 'row' }
       mx="-20px"
     >
+
+      {/* Icon */}
       <MessageIcon
         message      = { message }
         icon         = { MdPerson }
         colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
       />
-      <MessageBox
-        output       = { message['text'] }
-        colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
-      />
+      {/* /Icon */}
+
+      <Flex w="100%" direction="column" align={ isUserMessage ? "end" : "start" }>
+
+        {/* Character name */}
+        <Text
+          color={ colorPalettes.annotations.text }
+          fontSize="x-small"
+          mx="8px"
+        >
+          { message['name'] }
+        </Text>
+        {/* /Character Name */}
+
+        {/* Message Text */}
+        <MessageBox
+          output       = { message['text'] }
+          colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
+        />
+        {/* /Message Text */}
+
+      </Flex>
     </Flex>
   );
 }
