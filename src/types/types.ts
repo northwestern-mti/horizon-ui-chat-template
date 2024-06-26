@@ -5,3 +5,12 @@ export interface ChatBody {
   model: OpenAIModel;
   apiKey?: string | undefined;
 }
+
+
+export interface ChatMessage {
+  name: string;
+  text: string;
+}
+
+
+export type ColorPalette = Record<string, string>;
