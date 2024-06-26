@@ -71,12 +71,18 @@ export default function Chat(props: { apiKeyApp: string }) {
     messages_ai: {
       bg:          useColorModeValue('white',     'navy.800'),
       text:        useColorModeValue('navy.700',  'white'),
+      icon_bg:     "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
+      icon_border: "transparent",
+      icon_text:   "white",
     },
 
     // User chat messages
     messages_user: {
       bg:          useColorModeValue('navy.100',  'gray.100'),
       text:        useColorModeValue('navy.700',  'navy.700'),
+      icon_bg:     "transparent",
+      icon_border: useColorModeValue('gray.200',  'whiteAlpha.600'),
+      icon_text:   useColorModeValue('brand.500', 'white'),
     }
   }
 

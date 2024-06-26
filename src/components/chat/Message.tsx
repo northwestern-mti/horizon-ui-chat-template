@@ -13,6 +13,9 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react';
 
+// React imports
+import { MdPerson } from 'react-icons/md';
+
 
 
 /*
@@ -28,28 +31,6 @@ export function Message({ message, colorPalettes }: MessageProps) {
 
   const isUserMessage = message['name'] == 'Me';
 
-  const iconProps =
-    isUserMessage
-      ? {
-          bg: "transparent",
-          border: "1px solid",
-          borderColor: useColorModeValue('gray.200', 'whiteAlpha.200'),
-        }
-      : { 
-          bg: "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
-        }
-
-  const textProps =
-    isUserMessage
-      ? {
-          bg: "transparent",
-          border: "1px solid",
-          borderColor: useColorModeValue('gray.200', 'whiteAlpha.200'),
-        }
-      : { 
-          bg: "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
-        }
-
   return (
     <Flex
       w="100%"
@@ -58,13 +39,12 @@ export function Message({ message, colorPalettes }: MessageProps) {
     >
       <MessageIcon
         message      = { message }
-        colorPalette = { colorPalettes.annotations }
-        { ...iconProps }
+        icon         = { MdPerson }
+        colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
       />
       <MessageBox
         output       = { message['text'] }
         colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
-        { ...textProps }
       />
     </Flex>
   );
