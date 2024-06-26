@@ -30,7 +30,7 @@ const routes: IRoute[] = [
   },
   {
     name: 'Instructions',
-    path: '/',
+    path: '/instructions',
     icon: (
       <Icon as={IoIosHelpCircle} width="20px" height="20px" color="inherit" />
     ),
