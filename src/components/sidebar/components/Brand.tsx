@@ -13,6 +13,7 @@ export function SidebarBrand() {
   let logoColor = useColorModeValue('navy.700', 'white');
 
   // Change logo to white & transparent in dark mode
+  // Adapted from https://stackoverflow.com/a/24224219
   const logoColorFilter = useColorModeValue('', 'brightness(0) invert(1)')
 
   return (

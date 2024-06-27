@@ -32,6 +32,9 @@ const APIDOMAIN = 'https://localhost:8082'
 
 export default function Chat(props: { apiKeyApp: string }) {
 
+
+  // -------------- Variables --------------
+
   // Input text
   const [ inputCode,  setInputCode  ] = useState<string>('');
 
@@ -53,6 +56,8 @@ export default function Chat(props: { apiKeyApp: string }) {
       .then(json => { setCharacters(json) });
   }, [])
 
+
+  // -------------- Colors --------------
 
   const colors: ColorPalette = {
     brand:         useColorModeValue('brand.500', 'white'),
@@ -93,10 +98,19 @@ export default function Chat(props: { apiKeyApp: string }) {
   }
 
 
+  // -------------- Functions --------------
+
+  // Append a new message to the chat
   const appendMessage = async (newMessage: any) => {
     setOutputCode((prevCode) => [...prevCode, newMessage]);
   }
 
+  // Update the user message currently in the input bar
+  const handleChange = (Event: any) => {
+    setInputCode(Event.target.value);
+  };
+
+  // Call the model
   const handleTranslate = async () => {
 
     // Chat post conditions(maximum number of characters, valid message etc.)
@@ -172,18 +186,8 @@ export default function Chat(props: { apiKeyApp: string }) {
   //   document.body.removeChild(el);
   // };
 
-  // *** Initializing apiKey with .env.local value
-  // useEffect(() => {
-  // ENV file verison
-  // const apiKeyENV = process.env.NEXT_PUBLIC_OPENAI_API_KEY
-  // if (apiKey === undefined || null) {
-  //   setApiKey(apiKeyENV)
-  // }
-  // }, [])
 
-  const handleChange = (Event: any) => {
-    setInputCode(Event.target.value);
-  };
+  // -------------- Component(s) --------------
 
   return (
     <Flex
