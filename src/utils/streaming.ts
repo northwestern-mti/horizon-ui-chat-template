@@ -4,15 +4,28 @@
  *
  * Adapted from https://medium.com/@bs903944/event-streaming-made-easy-with-event-stream-and-javascript-fetch-8d07754a4bed
  */
-export function streamResponse(resource, options, callback) {
+export function streamResponse(
+  resource: RequestInfo | URL,
+  options:  RequestInit,
+  callback: (value: string) => any
+) {
 
   // Return as a Promise that resolves after the full response has been streamed
-  return new Promise((resolve, reject) => {
+  return new Promise<void>((resolve, reject) => {
 
     // Fetch the given resource and start reading
     fetch(resource, options)
       .then(response => {
+
+        // If response is empty, reject the promise
+        if (!response.body) {
+          reject();
+          return;
+        }
+
+        // Initialize reader & decoder objects
         const reader = response.body.getReader()
+        const decoder = new TextDecoder();
 
         // Recursive function that reads one chunk at a time and passes it to the callback
         // Resolves the Promise and stops the recursion when the stream ends
@@ -20,18 +33,19 @@ export function streamResponse(resource, options, callback) {
           reader.read()
             .then(({ value, done }) => {
 
-              // If stream has finished, invoke the callback one last time and resolve the Promise
-              if (done) {
-                if (value) callback(value);
-                resolve();
-                return;
+              // If a value was read, decode it to a string and pass each line to the callback
+              // If multiple lines are generated and returned in quick succession, they may be chunked together
+              if (value) {
+                const chunkString = decoder.decode(value);
+                for (let line of chunkString.split('\n')) {
+                  if (line) callback(line);
+                }
               }
 
-              // Otherwise, decode the value to a string and pass each line to the callback
-              // If multiple lines are generated and returned in quick succession, they may be chunked together
-              const chunkString = new TextDecoder().decode(value);
-              for (let line of chunkString.split('\n')) {
-                if (line) callback(line);
+              // If stream has finished, resolve the Promise and stop recursing
+              if (done) {
+                resolve();
+                return;
               }
 
               // Recurse
@@ -59,8 +73,15 @@ export function streamResponse(resource, options, callback) {
 /*
  * Send a user message to the given resource and stream the AI response to the given callback.
  * Returns a promise that resolves when the full response has been streamed.
+ *
+ * TODO: Invoke callback with more specific Dialogue Token type
  */
-export function streamAIMessage(resource, message, options, callback) {
+export function streamAIMessage(
+  resource: RequestInfo | URL,
+  message:  string,
+  options:  RequestInit,
+  callback: (value: any) => any
+) {
 
   // Package user message into a POST request body
   const full_options = {
@@ -82,6 +103,8 @@ export function streamAIMessage(resource, message, options, callback) {
 }
 
 
+
+/* Exports */
 export default {
   streamResponse,
   streamAIMessage,

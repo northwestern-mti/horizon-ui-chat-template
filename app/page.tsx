@@ -135,7 +135,7 @@ export default function Chat(props: { apiKeyApp: string }) {
       },
 
       // The callback to process values as they stream in
-      (value: any) => {
+      (value) => {
         if (value['type'] === 'DialogueMarker') {
           setNowTyping(() => value['name']);
         }
