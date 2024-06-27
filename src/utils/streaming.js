@@ -27,9 +27,12 @@ export function streamResponse(resource, options, callback) {
                 return;
               }
 
-              // Otherwise, decode the value to a string and pass it to the callback
+              // Otherwise, decode the value to a string and pass each line to the callback
+              // If multiple lines are generated and returned in quick succession, they may be chunked together
               const chunkString = new TextDecoder().decode(value);
-              callback(chunkString);
+              for (let line of chunkString.split('\n')) {
+                if (line) callback(line);
+              }
 
               // Recurse
               readChunk();
