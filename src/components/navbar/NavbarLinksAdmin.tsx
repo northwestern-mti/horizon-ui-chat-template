@@ -27,14 +27,14 @@ export default function HeaderLinks(props: {
 
   // Chakra Color Mode
   const navbarIcon = useColorModeValue('gray.500', 'white');
-  let menuBg = useColorModeValue('white', 'navy.800');
-  const textColor = useColorModeValue('navy.700', 'white');
+  let menuBg = useColorModeValue('white', 'purple.800');
+  const textColor = useColorModeValue('purple.700', 'white');
   const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
   const shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-    '0px 41px 75px #081132',
+    '0px 41px 75px purple.900',
   );
-  const buttonBg = useColorModeValue('transparent', 'navy.800');
+  const buttonBg = useColorModeValue('transparent', 'purple.800');
   const hoverButton = useColorModeValue(
     { bg: 'gray.100' },
     { bg: 'whiteAlpha.100' },

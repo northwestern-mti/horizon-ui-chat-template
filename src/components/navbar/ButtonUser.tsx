@@ -23,8 +23,8 @@ import NavLink from '@/components/link/NavLink';
 export default function ButtonUser() {
 
   // Chakra Color Mode
-  let menuBg = useColorModeValue('white', 'navy.800');
-  const textColor = useColorModeValue('navy.700', 'white');
+  let menuBg = useColorModeValue('white', 'purple.800');
+  const textColor = useColorModeValue('purple.700', 'white');
   const borderColor = useColorModeValue('#E6ECFA', 'rgba(135, 140, 189, 0.3)');
   const shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',

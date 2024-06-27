@@ -19,7 +19,7 @@ export function SearchBar(props: {
   // Chakra Color Mode
   const searchIconColor = useColorModeValue('gray.700', 'white');
   const searchColor = useColorModeValue('gray.700', 'white');
-  const inputBg = useColorModeValue('transparent', 'navy.800');
+  const inputBg = useColorModeValue('transparent', 'purple.800');
   return (
     <InputGroup
       zIndex="0"

@@ -24,7 +24,7 @@ export function NextAvatar({
             {...(showBorder
                 ? {
                       border: '2px',
-                      borderColor: colorMode === 'dark' ? 'navy.700' : 'white',
+                      borderColor: colorMode === 'dark' ? 'purple.700' : 'white',
                   }
                 : {})}
             alt={alt}

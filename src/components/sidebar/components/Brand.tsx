@@ -10,7 +10,7 @@ import Logo from '../../../../public/img/nuit-lockup.png';
 
 export function SidebarBrand() {
   //   Chakra color mode
-  let logoColor = useColorModeValue('navy.700', 'white');
+  let logoColor = useColorModeValue('purple.700', 'white');
 
   // Change logo to white & transparent in dark mode
   // Adapted from https://stackoverflow.com/a/24224219
