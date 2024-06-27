@@ -23,13 +23,14 @@ import { MdSend } from 'react-icons/md';
 
 export type ComposeInputProps = {
   placeholderText?: string;
+  value:            string;
   onChange:         any;
   onSubmit:         any;
   loading:          boolean;
   colorPalette:     ColorPalette;
 }
 
-export function ComposeInput({placeholderText, onChange, onSubmit, loading, colorPalette}: ComposeInputProps) {
+export function ComposeInput({placeholderText, value, onChange, onSubmit, loading, colorPalette}: ComposeInputProps) {
 
   if (!placeholderText) placeholderText = "Type your message here..."
 
@@ -49,6 +50,7 @@ export function ComposeInput({placeholderText, onChange, onSubmit, loading, colo
         color={ colorPalette.text }
         _placeholder={{ color: colorPalette.placeholder }}
         placeholder={placeholderText}
+        value={ value }
         onChange={onChange}
       />
       <Button

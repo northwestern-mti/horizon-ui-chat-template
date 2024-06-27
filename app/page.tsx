@@ -108,7 +108,8 @@ export default function Chat(props: { apiKeyApp: string }) {
     }
 
     // Add the user's message to the chat
-    appendMessage({name: 'Me', text: inputCode})
+    appendMessage({name: 'Me', text: inputCode});
+    setInputCode('');
 
     setLoading(true);
     const controller = new AbortController();
@@ -224,6 +225,7 @@ export default function Chat(props: { apiKeyApp: string }) {
           justifySelf={'flex-end'}
         >
           <ComposeInput
+            value={ inputCode }
             onChange={handleChange}
             onSubmit={handleTranslate}
             loading={loading}
