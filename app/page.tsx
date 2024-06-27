@@ -15,7 +15,6 @@ import {
   Button,
   Flex,
   Icon,
-  Img,
   Input,
   Text,
   useColorModeValue,
@@ -26,7 +25,6 @@ import { useEffect, useState } from 'react';
 
 // Other
 import { streamAIMessage } from '../src/utils/streaming'
-import Bg from '../public/img/chat/Academic-N-transparent.png';
 
 
 
@@ -186,17 +184,6 @@ export default function Chat(props: { apiKeyApp: string }) {
       direction="column"
       position="relative"
     >
-      <Img
-        src={Bg.src}
-        position={'absolute'}
-        w="550px"
-        left="50%"
-        top="50%"
-        transform={'translate(-50%, -50%)'}
-        pointerEvents="none"
-        userSelect="none"
-        zIndex="-99"
-      />
       <Flex
         direction="column"
         mx="auto"

@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import type { AppProps } from 'next/app';
-import { ChakraProvider, Box, Portal, useDisclosure } from '@chakra-ui/react';
+import { ChakraProvider, Box, Img, Portal, useDisclosure } from '@chakra-ui/react';
 import theme from '@/theme/theme';
 import routes from '@/routes';
 import Sidebar from '@/components/sidebar/Sidebar';
@@ -15,6 +15,10 @@ import '@/styles/Contact.css';
 import '@/styles/Plugins.css';
 import '@/styles/MiniCalendar.css';
 import AppWrappers from './AppWrappers';
+
+import Bg from '../public/img/chat/Academic-N-transparent.png';
+
+
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -74,6 +78,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   minH="100vh"
                   pt="50px"
                 >
+                  <Img
+                    src={Bg.src}
+                    position={'fixed'}
+                    w="550px"
+                    left={{
+                      base: "50%",
+                      xl: "calc( 50% + (300px / 2) )",
+                    }}
+                    top="50%"
+                    transform={'translate(-50%, -50%)'}
+                    pointerEvents="none"
+                    userSelect="none"
+                    zIndex="-99"
+                  />
                   {children}
                   {/* <Component apiKeyApp={apiKey} {...pageProps} /> */}
                 </Box>
