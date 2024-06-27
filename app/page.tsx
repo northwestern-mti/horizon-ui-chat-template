@@ -26,7 +26,7 @@ import { useEffect, useState } from 'react';
 
 
 
-const APIDOMAIN = 'https://localhost:8082'
+const APIDOMAIN = process.env.API_DOMAIN;
 
 
 

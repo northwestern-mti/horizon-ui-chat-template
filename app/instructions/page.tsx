@@ -29,8 +29,7 @@ import { streamAIMessage } from '../../src/utils/streaming'
 
 
 
-// const apiDomain = process.env.API_DOMAIN
-const APIDOMAIN = 'https://localhost:8082'
+const APIDOMAIN = process.env.API_DOMAIN
 
 
 

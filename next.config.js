@@ -15,6 +15,10 @@ const nextConfig = {
     // Make ENV
     unoptimized: true,
   },
+  env: {
+    APP_VERSION: process.env.npm_package_version,
+    API_DOMAIN:  process.env.REACT_APP_API_DOMAIN,
+  }
 };
 
 module.exports = nextConfig;
