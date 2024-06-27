@@ -220,8 +220,8 @@ export default function Chat(props: { apiKeyApp: string }) {
 
           {/* Message history */}
           {
-            outputCode.map((msg: any) => (
-              <Message colorPalettes={colorPalettes} message={msg} characters={characters} />
+            outputCode.map((msg: any, idx) => (
+              <Message key={idx} colorPalettes={colorPalettes} message={msg} characters={characters} />
             ))
           }
 

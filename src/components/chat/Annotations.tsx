@@ -66,7 +66,7 @@ export function ChatBeginning({ characters, colorPalette, ...props }: ChatBeginn
   // Format the names with commas and "and"
   const formatted_names = (characters ?? [])
     .map<React.ReactNode>(
-      (character) => <Text as="b">{character.name_full}</Text>
+      (character) => <Text key={character.name_full} as="b">{character.name_full}</Text>
     )
     .reduce(
       (prev, curr, i) => [prev, (i >= (characters ?? []).length - 1) ? ' and ' : ', ', curr]
