@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react';
 
 // React imports
+import React from 'react'
 import { MdSend } from 'react-icons/md';
 
 
@@ -24,8 +25,8 @@ import { MdSend } from 'react-icons/md';
 export type ComposeInputProps = {
   placeholderText?: string;
   value:            string;
-  onChange:         any;
-  onSubmit:         any;
+  onChange:         React.ChangeEventHandler;
+  onSubmit:         React.MouseEventHandler;
   loading:          boolean;
   colorPalette:     ColorPalette;
 }
