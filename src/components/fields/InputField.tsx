@@ -18,9 +18,9 @@ export default function Default(props: {
 }) {
   const { id, label, extra, placeholder, type, mb, ...rest } = props;
   // Chakra Color Mode
-  const textColorPrimary = useColorModeValue('navy.700', 'white');
+  const textColorPrimary = useColorModeValue('purple.700', 'white');
   const searchColor = useColorModeValue('gray.700', 'white');
-  const inputBg = useColorModeValue('transparent', 'navy.800');
+  const inputBg = useColorModeValue('transparent', 'purple.800');
   const placeholderColor = useColorModeValue(
     { color: 'gray.500' },
     { color: 'whiteAlpha.600' },

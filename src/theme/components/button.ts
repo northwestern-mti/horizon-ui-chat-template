@@ -17,7 +17,7 @@ export const buttonStyles = {
       variants: {
         transparent: (props: any) => ({
           bg: mode('transparent', 'transparent')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           boxShadow: 'none',
           _focus: {
             bg: mode('none', 'whiteAlpha.200')(props),
@@ -119,16 +119,16 @@ export const buttonStyles = {
           borderRadius: '16px',
         }),
         api: (props: any) => ({
-          bg: mode('navy.700', 'whiteAlpha.200')(props),
+          bg: mode('purple.700', 'whiteAlpha.200')(props),
           color: mode('white', 'white')(props),
           _focus: {
-            bg: mode('navy.700', 'whiteAlpha.200')(props),
+            bg: mode('purple.700', 'whiteAlpha.200')(props),
           },
           _active: {
-            bg: mode('navy.700', 'whiteAlpha.400')(props),
+            bg: mode('purple.700', 'whiteAlpha.400')(props),
           },
           _hover: {
-            bg: mode('navy.800', 'whiteAlpha.300')(props),
+            bg: mode('purple.800', 'whiteAlpha.300')(props),
             boxShadow: 'unset',
           },
         }),
@@ -174,7 +174,7 @@ export const buttonStyles = {
         }),
         light: (props: any) => ({
           bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           _focus: {
             bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
           },
@@ -206,7 +206,7 @@ export const buttonStyles = {
           bg: mode('transparent', 'brand.400')(props),
           border: mode('1px solid', '0px solid')(props),
           borderColor: mode('secondaryGray.400', 'transparent')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           _focus: {
             bg: mode('transparent', 'brand.400')(props),
           },
@@ -232,7 +232,7 @@ export const buttonStyles = {
       variants: {
         transparent: (props: any) => ({
           bg: mode('transparent', 'transparent')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           boxShadow: 'none',
           _focus: {
             bg: mode('gray.300', 'whiteAlpha.200')(props),
@@ -310,16 +310,16 @@ export const buttonStyles = {
           borderRadius: '16px',
         }),
         api: (props: any) => ({
-          bg: mode('navy.700', 'white')(props),
-          color: mode('white', 'navy.700')(props),
+          bg: mode('purple.700', 'white')(props),
+          color: mode('white', 'purple.700')(props),
           _focus: {
-            bg: mode('navy.700', 'white')(props),
+            bg: mode('purple.700', 'white')(props),
           },
           _active: {
-            bg: mode('navy.700', 'white')(props),
+            bg: mode('purple.700', 'white')(props),
           },
           _hover: {
-            bg: mode('navy.800', 'whiteAlpha.800')(props),
+            bg: mode('purple.800', 'whiteAlpha.800')(props),
             boxShadow: 'unset',
           },
         }),
@@ -365,7 +365,7 @@ export const buttonStyles = {
         }),
         light: (props: any) => ({
           bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           _focus: {
             bg: mode('secondaryGray.300', 'whiteAlpha.100')(props),
           },
@@ -397,7 +397,7 @@ export const buttonStyles = {
           bg: mode('transparent', 'brand.400')(props),
           border: mode('1px solid', '0px solid')(props),
           borderColor: mode('secondaryGray.400', 'transparent')(props),
-          color: mode('navy.700', 'white')(props),
+          color: mode('purple.700', 'white')(props),
           _focus: {
             bg: mode('transparent', 'brand.400')(props),
           },

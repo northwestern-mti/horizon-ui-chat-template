@@ -74,17 +74,17 @@ export const globalStyles = {
       800: '#ffffff',
       900: '#ffffff',
     },
-    navy: {
-      50: '#d0dcfb',
-      100: '#aac0fe',
-      200: '#a3b9f8',
-      300: '#728fea',
-      400: '#3652ba',
-      500: '#1b3bbb',
-      600: '#24388a',
-      700: '#1B254B',
-      800: '#111c44',
-      900: '#0b1437',
+    purple: {
+      50:  '#E4E0EE',
+      100: '#ccc4df',
+      200: '#a495c3',
+      300: '#836EAA',
+      400: '#684c96',
+      500: '#4E2A84',
+      600: '#5b3b8c',
+      700: '#401F68',
+      800: '#30104e',
+      900: '#1D0235',
     },
     gray: {
       100: '#FAFCFE',
@@ -94,7 +94,7 @@ export const globalStyles = {
     global: (props: any) => ({
       body: {
         overflowX: 'hidden',
-        bg: mode('#fdfeff', 'navy.900')(props),
+        bg: mode('#fdfeff', 'purple.900')(props),
         fontFamily: 'Plus Jakarta Sans',
       },
       input: {

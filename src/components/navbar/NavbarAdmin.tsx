@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Flex,
   Link,
+  Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
@@ -34,7 +35,7 @@ export default function AdminNavbar(props: {
   const { secondary, brandText, setApiKey } = props;
 
   // Here are all the props that may change depending on navbar's type or state.(secondary, variant, scrolled)
-  let mainText = useColorModeValue('navy.700', 'white');
+  let mainText = useColorModeValue('purple.700', 'white');
   let secondaryText = useColorModeValue('gray.700', 'white');
   let navbarPosition = 'fixed' as const;
   let navbarFilter = 'none';
@@ -42,7 +43,7 @@ export default function AdminNavbar(props: {
   let navbarShadow = 'none';
   let navbarBg = useColorModeValue(
     'rgba(244, 247, 254, 0.2)',
-    'rgba(11,20,55,0.5)',
+    'rgba(029, 002, 053, 0.5)',
   );
   let navbarBorder = 'transparent';
   let secondaryMargin = '0px';
@@ -109,7 +110,9 @@ export default function AdminNavbar(props: {
         alignItems={{ xl: 'center' }}
         mb={gap}
       >
-        <Box mb={{ base: '8px', md: '0px' }}>
+        <Box mb={{ base: '8px', md: '0px' }} ms="2em">
+
+          {/*
           <Breadcrumb>
             <BreadcrumbItem color={secondaryText} fontSize="sm" mb="5px">
               <BreadcrumbLink href="#" color={secondaryText}>
@@ -123,10 +126,12 @@ export default function AdminNavbar(props: {
               </BreadcrumbLink>
             </BreadcrumbItem>
           </Breadcrumb>
+          */}
+
           {/* Here we create navbar brand, based on route name */}
-          <Link
+          <Text
             color={mainText}
-            href="#"
+            // href="#"
             bg="inherit"
             borderRadius="inherit"
             fontWeight="bold"
@@ -143,7 +148,8 @@ export default function AdminNavbar(props: {
             }}
           >
             {brandText}
-          </Link>
+          </Text>
+
         </Box>
         <Box ms="auto" w={{ sm: '100%', md: 'unset' }}>
           <AdminNavbarLinks setApiKey={setApiKey} secondary={props.secondary} />

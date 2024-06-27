@@ -12,9 +12,9 @@ export const inputStyles = {
       variants: {
         main: (props: any) => ({
           field: {
-            bg: mode('transparent', 'navy.800')(props),
+            bg: mode('transparent', 'purple.800')(props),
             border: '1px solid',
-            color: mode('navy.700', 'white')(props),
+            color: mode('purple.700', 'white')(props),
             borderColor: mode('gray.200', 'whiteAlpha.100')(props),
             borderRadius: '12px',
             fontSize: 'sm',
@@ -25,7 +25,7 @@ export const inputStyles = {
         auth: (props: any) => ({
           field: {
             fontWeight: '500',
-            color: mode('navy.700', 'white')(props),
+            color: mode('purple.700', 'white')(props),
             bg: mode('transparent', 'transparent')(props),
             border: '1px solid',
             borderColor: mode('gray.200', 'rgba(135, 140, 189, 0.3)')(props),
@@ -113,12 +113,12 @@ export const inputStyles = {
       variants: {
         main: (props: any) => ({
           field: {
-            bg: mode('transparent', 'navy.800')(props),
+            bg: mode('transparent', 'purple.800')(props),
             border: '1px solid',
             color: 'gray.500',
             borderColor: mode('gray.200', 'whiteAlpha.100')(props),
             borderRadius: '12px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
           icon: {
             color: 'gray.500',
@@ -126,11 +126,11 @@ export const inputStyles = {
         }),
         mini: (props: any) => ({
           field: {
-            bg: mode('transparent', 'navy.800')(props),
+            bg: mode('transparent', 'purple.800')(props),
             border: '0px solid transparent',
             fontSize: '0px',
             p: '10px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
           icon: {
             color: 'gray.500',
@@ -146,7 +146,7 @@ export const inputStyles = {
             color: 'gray.500',
             borderColor: 'transparent',
             width: 'max-content',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
           icon: {
             color: 'gray.500',
@@ -164,7 +164,7 @@ export const inputStyles = {
             paddingRight: '20px',
             fontWeight: '700',
             fontSize: '14px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
           icon: {
             transform: 'none !important',
@@ -180,7 +180,7 @@ export const inputStyles = {
             border: '1px solid',
             borderColor: 'gray.200',
             borderRadius: '12px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
         authSecondary: (props: any) => ({
@@ -190,7 +190,7 @@ export const inputStyles = {
 
             borderColor: 'gray.200',
             borderRadius: '12px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
         search: (props: any) => ({
@@ -198,7 +198,7 @@ export const inputStyles = {
             border: 'none',
             py: '11px',
             borderRadius: 'inherit',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
       },

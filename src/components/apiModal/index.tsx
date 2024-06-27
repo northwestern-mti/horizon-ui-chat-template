@@ -33,10 +33,10 @@ function APIModal(props: { setApiKey: any; sidebar?: boolean }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [inputCode, setInputCode] = useState<string>('');
 
-  const textColor = useColorModeValue('navy.700', 'white');
+  const textColor = useColorModeValue('purple.700', 'white');
   const grayColor = useColorModeValue('gray.500', 'gray.500');
   const inputBorder = useColorModeValue('gray.200', 'whiteAlpha.200');
-  const inputColor = useColorModeValue('navy.700', 'white');
+  const inputColor = useColorModeValue('purple.700', 'white');
   const link = useColorModeValue('brand.500', 'white');
   const navbarIcon = useColorModeValue('gray.500', 'white');
   const toast = useToast();

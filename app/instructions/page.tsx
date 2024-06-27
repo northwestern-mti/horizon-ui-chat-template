@@ -6,9 +6,7 @@ import Link from '@/components/link/Link';
 import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
 import Message from '@/components/chat/Message';
-import { HSeparator } from '@/components/separator/Separator';
-import { ColorPalette, Character } from '@/types/types';
-import { streamAIMessage } from '@/utils/streaming'
+import { ColorPalette } from '@/types/types';
 
 // Chakra imports
 import {
@@ -16,6 +14,7 @@ import {
   Button,
   Flex,
   Icon,
+  Img,
   Input,
   Text,
   useColorModeValue,
@@ -24,16 +23,18 @@ import {
 // React imports
 import { useEffect, useState } from 'react';
 
+// Other
+import { streamAIMessage } from '../../src/utils/streaming'
 
 
+
+
+// const apiDomain = process.env.API_DOMAIN
 const APIDOMAIN = 'https://localhost:8082'
 
 
 
-export default function Chat(props: { apiKeyApp: string }) {
-
-
-  // -------------- Variables --------------
+export default function Page(props: { apiKeyApp: string }) {
 
   // Input text
   const [ inputCode,  setInputCode  ] = useState<string>('');
@@ -47,17 +48,6 @@ export default function Chat(props: { apiKeyApp: string }) {
 
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
-
-  // Retrieve the list of characters from the API
-  const [characters, setCharacters] = useState<Character[]>([]);
-  useEffect(() => {
-    fetch(`${APIDOMAIN}/api/characters`)
-      .then(resp => resp.json())
-      .then(json => { setCharacters(json) });
-  }, [])
-
-
-  // -------------- Colors --------------
 
   const colors: ColorPalette = {
     brand:         useColorModeValue('brand.500', 'white'),
@@ -89,26 +79,18 @@ export default function Chat(props: { apiKeyApp: string }) {
 
     // User chat messages
     messages_user: {
-      bg:          useColorModeValue('purple.100',  'purple.100'),
+      bg:          useColorModeValue('purple.100',  'gray.100'),
       text:        useColorModeValue('purple.700',  'purple.700'),
       icon_bg:     "transparent",
-      icon_border: useColorModeValue('gray.200',    'whiteAlpha.600'),
-      icon_text:   useColorModeValue('brand.500',   'white'),
+      icon_border: useColorModeValue('gray.200',  'whiteAlpha.600'),
+      icon_text:   useColorModeValue('brand.500', 'white'),
     }
   }
 
 
-  // -------------- Functions --------------
-
-  // Append a new message to the chat
   const appendMessage = async (newMessage: any) => {
     setOutputCode((prevCode) => [...prevCode, newMessage]);
   }
-
-  // Update the user message currently in the input bar
-  const handleChange = (Event: any) => {
-    setInputCode(Event.target.value);
-  };
 
   // Call the model
   const handleTranslate = async () => {
@@ -129,8 +111,7 @@ export default function Chat(props: { apiKeyApp: string }) {
     }
 
     // Add the user's message to the chat
-    appendMessage({name: 'Me', text: inputCode});
-    setInputCode('');
+    appendMessage({name: 'Me', text: inputCode})
 
     setLoading(true);
     const controller = new AbortController();
@@ -140,7 +121,7 @@ export default function Chat(props: { apiKeyApp: string }) {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${APIDOMAIN}/api/message`,
+      `${APIDOMAIN}/api/message/test`,
       inputCode,
 
       // Additional request options
@@ -149,7 +130,7 @@ export default function Chat(props: { apiKeyApp: string }) {
       },
 
       // The callback to process values as they stream in
-      (value) => {
+      (value: any) => {
         if (value['type'] === 'DialogueMarker') {
           setNowTyping(() => value['name']);
         }
@@ -186,8 +167,18 @@ export default function Chat(props: { apiKeyApp: string }) {
   //   document.body.removeChild(el);
   // };
 
+  // *** Initializing apiKey with .env.local value
+  // useEffect(() => {
+  // ENV file verison
+  // const apiKeyENV = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+  // if (apiKey === undefined || null) {
+  //   setApiKey(apiKeyENV)
+  // }
+  // }, [])
 
-  // -------------- Component(s) --------------
+  const handleChange = (Event: any) => {
+    setInputCode(Event.target.value);
+  };
 
   return (
     <Flex
@@ -196,91 +187,10 @@ export default function Chat(props: { apiKeyApp: string }) {
       direction="column"
       position="relative"
     >
-
-      {/* Chat window (scrollable) */}
-      <Flex
-        direction="column"
-        mx="auto"
-        w={{ base: '100%', md: '100%', xl: '100%' }}
-        minH={{ base: '75vh', '2xl': '85vh' }}
-        maxW="1000px"
-      >
-
-        {/* Main Box */}
-        <Flex
-          direction="column"
-          w="100%"
-          mx="auto"
-          display={outputCode ? 'flex' : 'none'}
-          mb={'auto'}
-          gap="16px"
-        >
-
-          {/* Beginning of conversation */}
-          <ChatBeginning colorPalette={colorPalettes.annotations} characters={characters} />
-          <HSeparator mx="auto" my="8px" w="75%" />
-
-          {/* Message history */}
-          {
-            outputCode.map((msg: any, idx) => (
-              <Message key={idx} colorPalettes={colorPalettes} message={msg} characters={characters} />
-            ))
-          }
-
-          {/* "Now Typing" notification */}
-          <NowTyping colorPalette={colorPalettes.annotations} name={ nowTyping } />
-        </Flex>
-
-      </Flex>
-      {/* /Chat window (scrollable) */}
-
-      {/* Bottom of chat window (fixed) */}
-      <Flex
-        position="fixed"
-        justifyContent="center"
-        alignItems="center"
-        direction="column"
-        bgColor={ useColorModeValue('#fdfeff', 'purple.900') }
-        zIndex="99"
-        mx="auto"
-        right={{ base: '12px', md: '30px', lg: '30px', xl: '30px' }}
-        px={{
-          base: '8px',
-          md: '10px',
-        }}
-        ps={{
-          base: '8px',
-          md: '12px',
-        }}
-        pt="8px"
-        bottom="0"
-        pb={{
-          base: 'calc(8px + 12px)',
-          md:   'calc(8px + 16px)',
-          xl:   'calc(8px + 18px)',
-        }}
-        w={{
-          base:  'calc(100vw - 8%)',
-          md:    'calc(100vw - 8%)',
-          lg:    'calc(100vw - 6%)',
-          xl:    'calc(100vw - 360px)',
-          '2xl': 'calc(100vw - 375px)',
-        }}
-        transitionDuration="var(--chakra-transition-duration-normal)"
-        transitionProperty="background-color"
-      >
-
-        {/* Chat Input */}
-        <Box w="100%" maxW="1000px">
-          <ComposeInput
-            value={ inputCode }
-            onChange={handleChange}
-            onSubmit={handleTranslate}
-            loading={loading}
-            colorPalette={colorPalettes.input}
-          />
-        </Box>
-      </Flex>
+      
+      <Box>
+        <Text>Instructions go here</Text>
+      </Box>
     </Flex>
   );
 }

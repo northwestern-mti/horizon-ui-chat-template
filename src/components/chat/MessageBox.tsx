@@ -1,20 +1,28 @@
-import ReactMarkdown from 'react-markdown'
-import { useColorModeValue } from '@chakra-ui/react'
+// Project imports
 import Card from '@/components/card/Card'
+import { ColorPalette } from '@/types/types';
 
-export default function MessageBox(props: { output: string }) {
-  const { output } = props
-  const textColor = useColorModeValue('navy.700', 'white')
+// React imports
+import ReactMarkdown from 'react-markdown'
+
+// Chakra imports
+import { useColorModeValue } from '@chakra-ui/react'
+
+
+
+export default function MessageBox(props: { output: string, colorPalette: ColorPalette }) {
+  const { output, colorPalette } = props
   return (
     <Card
       display={output ? 'flex' : 'none'}
       px="22px !important"
       pl="22px !important"
-      color={textColor}
-      minH="450px"
+      bgColor={ colorPalette.bg }
+      color={ colorPalette.text }
       fontSize={{ base: 'sm', md: 'md' }}
       lineHeight={{ base: '24px', md: '26px' }}
       fontWeight="500"
+      w="80%"
     >
       <ReactMarkdown className="font-medium">
         {output ? output : ''}

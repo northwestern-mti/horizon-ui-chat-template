@@ -12,14 +12,14 @@ export const textareaStyles = {
       variants: {
         main: (props: any) => ({
           field: {
-            bg: mode('transparent', 'navy.800')(props),
+            bg: mode('transparent', 'purple.800')(props),
             border: '1px solid !important',
-            color: mode('navy.700', 'white')(props),
+            color: mode('purple.700', 'white')(props),
             borderColor: mode('gray.200', 'whiteAlpha.100')(props),
             borderRadius: '16px',
             fontSize: 'sm',
             p: '20px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
         auth: () => ({
@@ -38,7 +38,7 @@ export const textareaStyles = {
 
             borderColor: 'gray.200',
             borderRadius: '16px',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
         search: () => ({
@@ -46,7 +46,7 @@ export const textareaStyles = {
             border: 'none',
             py: '11px',
             borderRadius: 'inherit',
-            _placeholder: { color: 'navy.700' },
+            _placeholder: { color: 'purple.700' },
           },
         }),
       },
