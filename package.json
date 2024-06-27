@@ -1,6 +1,6 @@
 {
-  "name": "horizon-ai-template-pro",
-  "version": "1.0.0",
+  "name": "the-real-deal-client",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
