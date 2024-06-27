@@ -8,6 +8,7 @@ import ComposeInput from '@/components/chat/ComposeInput';
 import Message from '@/components/chat/Message';
 import { HSeparator } from '@/components/separator/Separator';
 import { ColorPalette, Character } from '@/types/types';
+import { streamAIMessage } from '@/utils/streaming'
 
 // Chakra imports
 import {
@@ -22,9 +23,6 @@ import {
 
 // React imports
 import { useEffect, useState } from 'react';
-
-// Other
-import { streamAIMessage } from '../src/utils/streaming'
 
 
 
