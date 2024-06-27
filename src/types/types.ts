@@ -14,3 +14,9 @@ export interface ChatMessage {
 
 
 export type ColorPalette = Record<string, string>;
+
+
+export interface Character {
+  name:      string;
+  name_full: string;
+}

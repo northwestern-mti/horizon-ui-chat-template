@@ -3,7 +3,7 @@
 // Project imports
 import MessageBox  from '@/components/chat/MessageBox';
 import MessageIcon from '@/components/chat/MessageIcon';
-import { ChatMessage, ColorPalette } from '@/types/types';
+import { Character, ChatMessage, ColorPalette } from '@/types/types';
 
 // Chakra imports
 import {
@@ -24,12 +24,17 @@ import { MdPerson } from 'react-icons/md';
 
 export type MessageProps = {
   message:       ChatMessage;
+  characters:    Character[];
   colorPalettes: Record<string, ColorPalette>;
 }
 
-export function Message({ message, colorPalettes }: MessageProps) {
+export function Message({ message, characters, colorPalettes }: MessageProps) {
 
   const isUserMessage = message['name'] == 'Me';
+
+  // Find the character with the matching name
+  // TODO: Just pass the speaking character to this function. Return from the API, or lookup outside this component?
+  const character = message['name'] == 'Me' ? null : characters.filter(c => c.name == message['name'])[0]
 
   return (
     <Flex
@@ -54,7 +59,7 @@ export function Message({ message, colorPalettes }: MessageProps) {
           fontSize="x-small"
           mx="8px"
         >
-          { message['name'] }
+          { isUserMessage ? 'Me' : (character ? character.name_full : message['name']) }
         </Text>
         {/* /Character Name */}
 

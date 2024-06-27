@@ -1,7 +1,7 @@
 'use client';
 
 // Project imports
-import { ColorPalette } from '@/types/types';
+import { Character, ColorPalette } from '@/types/types';
 
 // Chakra imports
 import {
@@ -48,19 +48,28 @@ export function NowTyping({ name, colorPalette, ...props }: NowTypingProps) {
  */
 
 export type ChatBeginningProps = {
-  names:        string[];
+  characters:   Character[];
   colorPalette: ColorPalette;
 } & TextProps
 
-export function ChatBeginning({ names, colorPalette, ...props }: ChatBeginningProps) {
+export function ChatBeginning({ characters, colorPalette, ...props }: ChatBeginningProps) {
+
+  // If no characters listed, print a default message
+  if (!characters || !characters.length) {
+    return (
+      <Text fontSize="xs" textAlign="center" color={colorPalette.text} {...props}>
+        This is the beginning of your conversation.
+      </Text>
+    );
+  }
 
   // Format the names with commas and "and"
-  const formatted_names = names
+  const formatted_names = (characters ?? [])
     .map<React.ReactNode>(
-      (name) => <Text as="b">{name}</Text>
+      (character) => <Text as="b">{character.name_full}</Text>
     )
     .reduce(
-      (prev, curr, i) => [prev, (i >= names.length - 1) ? ' and ' : ', ', curr]
+      (prev, curr, i) => [prev, (i >= (characters ?? []).length - 1) ? ' and ' : ', ', curr]
     )
 
   return (

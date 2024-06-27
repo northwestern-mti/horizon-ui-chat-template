@@ -7,7 +7,7 @@ import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
 import Message from '@/components/chat/Message';
 import { HSeparator } from '@/components/separator/Separator';
-import { ColorPalette } from '@/types/types';
+import { ColorPalette, Character } from '@/types/types';
 
 // Chakra imports
 import {
@@ -46,6 +46,15 @@ export default function Chat(props: { apiKeyApp: string }) {
 
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
+
+  // Retrieve the list of characters from the API
+  const [characters, setCharacters] = useState<Character[]>([]);
+  useEffect(() => {
+    fetch(`${APIDOMAIN}/api/characters`)
+      .then(resp => resp.json())
+      .then(json => { setCharacters(json) });
+  }, [])
+
 
   const colors: ColorPalette = {
     brand:         useColorModeValue('brand.500', 'white'),
@@ -206,13 +215,13 @@ export default function Chat(props: { apiKeyApp: string }) {
         >
 
           {/* Beginning of conversation */}
-          <ChatBeginning colorPalette={colorPalettes.annotations} names={['Olivia M. Gold', 'Andrew Orlando']} />
+          <ChatBeginning colorPalette={colorPalettes.annotations} characters={characters} />
           <HSeparator mx="auto" my="8px" w="75%" />
 
           {/* Message history */}
           {
             outputCode.map((msg: any) => (
-              <Message colorPalettes={colorPalettes} message={msg} />
+              <Message colorPalettes={colorPalettes} message={msg} characters={characters} />
             ))
           }
 
