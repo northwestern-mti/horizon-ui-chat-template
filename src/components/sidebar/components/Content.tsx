@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import NavLink from '@/components/link/NavLink';
 //   Custom components
-import avatar4 from '/public/img/avatars/avatar4.png';
+import avatarNU from '/public/img/avatars/nu.png';
 import { NextAvatar } from '@/components/image/Avatar';
 import APIModal from '@/components/apiModal';
 import Brand from '@/components/sidebar/components/Brand';
@@ -79,7 +79,7 @@ function SidebarContent(props: SidebarContent) {
         borderRadius="30px"
         p="14px"
       >
-        <NextAvatar h="34px" w="34px" src={avatar4} me="10px" />
+        <NextAvatar h="34px" w="34px" src={avatarNU} me="10px" />
         <Text color={textColor} fontSize="xs" fontWeight="600" me="10px" flexGrow={1}>
           Username
         </Text>
