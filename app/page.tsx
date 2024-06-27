@@ -185,6 +185,8 @@ export default function Chat(props: { apiKeyApp: string }) {
       direction="column"
       position="relative"
     >
+
+      {/* Chat window (scrollable) */}
       <Flex
         direction="column"
         mx="auto"
@@ -218,12 +220,47 @@ export default function Chat(props: { apiKeyApp: string }) {
           <NowTyping colorPalette={colorPalettes.annotations} name={ nowTyping } />
         </Flex>
 
+      </Flex>
+      {/* /Chat window (scrollable) */}
+
+      {/* Bottom of chat window (fixed) */}
+      <Flex
+        position="fixed"
+        justifyContent="center"
+        alignItems="center"
+        direction="column"
+        bgColor={ useColorModeValue('#fdfeff', 'navy.900') }
+        zIndex="99"
+        mx="auto"
+        right={{ base: '12px', md: '30px', lg: '30px', xl: '30px' }}
+        px={{
+          base: '8px',
+          md: '10px',
+        }}
+        ps={{
+          base: '8px',
+          md: '12px',
+        }}
+        pt="8px"
+        bottom="0"
+        pb={{
+          base: 'calc(8px + 12px)',
+          md:   'calc(8px + 16px)',
+          xl:   'calc(8px + 18px)',
+        }}
+        w={{
+          base:  'calc(100vw - 8%)',
+          md:    'calc(100vw - 8%)',
+          lg:    'calc(100vw - 6%)',
+          xl:    'calc(100vw - 360px)',
+          '2xl': 'calc(100vw - 375px)',
+        }}
+        transitionDuration="var(--chakra-transition-duration-normal)"
+        transitionProperty="background-color"
+      >
+
         {/* Chat Input */}
-        <Box
-          ms={{ base: '0px', xl: '60px' }}
-          mt="20px"
-          justifySelf={'flex-end'}
-        >
+        <Box w="100%" maxW="1000px">
           <ComposeInput
             value={ inputCode }
             onChange={handleChange}
@@ -232,7 +269,6 @@ export default function Chat(props: { apiKeyApp: string }) {
             colorPalette={colorPalettes.input}
           />
         </Box>
-
       </Flex>
     </Flex>
   );
