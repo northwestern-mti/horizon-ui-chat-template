@@ -3,7 +3,7 @@
 // Project imports
 import MessageBox  from '@/components/chat/MessageBox';
 import MessageIcon from '@/components/chat/MessageIcon';
-import { ChatMessage, ColorPalette } from '@/types/types';
+import { ChatMessageGroup, ColorPalette } from '@/types/types';
 
 // Chakra imports
 import {
@@ -22,15 +22,15 @@ import { MdPerson } from 'react-icons/md';
  * Chat Message Component
  */
 
-export type MessageProps = {
-  message:       ChatMessage;
+export type MessageGroupProps = {
+  messages:      ChatMessageGroup;
   colorPalettes: Record<string, ColorPalette>;
 }
 
-export function Message({ message, colorPalettes }: MessageProps) {
+export function MessageGroup({ messages, colorPalettes }: MessageGroupProps) {
 
   // Check whether the current speaker is the user
-  const isUserMessage = message.speaker.name == 'Me';
+  const isUserMessage = messages.speaker.name == 'Me';
 
   return (
     <Flex
@@ -41,13 +41,13 @@ export function Message({ message, colorPalettes }: MessageProps) {
 
       {/* Icon */}
       <MessageIcon
-        character    = { message.speaker }
+        character    = { messages.speaker }
         icon         = { MdPerson }
         colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
       />
       {/* /Icon */}
 
-      <Flex w="100%" direction="column" align={ isUserMessage ? "end" : "start" }>
+      <Flex w="100%" direction="column" align={ isUserMessage ? "end" : "start" } gap="8px">
 
         {/* Character name */}
         <Text
@@ -55,16 +55,20 @@ export function Message({ message, colorPalettes }: MessageProps) {
           fontSize="x-small"
           mx="8px"
         >
-          { message.speaker.name_full }
+          { messages.speaker.name_full }
         </Text>
         {/* /Character Name */}
 
-        {/* Message Text */}
-        <MessageBox
-          output       = { message.message }
-          colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
-        />
-        {/* /Message Text */}
+        {/* Message Text(s) */}
+        {
+          messages.messages.map(message => 
+            <MessageBox
+              output       = { message }
+              colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
+            />
+          )
+        }
+        {/* /Message Text(s) */}
 
       </Flex>
     </Flex>
@@ -74,4 +78,4 @@ export function Message({ message, colorPalettes }: MessageProps) {
 
 
 /* Export */
-export default Message;
+export default MessageGroup;

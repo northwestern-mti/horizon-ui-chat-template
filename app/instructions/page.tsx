@@ -5,7 +5,6 @@
 import Link from '@/components/link/Link';
 import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
-import Message from '@/components/chat/Message';
 import { ColorPalette } from '@/types/types';
 
 // Chakra imports

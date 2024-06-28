@@ -5,9 +5,9 @@
 import Link from '@/components/link/Link';
 import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
-import Message from '@/components/chat/Message';
+import MessageGroup from '@/components/chat/MessageGroup';
 import { HSeparator } from '@/components/separator/Separator';
-import { ColorPalette, ChatMessage, Character } from '@/types/types';
+import { ColorPalette, ChatMessage, ChatMessageGroup, Character } from '@/types/types';
 import { streamAIMessage } from '@/utils/streaming'
 
 // Chakra imports
@@ -108,6 +108,21 @@ export default function Chat(props: { apiKeyApp: string }) {
   // Update the user message currently in the input bar
   const handleChange = (Event: any) => {
     setInputCode(Event.target.value);
+  };
+
+  // Group consecutive messages by speaker
+  const groupMessages = (messages: ChatMessage[]) => {
+    return messages.reduce<ChatMessageGroup[]>((acc, next) => {
+      if (acc.length && next.speaker.name === acc[acc.length-1].speaker.name) {
+        acc[acc.length-1].messages.push(next.message)
+      } else {
+        acc.push({
+          speaker:  next.speaker,
+          messages: [next.message],
+        })
+      }
+      return acc
+    }, [])
   };
 
   // Call the model
@@ -222,8 +237,9 @@ export default function Chat(props: { apiKeyApp: string }) {
 
           {/* Message history */}
           {
-            outputCode.map((msg, idx) => (
-              <Message key={idx} colorPalettes={colorPalettes} message={msg} />
+            // Group consecutive messages by speaker and render each group together
+            groupMessages(outputCode).map((messageGroup: ChatMessageGroup, idx) => (
+              <MessageGroup key={idx} colorPalettes={colorPalettes} messages={messageGroup} />
             ))
           }
 

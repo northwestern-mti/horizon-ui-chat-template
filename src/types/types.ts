@@ -12,6 +12,11 @@ export interface ChatMessage {
   message: string;
 }
 
+export interface ChatMessageGroup {
+  speaker:  Character;
+  messages: string[]
+}
+
 
 export type ColorPalette = Record<string, string>;
 
