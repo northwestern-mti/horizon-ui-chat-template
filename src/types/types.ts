@@ -8,8 +8,13 @@ export interface ChatBody {
 
 
 export interface ChatMessage {
-  name: string;
-  text: string;
+  speaker: Character;
+  message: string;
+}
+
+export interface ChatMessageGroup {
+  speaker:  Character;
+  messages: string[]
 }
 
 
@@ -19,4 +24,32 @@ export type ColorPalette = Record<string, string>;
 export interface Character {
   name:      string;
   name_full: string;
+}
+
+export function Character(obj: Character | string): Character {
+  if (typeof obj === 'string') {
+    return {
+      name:      obj,
+      name_full: obj,
+    }
+  }
+  return obj;
+}
+
+
+
+export interface DialogueToken {
+  type:    "DialogueMarker" | "DialogueInstance"
+  speaker: Character
+  message: string
+}
+
+export interface DialogueMarker extends DialogueToken {
+  type:    "DialogueMarker"
+  message: ""
+}
+
+export interface DialogueInstance extends DialogueToken {
+  type:    "DialogueInstance"
+  message: string,
 }

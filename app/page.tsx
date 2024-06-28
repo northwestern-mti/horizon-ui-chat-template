@@ -5,9 +5,9 @@
 import Link from '@/components/link/Link';
 import { NowTyping, ChatBeginning } from '@/components/chat/Annotations';
 import ComposeInput from '@/components/chat/ComposeInput';
-import Message from '@/components/chat/Message';
+import MessageGroup from '@/components/chat/MessageGroup';
 import { HSeparator } from '@/components/separator/Separator';
-import { ColorPalette, Character } from '@/types/types';
+import { ColorPalette, ChatMessage, ChatMessageGroup, Character } from '@/types/types';
 import { streamAIMessage } from '@/utils/streaming'
 
 // Chakra imports
@@ -39,17 +39,17 @@ export default function Chat(props: { apiKeyApp: string }) {
   const [ inputCode,  setInputCode  ] = useState<string>('');
 
   // Response message
-  const [ outputCode, setOutputCode ] = useState<string[]>([]);
+  const [ outputCode, setOutputCode ] = useState<ChatMessage[]>([]);
 
   // Chat states
   const [ loading,    setLoading    ] = useState<boolean>(false);
-  const [ nowTyping,  setNowTyping  ] = useState<string>('');
+  const [ nowTyping,  setNowTyping  ] = useState<Character | null>(null);
 
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
 
   // Retrieve the list of characters from the API
-  const [characters, setCharacters] = useState<Character[]>([]);
+  const [characters, setCharacters] = useState<Record<string, Character>>({});
   useEffect(() => {
     fetch(`${APIDOMAIN}/api/characters`)
       .then(resp => resp.json())
@@ -101,13 +101,28 @@ export default function Chat(props: { apiKeyApp: string }) {
   // -------------- Functions --------------
 
   // Append a new message to the chat
-  const appendMessage = async (newMessage: any) => {
+  const appendMessage = async (newMessage: ChatMessage) => {
     setOutputCode((prevCode) => [...prevCode, newMessage]);
   }
 
   // Update the user message currently in the input bar
   const handleChange = (Event: any) => {
     setInputCode(Event.target.value);
+  };
+
+  // Group consecutive messages by speaker
+  const groupMessages = (messages: ChatMessage[]) => {
+    return messages.reduce<ChatMessageGroup[]>((acc, next) => {
+      if (acc.length && next.speaker.name === acc[acc.length-1].speaker.name) {
+        acc[acc.length-1].messages.push(next.message)
+      } else {
+        acc.push({
+          speaker:  next.speaker,
+          messages: [next.message],
+        })
+      }
+      return acc
+    }, [])
   };
 
   // Call the model
@@ -129,7 +144,7 @@ export default function Chat(props: { apiKeyApp: string }) {
     }
 
     // Add the user's message to the chat
-    appendMessage({name: 'Me', text: inputCode});
+    appendMessage({speaker: Character('Me'), message: inputCode});
     setInputCode('');
 
     setLoading(true);
@@ -149,16 +164,16 @@ export default function Chat(props: { apiKeyApp: string }) {
       },
 
       // The callback to process values as they stream in
-      (value) => {
-        if (value['type'] === 'DialogueMarker') {
-          setNowTyping(() => value['name']);
+      (token) => {
+        if (token['type'] === 'DialogueMarker') {
+          setNowTyping(() => token.speaker);
         }
-        else if (value['type'] === 'DialogueInstance') {
-          appendMessage(value);
-          setNowTyping(() => '');
+        else if (token['type'] === 'DialogueInstance') {
+          appendMessage(token);
+          setNowTyping(() => null);
         }
         else {
-          console.warn('Unrecognized dialogue token: ', value)
+          console.warn('Unrecognized dialogue token: ', token)
         }
       }
     )
@@ -217,18 +232,19 @@ export default function Chat(props: { apiKeyApp: string }) {
         >
 
           {/* Beginning of conversation */}
-          <ChatBeginning colorPalette={colorPalettes.annotations} characters={characters} />
+          <ChatBeginning colorPalette={colorPalettes.annotations} characters={Object.values(characters)} />
           <HSeparator mx="auto" my="8px" w="75%" />
 
           {/* Message history */}
           {
-            outputCode.map((msg: any, idx) => (
-              <Message key={idx} colorPalettes={colorPalettes} message={msg} characters={characters} />
+            // Group consecutive messages by speaker and render each group together
+            groupMessages(outputCode).map((messageGroup: ChatMessageGroup, idx) => (
+              <MessageGroup key={idx} colorPalettes={colorPalettes} messages={messageGroup} />
             ))
           }
 
           {/* "Now Typing" notification */}
-          <NowTyping colorPalette={colorPalettes.annotations} name={ nowTyping } />
+          <NowTyping colorPalette={colorPalettes.annotations} character={ nowTyping } />
         </Flex>
 
       </Flex>

@@ -16,16 +16,19 @@ import {
  */
 
 export type NowTypingProps = {
-  name:         string;
+  character:    Character | string | null;
   colorPalette: ColorPalette;
 } & TextProps
 
-export function NowTyping({ name, colorPalette, ...props }: NowTypingProps) {
+export function NowTyping({ character, colorPalette, ...props }: NowTypingProps) {
 
   // If name is empty, no one is currently typing
-  if (!name) {
+  if (!character) {
     return <></>
   }
+
+  // Make sure the character is a Character object
+  character = Character(character);
 
   return (
     <Text
@@ -36,7 +39,7 @@ export function NowTyping({ name, colorPalette, ...props }: NowTypingProps) {
       textAlign={'left'}
       {...props}
     >
-      { name } is typing...
+      { character.name_full } is typing...
     </Text>
   );
 }

@@ -1,3 +1,7 @@
+import { Character, DialogueToken } from '@/types/types';
+
+
+
 /*
  * Send a request to the given resource and stream the results to the given callback.
  * Returns a promise that resolves when the full response has been streamed.
@@ -7,7 +11,7 @@
 export function streamResponse(
   resource: RequestInfo | URL,
   options:  RequestInit,
-  callback: (value: string) => any
+  callback: (value: string) => void
 ) {
 
   // Return as a Promise that resolves after the full response has been streamed
@@ -80,7 +84,7 @@ export function streamAIMessage(
   resource: RequestInfo | URL,
   message:  string,
   options:  RequestInit,
-  callback: (value: any) => any
+  callback: (value: DialogueToken) => void
 ) {
 
   // Package user message into a POST request body
@@ -98,7 +102,13 @@ export function streamAIMessage(
   // Stream the response
   return streamResponse(resource, full_options, (value) => {
     if (value === null) return;
-    callback(JSON.parse(value));
+
+    // Parse the Dialogue Token and make sure the speaker is a valid Character object
+    const token: DialogueToken = JSON.parse(value);
+    token.speaker = Character(token.speaker);
+
+    // Invoke the callback on the token
+    callback(token);
   });
 }
 

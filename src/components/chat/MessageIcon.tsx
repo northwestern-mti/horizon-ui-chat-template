@@ -1,7 +1,7 @@
 'use client';
 
 // Project imports
-import { ChatMessage, ColorPalette } from '@/types/types';
+import { Character, ColorPalette } from '@/types/types';
 
 // Chakra imports
 import {
@@ -18,7 +18,7 @@ import { IconType } from 'react-icons'
 
 
 export type ChatMessageIconProps = {
-  message:      ChatMessage;
+  character?:   Character | string;
   icon?:        IconType;
   colorPalette: ColorPalette;
 }
@@ -26,7 +26,10 @@ export type ChatMessageIconProps = {
 /*
  * Chat Message Component
  */
-export function MessageIcon({ message, icon, colorPalette, ...props }: ChatMessageIconProps) {
+export function MessageIcon({ character, icon, colorPalette, ...props }: ChatMessageIconProps) {
+
+  // Make sure the character is a Character object (or undefined)
+  character = (character !== undefined) ? Character(character) : character;
 
   const displayIcon = icon
     ? (
@@ -44,7 +47,7 @@ export function MessageIcon({ message, icon, colorPalette, ...props }: ChatMessa
           fontSize={{ base: 'sm', md: 'md' }}
           lineHeight={{ base: '24px', md: '26px' }}
         >
-          { message['name'].slice(0, 1) }
+          { character ? character.name.slice(0, 1) : '' }
         </Text>
       )
 
