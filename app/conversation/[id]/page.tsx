@@ -64,8 +64,10 @@ export default function Page(props: { apiKeyApp: string }) {
       .then(json => {
 
         // Set the AI characters from the scenario
-        if (json?.characters) {
-          setCharacters(json.characters)
+        if (json?.scenario?.characters) {
+          setCharacters( Object.fromEntries(
+            json.scenario.characters.map((c: any) => [c?.name_short, c])
+          ))
         }
 
         // Fill in the conversation history
