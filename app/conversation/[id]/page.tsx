@@ -54,19 +54,19 @@ export default function Page(props: { apiKeyApp: string }) {
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
 
-  // Retrieve the list of characters from the API
+  // The AI characters in this conversation
   const [characters, setCharacters] = useState<Record<string, Character>>({});
-  useEffect(() => {
-    fetch(`${APIDOMAIN}/api/characters`)
-      .then(resp => resp.json())
-      .then(json => { setCharacters(json) });
-  }, [])
 
   // Retrieve the conversation information from the API
   useEffect(() => {
     fetch(`${APIDOMAIN}/api/conversation/${params.id}`, {credentials: 'include'})
       .then(resp => resp.json())
       .then(json => {
+
+        // Set the AI characters from the scenario
+        if (json?.characters) {
+          setCharacters(json.characters)
+        }
 
         // Fill in the conversation history
         if (json.messages) {

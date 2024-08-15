@@ -166,7 +166,7 @@ export async function fetchRoutes(): Promise<IRoute[]> {
 
   // Map the list of conversations to a list of route objects
   const conversationRoutes = conversations.map((conversation: any) => ({
-    name: conversation.ds_key,
+    name: conversation?.scenario?.title || conversation?.ds_key,
     path: `/conversation/${conversation.ds_key}`,
     icon: (
       <Icon as={MdMessage} width="20px" height="20px" color="inherit" />
