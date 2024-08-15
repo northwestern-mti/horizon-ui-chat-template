@@ -33,7 +33,7 @@ const APIDOMAIN = process.env.API_DOMAIN;
 
 
 
-export default function Chat(props: { apiKeyApp: string }) {
+export default function ConversationPage(props: { apiKeyApp: string }) {
 
 
   // -------------- Variables --------------

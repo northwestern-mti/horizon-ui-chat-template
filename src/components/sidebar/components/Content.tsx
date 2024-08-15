@@ -69,7 +69,7 @@ function SidebarContent(props: SidebarContent) {
   // Fill as an effect to avoid hydration error
   const [ username, setUsername ] = useState<string>('');
   useEffect(() => {
-    setUsername( (userData['name_first'] || ['']).join(' ') )
+    setUsername( (userData?.name_first || ['']).join(' ') )
   }, [])
 
 

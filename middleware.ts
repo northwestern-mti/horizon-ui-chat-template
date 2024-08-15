@@ -19,6 +19,9 @@ const defaultRoute = '/'
 // The route to send users to 
 const loginRoute   = '/auth/login'
 
+// The route to send users to if the API fetch fails
+const errorRoute   = '/error'
+
 
 
 /**
@@ -41,16 +44,23 @@ export default async function middleware(req: NextRequest) {
   // If not, we know we'll need to authenticate, so we can skip this API call
   let userData = null
   if (session) {
-    userData = await (
-      await fetch(`${APIDOMAIN}/user`, {
-        credentials: 'include',
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "Cookie": cookies().getAll().map(({name, value}) => `${name}=${value}`).join('; '),
-        }
-      })
-    ).json()
+    try {
+      userData = await (
+        await fetch(`${APIDOMAIN}/user`, {
+          credentials: 'include',
+          headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "Cookie": cookies().getAll().map(({name, value}) => `${name}=${value}`).join('; '),
+          }
+        })
+      ).json()
+    }
+    catch (e) {
+      return (path === errorRoute)
+        ? NextResponse.next()
+        : NextResponse.redirect(new URL(errorRoute, req.nextUrl))
+    }
   }
 
   // If user not logged in, redirect to the login route
