@@ -20,22 +20,21 @@ const APIDOMAIN = process.env.API_DOMAIN;
 
 
 
-<<<<<<< HEAD
-//export default function Home(props: { apiKeyApp: string }) {
-export default function Home() {
-=======
 export default function Page(props: { apiKeyApp: string }) {
->>>>>>> 7053ee8bdd59aeb4e3b68dff2a9e6c4ca3c38fe2
 
   // -------------- Component(s) --------------
 
   return (
     <Flex
       w="100%"
+      h="100%"
       pt={{ base: '70px', md: '0px' }}
       direction="column"
       position="relative"
+      textAlign="center"
+      justifyContent="center"
     >
+      <Text>The site is currently down. Please try again later.</Text>
     </Flex>
   );
 }

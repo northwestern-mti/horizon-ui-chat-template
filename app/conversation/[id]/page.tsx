@@ -33,8 +33,12 @@ const APIDOMAIN = process.env.API_DOMAIN;
 
 
 
+<<<<<<< HEAD
 // export default function Chat(props: { apiKeyApp: string }) {
 export default function Chat() {
+=======
+export default function Page(props: { apiKeyApp: string }) {
+>>>>>>> 7053ee8bdd59aeb4e3b68dff2a9e6c4ca3c38fe2
 
 
   // -------------- Variables --------------
@@ -55,19 +59,21 @@ export default function Chat() {
   // API Key
   // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
 
-  // Retrieve the list of characters from the API
+  // The AI characters in this conversation
   const [characters, setCharacters] = useState<Record<string, Character>>({});
-  useEffect(() => {
-    fetch(`${APIDOMAIN}/api/characters`)
-      .then(resp => resp.json())
-      .then(json => { setCharacters(json) });
-  }, [])
 
   // Retrieve the conversation information from the API
   useEffect(() => {
     fetch(`${APIDOMAIN}/api/conversation/${params.id}`, {credentials: 'include'})
       .then(resp => resp.json())
       .then(json => {
+
+        // Set the AI characters from the scenario
+        if (json?.scenario?.characters) {
+          setCharacters( Object.fromEntries(
+            json.scenario.characters.map((c: any) => [c?.name_short, c])
+          ))
+        }
 
         // Fill in the conversation history
         if (json.messages) {
