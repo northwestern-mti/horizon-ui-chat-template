@@ -70,7 +70,7 @@ function SidebarContent(props: SidebarContent) {
   const [ username, setUsername ] = useState<string>('');
   useEffect(() => {
     setUsername( (userData?.name_first || ['']).join(' ') )
-  }, [])
+  }, [ userData ])
 
 
   // SIDEBAR
