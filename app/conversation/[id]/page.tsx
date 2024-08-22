@@ -59,7 +59,7 @@ export default function Page() {
 
   // Retrieve the conversation information from the API
   useEffect(() => {
-    fetch(`${APIDOMAIN}/api/conversation/${params.id}`, {credentials: 'include'})
+    fetch(`${APIDOMAIN}/conversation/${params.id}`, {credentials: 'include'})
       .then(resp => resp.json())
       .then(json => {
 
@@ -182,7 +182,7 @@ export default function Page() {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${APIDOMAIN}/api/conversation/${params.id}/message`,
+      `${APIDOMAIN}/conversation/${params.id}/message`,
       inputCode,
 
       // Additional request options

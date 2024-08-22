@@ -157,7 +157,7 @@ export async function fetchRoutes(): Promise<IRoute[]> {
   // Fetch the list of conversations available to this user from the API
   const conversations = await (
     await fetch(
-      `${APIDOMAIN}/api/conversations`,
+      `${APIDOMAIN}/conversations`,
       {
         credentials: 'include',
       }

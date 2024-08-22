@@ -119,7 +119,7 @@ export default function Page() {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${APIDOMAIN}/api/message/test`,
+      `${APIDOMAIN}/message/test`,
       inputCode,
 
       // Additional request options
