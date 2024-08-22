@@ -18,9 +18,10 @@ import React from 'react'
 
 export default function Page() {
 
-  // When the login button is clicked, redirect to the SSO process
+  // When the login button is clicked, redirect to the SSO process,
+  // with the homepage as the ultimate return address
   const onClick = () => {
-    login(`${process.env.API_URL}/auth/login`);
+    login( `${process.env.API_URL}/auth/login`, `${window.location.origin}/` );
   };
 
 

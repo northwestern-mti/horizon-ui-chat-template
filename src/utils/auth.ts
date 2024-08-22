@@ -5,14 +5,19 @@ export function getCookie(key: string): string {
 }
 
 
-export function login(gotoURL: RequestInfo | URL = '') {
+export function login(gotoURL: RequestInfo | URL = '', returnURL: RequestInfo | URL = '') {
 
-  // Define the return API URL after a successful login
+  // Define the return URL on the API after successful authorization
   if (!gotoURL) {
     gotoURL = `${process.env.API_URL}/auth/login`;
   }
 
+  // Define the return URL on the client after a successful login
+  if (!returnURL) {
+    returnURL = `${window.location.origin}/`;
+  }
+
   // Redirect to the SSO provider
-  const login_url = `${ process.env.SSO_URL }?goto=${ gotoURL }`;
+  const login_url = `${ process.env.SSO_URL }?goto=${ gotoURL }?continue_to=${ returnURL }`;
   window.location.href = login_url;
 }
