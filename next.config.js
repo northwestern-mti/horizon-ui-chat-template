@@ -17,7 +17,7 @@ const nextConfig = {
   },
   env: {
     APP_VERSION: process.env.npm_package_version,
-    API_DOMAIN:  process.env.REACT_APP_API_DOMAIN,
+    API_URL:     process.env.API_URL,
     SSO_URL:     process.env.SSO_URL,
   },
   output: 'standalone'

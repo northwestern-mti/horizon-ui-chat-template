@@ -29,7 +29,7 @@ import { useRouter, useParams, useSearchParams } from 'next/navigation'
 
 
 
-const APIDOMAIN = process.env.API_DOMAIN;
+const API_URL = process.env.API_URL;
 
 
 
@@ -59,7 +59,7 @@ export default function Page() {
 
   // Retrieve the conversation information from the API
   useEffect(() => {
-    fetch(`${APIDOMAIN}/conversation/${params.id}`, {credentials: 'include'})
+    fetch(`${API_URL}/conversation/${params.id}`, {credentials: 'include'})
       .then(resp => resp.json())
       .then(json => {
 
@@ -182,7 +182,7 @@ export default function Page() {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${APIDOMAIN}/conversation/${params.id}/message`,
+      `${API_URL}/conversation/${params.id}/message`,
       inputCode,
 
       // Additional request options

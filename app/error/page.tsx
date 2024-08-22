@@ -16,10 +16,6 @@ import { useEffect, useState } from 'react';
 
 
 
-const APIDOMAIN = process.env.API_DOMAIN;
-
-
-
 export default function Page(props: { apiKeyApp: string }) {
 
   // -------------- Component(s) --------------

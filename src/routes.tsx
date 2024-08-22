@@ -19,7 +19,7 @@ import { IRoute } from './types/navigation';
 
 
 
-const APIDOMAIN = process.env.API_DOMAIN;
+const API_URL = process.env.API_URL;
 
 
 
@@ -157,7 +157,7 @@ export async function fetchRoutes(): Promise<IRoute[]> {
   // Fetch the list of conversations available to this user from the API
   const conversations = await (
     await fetch(
-      `${APIDOMAIN}/conversations`,
+      `${API_URL}/conversations`,
       {
         credentials: 'include',
       }

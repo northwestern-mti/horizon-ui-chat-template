@@ -9,7 +9,7 @@ export function login(gotoURL: RequestInfo | URL = '') {
 
   // Define the return API URL after a successful login
   if (!gotoURL) {
-    gotoURL = `${process.env.API_DOMAIN}/auth/login`;
+    gotoURL = `${process.env.API_URL}/auth/login`;
   }
 
   // Redirect to the SSO provider

@@ -20,7 +20,7 @@ export default function LoginPage() {
 
   // When the login button is clicked, redirect to the SSO process
   const onClick = () => {
-    login(`${process.env.API_DOMAIN}/auth/login`);
+    login(`${process.env.API_URL}/auth/login`);
   };
 
 

@@ -5,7 +5,7 @@ import { cookies } from 'next/headers'
 
 
 // The domain of the API
-const APIDOMAIN = process.env.API_DOMAIN;
+const API_URL = process.env.API_URL;
 
 // List of routes available to the public
 // Middleware function will not be called on these
@@ -46,7 +46,7 @@ export default async function middleware(req: NextRequest) {
   if (session) {
     try {
       userData = await (
-        await fetch(`${APIDOMAIN}/user`, {
+        await fetch(`${API_URL}/user`, {
           credentials: 'include',
           headers: {
             "Accept": "application/json",

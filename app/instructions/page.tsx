@@ -28,7 +28,7 @@ import { streamAIMessage } from '../../src/utils/streaming'
 
 
 
-const APIDOMAIN = process.env.API_DOMAIN
+const API_URL = process.env.API__URL;
 
 
 
@@ -119,7 +119,7 @@ export default function Page() {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${APIDOMAIN}/message/test`,
+      `${API_URL}/message/test`,
       inputCode,
 
       // Additional request options

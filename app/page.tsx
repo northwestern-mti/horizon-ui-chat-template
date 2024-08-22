@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 
 
 
-const APIDOMAIN = process.env.API_DOMAIN;
+const API_URL = process.env.API_URL;
 
 
 
