@@ -103,7 +103,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     zIndex="-99"
                   />
                   {children}
-                  {/* <Component apiKeyApp={apiKey} {...pageProps} /> */}
+                  {/* <Component {...pageProps} /> */}
                 </Box>
                 <Box>
                   <Footer />

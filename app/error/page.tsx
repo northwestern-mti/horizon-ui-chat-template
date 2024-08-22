@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react';
 
 
 
-export default function Page(props: { apiKeyApp: string }) {
+export default function Page() {
 
   // -------------- Component(s) --------------
 

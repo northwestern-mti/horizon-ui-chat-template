@@ -51,9 +51,6 @@ export default function Page() {
   const [ loading,    setLoading    ] = useState<boolean>(false);
   const [ nowTyping,  setNowTyping  ] = useState<Character | null>(null);
 
-  // API Key
-  // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
-
   // The AI characters in this conversation
   const [characters, setCharacters] = useState<Record<string, Character>>({});
 

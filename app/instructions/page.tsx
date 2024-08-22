@@ -44,9 +44,6 @@ export default function Page() {
   const [ loading,    setLoading    ] = useState<boolean>(false);
   const [ nowTyping,  setNowTyping  ] = useState<string>('');
 
-  // API Key
-  // const [apiKey, setApiKey] = useState<string>(apiKeyApp);
-
   const colors: ColorPalette = {
     brand:         useColorModeValue('brand.500', 'white'),
     gray:          useColorModeValue('gray.500',  'white'),

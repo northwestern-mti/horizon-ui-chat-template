@@ -16,7 +16,7 @@ import React from 'react'
 
 
 
-export default function LoginPage() {
+export default function Page() {
 
   // When the login button is clicked, redirect to the SSO process
   const onClick = () => {
