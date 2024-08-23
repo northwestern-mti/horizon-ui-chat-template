@@ -36,31 +36,27 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname
   const isPublicRoute = publicRoutes.includes(path)
 
-  // Check for an API session cookie
-  const session = cookies().get('session')
-
-  // If there's a session cookie, check it against the API to ensure it represents a
-  // valid session (logged in, not expired)
-  // If not, we know we'll need to authenticate, so we can skip this API call
+  // Try getting a user object from the current session cookie
+  // This involves calling the API and forwarding all cookies
   let userData = null
-  if (session) {
-    try {
-      userData = await (
-        await fetch(`${API_URL}/user`, {
-          credentials: 'include',
-          headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json",
-            "Cookie": cookies().getAll().map(({name, value}) => `${name}=${value}`).join('; '),
-          }
-        })
-      ).json()
-    }
-    catch (e) {
-      return (path === errorRoute)
-        ? NextResponse.next()
-        : NextResponse.redirect(new URL(errorRoute, req.nextUrl))
-    }
+  try {
+    userData = await (
+      await fetch(`${API_URL}/user`, {
+        credentials: 'include',
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+          "Cookie": cookies().getAll().map(({name, value}) => `${name}=${value}`).join('; '),
+        }
+      })
+    ).json()
+  }
+
+  // If the API is not available, redirect to the error page
+  catch (e) {
+    return (path === errorRoute)
+      ? NextResponse.next()
+      : NextResponse.redirect(new URL(errorRoute, req.nextUrl))
   }
 
   // If user not logged in, redirect to the login route
