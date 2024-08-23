@@ -184,10 +184,10 @@ export function SidebarLinks(props: SidebarLinksProps) {
           </Accordion>
         );
       } else if (!route.invisible) {
-        return (
-          <>
-            {route.icon ? (
+        return route.icon
+          ? (
               <Flex
+                key={key}
                 align="center"
                 justifyContent="space-between"
                 w="100%"
@@ -248,8 +248,8 @@ export function SidebarLinks(props: SidebarLinksProps) {
                   )}
                 </HStack>
               </Flex>
-            ) : (
-              <ListItem ms={0} cursor="not-allowed" opacity={'0.4'}>
+          ) : (
+              <ListItem key={key} ms={0} cursor="not-allowed" opacity={'0.4'}>
                 <Flex ps="32px" alignItems="center" mb="8px">
                   <Text
                     color={
@@ -266,9 +266,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
                   </Text>
                 </Flex>
               </ListItem>
-            )}
-          </>
-        );
+          )
       }
     });
   };
