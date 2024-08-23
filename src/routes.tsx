@@ -214,14 +214,22 @@ const routes: IRoute[] = [
 export async function fetchRoutes(): Promise<IRoute[]> {
 
   // Fetch the list of conversations available to this user from the API
-  const conversations = await (
-    await fetch(
-      `${API_URL}/${API_ROUTES.list_conversations()}`,
-      {
-        credentials: 'include',
-      }
-    )
-  ).json()
+  let conversations = []
+  try {
+    conversations = await (
+      await fetch(
+        `${API_URL}/${API_ROUTES.list_conversations()}`,
+        {
+          credentials: 'include',
+        }
+      )
+    ).json()
+  }
+
+  // If API lookup fails, don't show any routes in the sidebar
+  catch (e) {
+    return [];
+  }
 
   // Map the list of conversations to a list of route objects
   const conversationRoutes = conversations.map((conversation: any) => ({
