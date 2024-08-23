@@ -22,8 +22,9 @@ export default function HeaderLinks(props: {
   routes:    IRoute[];
   secondary: boolean;
   setApiKey: any;
+  sidebarWidth: string;
 }) {
-  const { routes, secondary, setApiKey } = props;
+  const { routes, secondary, setApiKey, sidebarWidth } = props;
   const { colorMode, toggleColorMode } = useColorMode();
 
   // Chakra Color Mode
@@ -67,7 +68,7 @@ export default function HeaderLinks(props: {
         me="10px"
         borderRadius="30px"
       />
-      <SidebarResponsive routes={routes} />
+      <SidebarResponsive routes={routes} width={sidebarWidth} />
 
       {/* Info */}
       {/* <ButtonInfo /> */}

@@ -33,6 +33,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     }
   }, [apiKey]);
 
+  const sidebarWidth = "325px";
+
 
   // Once loaded, fetch the list of routes
   const [routes, setRoutes] = useState<IRoute[]>([])
@@ -52,8 +54,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           {pathname?.includes('register') || pathname?.includes('sign-in') ? (
             children
           ) : (
-            <Box>
-              <Sidebar setApiKey={setApiKey} routes={routes} />
+            <Box position="relative">
+              <Sidebar setApiKey={setApiKey} routes={routes} width={sidebarWidth} />
               <Box
                 pt={{ base: '60px', md: '100px' }}
                 float="right"
@@ -62,8 +64,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 overflow="auto"
                 position="relative"
                 maxHeight="100%"
-                w={{ base: '100%', xl: 'calc( 100% - 300px )' }}
-                maxWidth={{ base: '100%', xl: 'calc( 100% - 300px )' }}
+                w={{ base: '100%', xl: `calc( 100% - (${ sidebarWidth } + 40px) )` }}
+                maxWidth={{ base: '100%', xl: `calc( 100% - (${ sidebarWidth } + 40px) )` }}
                 transition="all 0.33s cubic-bezier(0.685, 0.0473, 0.346, 1)"
                 transitionDuration=".2s, .2s, .35s"
                 transitionProperty="top, bottom, width"
@@ -78,6 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                       logoText={'Horizon UI Dashboard PRO'}
                       brandText={getActiveRoute(routes, pathname)}
                       secondary={getActiveNavbar(routes, pathname)}
+                      sidebarWidth={ sidebarWidth }
                     />
                   </Box>
                 </Portal>
@@ -87,6 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   pe="20px"
                   minH="100vh"
                   pt="50px"
+                  w="100%"
                 >
                   <Img
                     src={Bg.src}
@@ -94,7 +98,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     w="550px"
                     left={{
                       base: "50%",
-                      xl: "calc( 50% + (300px / 2) )",
+                      xl: `calc( 50% + ((${ sidebarWidth } + 40px) / 2) )`,
                     }}
                     top="50%"
                     transform={'translate(-50%, -50%)'}

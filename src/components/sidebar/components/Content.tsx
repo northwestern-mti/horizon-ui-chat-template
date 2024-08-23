@@ -42,11 +42,12 @@ import { getCookie } from "cookies-next";
 
 interface SidebarContent extends PropsWithChildren {
   routes: IRoute[];
+  width: string;
   [x: string]: any;
 }
 
 function SidebarContent(props: SidebarContent) {
-  const { routes, setApiKey } = props;
+  const { routes, setApiKey, width } = props;
   const textColor = useColorModeValue('purple.700', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
   const bgColor = useColorModeValue('white', 'purple.700');
@@ -81,7 +82,7 @@ function SidebarContent(props: SidebarContent) {
       pt="20px"
       pb="26px"
       borderRadius="30px"
-      maxW="285px"
+      maxW={ width }
       px="20px"
     >
       <Brand />

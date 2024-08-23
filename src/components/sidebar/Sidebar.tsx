@@ -28,11 +28,12 @@ import { isWindowAvailable } from '@/utils/navigation';
 
 export interface SidebarProps extends PropsWithChildren {
   routes: IRoute[];
+  width: string;
   [x: string]: any;
 }
 
 function Sidebar(props: SidebarProps) {
-  const { routes, setApiKey } = props;
+  const { routes, width, setApiKey } = props;
   // this is for the rest of the collapses
   let variantChange = '0.2s linear';
   let shadow = useColorModeValue(
@@ -49,7 +50,7 @@ function Sidebar(props: SidebarProps) {
       <Box
         bg={sidebarBg}
         transition={variantChange}
-        w="285px"
+        w={width}
         ms={{
           sm: '16px',
         }}
@@ -69,7 +70,7 @@ function Sidebar(props: SidebarProps) {
           renderThumbVertical={renderThumb}
           renderView={renderView}
         >
-          <Content setApiKey={setApiKey} routes={routes} />
+          <Content setApiKey={setApiKey} routes={routes} width={width} />
         </Scrollbars>
       </Box>
     </Box>
@@ -77,13 +78,13 @@ function Sidebar(props: SidebarProps) {
 }
 
 // FUNCTIONS
-export function SidebarResponsive(props: { routes: IRoute[] }) {
+export function SidebarResponsive(props: { routes: IRoute[], width: string }) {
   let sidebarBackgroundColor = useColorModeValue('white', 'purple.800');
   let menuColor = useColorModeValue('gray.400', 'white');
   // // SIDEBAR
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { routes } = props;
+  const { routes, width } = props;
   return (
     <Flex display={{ sm: 'flex', xl: 'none' }} alignItems="center">
       <Flex w="max-content" h="max-content" onClick={onOpen}>
@@ -108,8 +109,8 @@ export function SidebarResponsive(props: { routes: IRoute[] }) {
       >
         <DrawerOverlay />
         <DrawerContent
-          w="285px"
-          maxW="285px"
+          w={ width }
+          maxW={ width }
           ms={{
             sm: '16px',
           }}
@@ -125,14 +126,14 @@ export function SidebarResponsive(props: { routes: IRoute[] }) {
             _focus={{ boxShadow: 'none' }}
             _hover={{ boxShadow: 'none' }}
           />
-          <DrawerBody maxW="285px" px="0rem" pb="0">
+          <DrawerBody maxW={ width } px="0rem" pb="0">
             <Scrollbars
               autoHide
               renderTrackVertical={renderTrack}
               renderThumbVertical={renderThumb}
               renderView={renderView}
             >
-              <Content routes={routes} />
+              <Content routes={routes} width={width} />
             </Scrollbars>
           </DrawerBody>
         </DrawerContent>
