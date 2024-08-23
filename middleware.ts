@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
+// Project Imports
+import { ROUTES, API_ROUTES } from '@/routes';
+
 
 
 // The domain of the API
@@ -9,18 +12,9 @@ const API_URL = process.env.API_URL;
 
 // List of routes available to the public
 // Middleware function will not be called on these
-const publicRoutes = [
-  '/auth/login',
-]
-
-// The default route to send users to once they are logged in
-const defaultRoute = '/'
-
-// The route to send users to 
-const loginRoute   = '/auth/login'
-
-// The route to send users to if the API fetch fails
-const errorRoute   = '/error'
+const publicRoutes = Object.entries(ROUTES).flatMap(([routeName, route]) => {
+  return route.isPublic ? [route.path] : []
+})
 
 
 
@@ -41,7 +35,7 @@ export default async function middleware(req: NextRequest) {
   let userData = null
   try {
     userData = await (
-      await fetch(`${API_URL}/user`, {
+      await fetch(`${API_URL}/${API_ROUTES.get_user()}`, {
         credentials: 'include',
         headers: {
           "Accept": "application/json",
@@ -54,19 +48,19 @@ export default async function middleware(req: NextRequest) {
 
   // If the API is not available, redirect to the error page
   catch (e) {
-    return (path === errorRoute)
+    return (path === ROUTES.error.path)
       ? NextResponse.next()
-      : NextResponse.redirect(new URL(errorRoute, req.nextUrl))
+      : NextResponse.redirect(new URL(ROUTES.error.path, req.nextUrl))
   }
 
   // If user not logged in, redirect to the login route
   if (!isPublicRoute && !(userData)) {
-    return NextResponse.redirect(new URL(loginRoute, req.nextUrl))
+    return NextResponse.redirect(new URL(ROUTES.login.path, req.nextUrl))
   }
 
   // If user is logged in, redirect login page to default route
   const response = (isPublicRoute && userData)
-    ? NextResponse.redirect(new URL(defaultRoute, req.nextUrl))
+    ? NextResponse.redirect(new URL(ROUTES.home.path, req.nextUrl))
     : NextResponse.next()
 
   // Add the retrieved user data to the response object, so we can use it to render the new page

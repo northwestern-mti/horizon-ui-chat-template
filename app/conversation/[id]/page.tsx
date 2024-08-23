@@ -9,6 +9,7 @@ import MessageGroup from '@/components/chat/MessageGroup';
 import { HSeparator } from '@/components/separator/Separator';
 import { ColorPalette, ChatMessage, ChatMessageGroup, Character } from '@/types/types';
 import { streamAIMessage } from '@/utils/streaming'
+import { API_ROUTES } from '@/routes';
 
 // Chakra imports
 import {
@@ -56,7 +57,10 @@ export default function Page() {
 
   // Retrieve the conversation information from the API
   useEffect(() => {
-    fetch(`${API_URL}/conversation/${params.id}`, {credentials: 'include'})
+    fetch(
+      `${API_URL}/${ API_ROUTES.show_conversation(params.id) }`,
+      { credentials: 'include' }
+    )
       .then(resp => resp.json())
       .then(json => {
 
@@ -179,7 +183,7 @@ export default function Page() {
 
     // Send the user message to the API and stream the results
     streamAIMessage(
-      `${API_URL}/conversation/${params.id}/message`,
+      `${API_URL}/${ API_ROUTES.message(params.id) }`,
       inputCode,
 
       // Additional request options

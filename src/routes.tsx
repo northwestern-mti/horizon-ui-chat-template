@@ -22,6 +22,65 @@ import { IRoute } from './types/navigation';
 const API_URL = process.env.API_URL;
 
 
+export const ROUTES: Record<string, IRoute> = {
+
+  // Default homepage
+  'home': {
+    name: 'Home',
+    path: '/',
+    icon: (
+      <Icon as={MdHome} width="20px" height="20px" color="inherit" />
+    ),
+    collapse: false,
+  },
+
+  // Login page
+  'login': {
+    name: '',
+    path: '/auth/login',
+    isPublic: true,
+  },
+
+  // Login page
+  'error': {
+    name: 'Error',
+    path: '/error',
+  },
+
+  'instructions': {
+    name: 'Instructions',
+    path: '/instructions',
+    icon: (
+      <Icon as={IoIosHelpCircle} width="20px" height="20px" color="inherit" />
+    ),
+    collapse: false,
+  },
+};
+
+
+export const API_ROUTES: Record<string, (...urlVars: string[]) => string> = {
+  "login":
+    (continue_to?: string) => continue_to
+      ? `/auth/login?continue_to=${continue_to}`
+      : "/auth/login",
+
+  "get_user":
+    () => "/user",
+
+  "list_conversations":
+    () => "/conversations",
+
+  "list_all_conversations":
+    () => "/conversations/all",
+
+  "show_conversation":
+    (conversation_id: string) => `/conversation/${conversation_id}`,
+
+  "message":
+    (conversation_id: string) => `/conversation/${conversation_id}/message`,
+}
+
+
 
 const routes: IRoute[] = [
 
@@ -157,7 +216,7 @@ export async function fetchRoutes(): Promise<IRoute[]> {
   // Fetch the list of conversations available to this user from the API
   const conversations = await (
     await fetch(
-      `${API_URL}/conversations`,
+      `${API_URL}/${API_ROUTES.list_conversations()}`,
       {
         credentials: 'include',
       }
@@ -176,31 +235,10 @@ export async function fetchRoutes(): Promise<IRoute[]> {
 
   // Insert the list of conversations into the routes list
   return [
-
-    // Homepage
-    {
-      name: 'Home',
-      path: '/',
-      icon: (
-        <Icon as={MdHome} width="20px" height="20px" color="inherit" />
-      ),
-      collapse: false,
-    },
-
-    // Conversations
+    ROUTES.home,
     ...conversationRoutes,
-
-    // Instructions
-    {
-      name: 'Instructions',
-      path: '/instructions',
-      icon: (
-        <Icon as={IoIosHelpCircle} width="20px" height="20px" color="inherit" />
-      ),
-      collapse: false,
-    },
   ];
 }
 
 
-export default { fetchRoutes }
+export default { ROUTES, API_ROUTES, fetchRoutes }

@@ -3,6 +3,7 @@
 // Project imports
 import LoginButton from '@/components/auth/LoginButton';
 
+import { ROUTES, API_ROUTES } from '@/routes';
 import { login } from '@/utils/auth';
 
 // Chakra imports
@@ -21,7 +22,10 @@ export default function Page() {
   // When the login button is clicked, redirect to the SSO process,
   // with the homepage as the ultimate return address
   const onClick = () => {
-    login( `${process.env.API_URL}/auth/login`, `${window.location.origin}/` );
+    login(
+      `${process.env.API_URL}/${API_ROUTES.login()}`,
+      `${window.location.origin}/${ROUTES.home.path}`
+    );
   };
 
 
