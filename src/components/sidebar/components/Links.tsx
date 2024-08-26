@@ -21,6 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { FaCircle } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
+import { PiArrowElbowDownRight } from "react-icons/pi";
 import NavLink from '@/components/link/NavLink';
 import { IRoute } from '@/types/navigation';
 import { PropsWithChildren, useCallback } from 'react';
@@ -49,6 +50,11 @@ export function SidebarLinks(props: SidebarLinksProps) {
   let activeIcon    = useColorModeValue('purple.500', 'white');
   let iconColor     = useColorModeValue('purple.700', 'white');
   let gray          = useColorModeValue('gray.500',   'gray.500');
+
+  // For secondary routes, use a default bullet-style arrow as the default icon
+  const defaultSecondaryIcon = (
+    <Icon as={PiArrowElbowDownRight} width="12px" height="12px" color="inherit" mb="4px" />
+  )
 
 
 
@@ -114,14 +120,18 @@ export function SidebarLinks(props: SidebarLinksProps) {
    */
   function linkWithIcon(route: IRoute, fontSize: string = "sm") {
 
-    // Create an element for the icon, if one is provided
-    const iconElement = route.icon
+    // If this route defines an icon, use it, otherwise fallback to the default secondary icon
+    // for secondary links or no icon otherwise
+    const icon = route.icon ? route.icon : (route.secondary ? defaultSecondaryIcon : null)
+
+    // Create an element for the icon, if applicable
+    const iconElement = icon
       ? <Box
           color = { getRouteColorIfActive(route, activeIcon) }
           me    = "12px"
           mt    = "6px"
         >
-          {route.icon}
+          {icon}
         </Box>
       : <></>
 
