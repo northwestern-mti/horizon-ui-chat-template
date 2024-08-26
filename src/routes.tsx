@@ -7,7 +7,7 @@ import {
   MdAutoAwesome,
   MdOutlineManageAccounts,
   MdMessage,
-  MdOutlineHelp
+  MdOutlineHelp,
 } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
 import { IoIosHelpCircle } from "react-icons/io";
@@ -232,14 +232,35 @@ export async function fetchRoutes(): Promise<IRoute[]> {
   }
 
   // Map the list of conversations to a list of route objects
-  const conversationRoutes = conversations.map((conversation: any) => ({
-    name: conversation?.scenario?.title || conversation?.ds_key,
-    path: `/conversation/${conversation.ds_key}`,
-    icon: (
-      <Icon as={MdMessage} width="20px" height="20px" color="inherit" />
-    ),
-    collapse: false,
-  }))
+  const conversationRoutes = conversations
+    .map(({scenario, conversations}: {scenario: any, conversations: any}) => ({
+
+      // Top-level name is the title of the scenario
+      name: scenario?.title || scenario?.ds_key,
+      path: `/scenario/${scenario?.ds_key}`,
+
+      // Chat icon
+      icon: (
+        <Icon as={MdMessage} width="20px" height="20px" color="inherit" />
+      ),
+
+      // Add a sub-route for each conversation in this scenario
+      collapse: true,
+      items: [
+        ...conversations.map((conversation: any) => ({
+          secondary: true,
+
+          // If the conversation has a title, use it, otherwise name it after the date it was started
+          name: conversation?.title || `Chat from ${new Date(Date.parse(conversation?.created_on)).toDateString()}`,
+
+          // Use the scenario title as the page title for each conversation
+          title: scenario?.title || '',
+
+          // Link to the conversation
+          path: `/conversation/${conversation.ds_key}`,
+        })),
+      ],
+    }))
 
   // Insert the list of conversations into the routes list
   return [
