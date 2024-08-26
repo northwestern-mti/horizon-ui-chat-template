@@ -36,16 +36,19 @@ interface SidebarLinksProps extends PropsWithChildren {
 
 export function SidebarLinks(props: SidebarLinksProps) {
 
-  // Chakra color mode
-  const pathname = usePathname();
-  let activeColor = useColorModeValue('purple.700', 'white');
-  let inactiveColor = useColorModeValue('gray.500', 'gray.500');
-  let borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
-  let activeIcon = useColorModeValue('brand.500', 'white');
-  let iconColor = useColorModeValue('purple.700', 'white');
-  let gray = useColorModeValue('gray.500', 'gray.500');
+  // Extract routes from props
+  const { routes }  = props;
 
-  const { routes } = props;
+  // Get the current browser path
+  const pathname    = usePathname();
+
+  // Chakra color mode
+  let activeColor   = useColorModeValue('purple.700', 'white');
+  let inactiveColor = useColorModeValue('gray.500',   'gray.500');
+  let borderColor   = useColorModeValue('gray.200',   'whiteAlpha.300');
+  let activeIcon    = useColorModeValue('brand.500',  'white');
+  let iconColor     = useColorModeValue('purple.700', 'white');
+  let gray          = useColorModeValue('gray.500',   'gray.500');
 
 
 
