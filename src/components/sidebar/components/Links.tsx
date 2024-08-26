@@ -16,6 +16,7 @@ import {
   List,
   Icon,
   ListItem,
+  VStack,
   useColorModeValue,
   Link,
 } from '@chakra-ui/react';
@@ -23,6 +24,7 @@ import { FaCircle } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { PiArrowElbowDownRight } from "react-icons/pi";
 import NavLink from '@/components/link/NavLink';
+import { HSeparator } from '@/components/separator/Separator';
 import { IRoute } from '@/types/navigation';
 import { PropsWithChildren, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
@@ -30,7 +32,7 @@ import { usePathname } from 'next/navigation';
 
 
 interface SidebarLinksProps extends PropsWithChildren {
-  routes: IRoute[];
+  routes: IRoute[][];
 }
 
 
@@ -178,8 +180,8 @@ export function SidebarLinks(props: SidebarLinksProps) {
       <Flex
         w              = "100%"
         maxW           = "100%"
-        pt             = {isHeader ? "14px" : "0px"}
-        pb             = "10px"
+        pt             = {isHeader ? "8px" : "4px"}
+        pb             = "6px"
         ps             = {isHeader ? "0px" : "17px"}
         align          = "center"
         alignItems     = "center"
@@ -243,7 +245,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
         return (
           <Accordion defaultIndex={0} allowToggle key={key}>
             <Flex w="100%" justifyContent={'space-between'}>
-              <AccordionItem border="none" mb="14px" w="100%">
+              <AccordionItem border="none" w="100%">
 
                 {/* The main route to render */}
                 <AccordionButton
@@ -266,7 +268,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
 
                 {/* Recursively render the child routes */}
                 <AccordionPanel py="0px" ps={'8px'}>
-                  <List>
+                  <List pb="8px">
                     {
                       route.icon && route.items
                         ? createLinks(route.items) // for bullet accordion links
@@ -335,8 +337,21 @@ export function SidebarLinks(props: SidebarLinksProps) {
       );
     });
   };
-  //  BRAND
-  return <>{createLinks(routes)}</>;
+
+  // Return each set of links
+  return (
+    <VStack spacing="20px" divider={<HSeparator></HSeparator>}>
+      {routes.map((routesGroup, key) => (
+        <Box
+          key={key}
+          w="100%"
+          alignContent="left"
+        >
+          {createLinks(routesGroup)}
+        </Box>
+      ))}
+    </VStack>
+  );
 }
 
 export default SidebarLinks;

@@ -19,7 +19,7 @@ import { IRoute } from '@/types/navigation';
 
 
 export default function AdminNavbar(props: {
-  routes: IRoute[];
+  routes: IRoute[][];
   secondary: boolean;
   brandText: string;
   logoText: string;

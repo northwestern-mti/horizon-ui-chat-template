@@ -211,7 +211,7 @@ const routes: IRoute[] = [
 
 
 
-export async function fetchRoutes(): Promise<IRoute[]> {
+export async function fetchRoutes(): Promise<IRoute[][]> {
 
   // Fetch the list of conversations available to this user from the API
   let conversations = []
@@ -264,8 +264,10 @@ export async function fetchRoutes(): Promise<IRoute[]> {
 
   // Insert the list of conversations into the routes list
   return [
-    ROUTES.home,
-    ...conversationRoutes,
+    [
+      ROUTES.home,
+    ],
+    conversationRoutes,
   ];
 }
 

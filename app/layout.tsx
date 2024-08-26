@@ -37,7 +37,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
 
   // Once loaded, fetch the list of routes
-  const [routes, setRoutes] = useState<IRoute[]>([])
+  const [routes, setRoutes] = useState<IRoute[][]>([])
   useEffect(() => {
     fetchRoutes().then(routes => setRoutes(routes))
   }, [])

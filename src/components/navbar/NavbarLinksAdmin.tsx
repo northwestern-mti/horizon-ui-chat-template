@@ -19,7 +19,7 @@ import { IRoute } from '@/types/navigation';
 
 
 export default function HeaderLinks(props: {
-  routes:    IRoute[];
+  routes:    IRoute[][];
   secondary: boolean;
   setApiKey: any;
   sidebarWidth: string;

@@ -27,7 +27,7 @@ import { IRoute } from '@/types/navigation';
 import { isWindowAvailable } from '@/utils/navigation';
 
 export interface SidebarProps extends PropsWithChildren {
-  routes: IRoute[];
+  routes: IRoute[][];
   width: string;
   [x: string]: any;
 }
@@ -78,7 +78,7 @@ function Sidebar(props: SidebarProps) {
 }
 
 // FUNCTIONS
-export function SidebarResponsive(props: { routes: IRoute[], width: string }) {
+export function SidebarResponsive(props: { routes: IRoute[][], width: string }) {
   let sidebarBackgroundColor = useColorModeValue('white', 'purple.800');
   let menuColor = useColorModeValue('gray.400', 'white');
   // // SIDEBAR

@@ -41,7 +41,7 @@ import { getCookie } from "cookies-next";
 // FUNCTIONS
 
 interface SidebarContent extends PropsWithChildren {
-  routes: IRoute[];
+  routes: IRoute[][];
   width: string;
   [x: string]: any;
 }
