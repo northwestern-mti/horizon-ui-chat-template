@@ -18,6 +18,9 @@ import { ContactCard } from '@/components/contacts/contactCard'
 // React imports
 import { useEffect, useState } from 'react';
 
+// Cookies
+import { getCookie } from "cookies-next";
+
 
 
 const API_URL = process.env.API_URL;
