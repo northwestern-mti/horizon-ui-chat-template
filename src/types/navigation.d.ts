@@ -3,6 +3,7 @@ import { ComponentType, Element } from 'react';
 export interface IRoute {
   path: string;
   name: string;
+  title?: string;
   layout?: string;
   exact?: boolean;
   component?: ComponentType;

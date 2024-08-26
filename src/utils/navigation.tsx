@@ -19,7 +19,7 @@ export const findCurrentRoute = (
 
 export const getActiveRoute = (routes: IRoute[], pathname: string): string => {
   const route = findCurrentRoute(routes, pathname);
-  return route?.name || '';  // Page title (default text)
+  return route?.title || route?.name || '';  // Page title (default text)
 };
 
 export const getActiveNavbar = (
