@@ -61,8 +61,20 @@ export function SidebarLinks(props: SidebarLinksProps) {
    * Verifies if routeName is the one active (in browser input)
    */
   const activeRoute = useCallback(
-    (routeName: string) => {
-      return pathname?.includes(routeName);
+    (route: IRoute) => {
+
+      // Consider the route path
+      let routes = [ route?.path.toLowerCase() ]
+
+      // If route has nested sub-routes, consider all of their paths as well
+      if (route.items) {
+        routes = routes.concat(
+          route.items.map((subRoute: IRoute) => subRoute?.path.toLowerCase())
+        )
+      }
+
+      // Check if the current path is any of the routes above
+      return routes.includes(pathname)
     },
     [pathname],
   );
@@ -72,7 +84,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
    * or the appropriate inactive / disabled color otherwise.
    */
   function getRouteColorIfActive(route: IRoute, color: string) {
-    return route.disabled ? gray : activeRoute(route.path.toLowerCase()) ? color : inactiveColor
+    return route.disabled ? gray : activeRoute(route) ? color : inactiveColor
   }
 
 
@@ -165,7 +177,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
 
         {/* Render the route name itself */}
         <HStack
-          spacing = { activeRoute(route.path.toLowerCase()) ? '22px' : '26px' }
+          spacing = { activeRoute(route) ? '22px' : '26px' }
           w       = "100%"
         >
           { isHeader ? linkWithIcon(route) : linkWithHref(route) }
@@ -281,17 +293,9 @@ export function SidebarLinks(props: SidebarLinksProps) {
             color={route.disabled ? gray : activeIcon}
           />
           <Text
-            color={
-              route.disabled
-                ? gray
-                : activeRoute(route.path.toLowerCase())
-                ? activeColor
-                : inactiveColor
-            }
-            fontWeight={
-              activeRoute(route.path.toLowerCase()) ? 'bold' : 'normal'
-            }
-            fontSize="sm"
+            color      = { getRouteColorIfActive(route, activeColor) }
+            fontWeight = { activeRoute(route) ? 'bold' : 'normal' }
+            fontSize   = "sm"
           >
             {route.name}
           </Text>
