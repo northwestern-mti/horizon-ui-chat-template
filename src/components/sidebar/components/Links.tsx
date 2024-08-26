@@ -26,12 +26,17 @@ import { IRoute } from '@/types/navigation';
 import { PropsWithChildren, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 
+
+
 interface SidebarLinksProps extends PropsWithChildren {
   routes: IRoute[];
 }
 
+
+
 export function SidebarLinks(props: SidebarLinksProps) {
-  //   Chakra color mode
+
+  // Chakra color mode
   const pathname = usePathname();
   let activeColor = useColorModeValue('purple.700', 'white');
   let inactiveColor = useColorModeValue('gray.500', 'gray.500');
@@ -42,7 +47,16 @@ export function SidebarLinks(props: SidebarLinksProps) {
 
   const { routes } = props;
 
-  // verifies if routeName is the one active (in browser input)
+
+
+  //
+  // Helper functions for link attributes
+  //
+
+
+  /**
+   * Verifies if routeName is the one active (in browser input)
+   */
   const activeRoute = useCallback(
     (routeName: string) => {
       return pathname?.includes(routeName);
@@ -50,14 +64,138 @@ export function SidebarLinks(props: SidebarLinksProps) {
     [pathname],
   );
 
+  /**
+   * Return the given color if the route is currently active,
+   * or the appropriate inactive / disabled color otherwise.
+   */
+  function getRouteColorIfActive(route: IRoute, color: string) {
+    return route.disabled ? gray : activeRoute(route.path.toLowerCase()) ? color : inactiveColor
+  }
+
+
+
+  //
+  // Helper functions for rendering route / link components.
+  //
+
+
+  /**
+   * Render a link with an href to the given path.
+   */
+  function linkWithHref(route: IRoute, fontSize: string = "sm") {
+    return (
+      <NavLink
+        href   = { route.layout ? route.layout + route.path : route.path }
+        styles = {{ width: '100%' }}
+      >
+        { linkWithIcon(route, fontSize )}
+      </NavLink>
+    )
+  }
+
+
+  /**
+   * Render the link text with an icon on the left-hand side.
+   */
+  function linkWithIcon(route: IRoute, fontSize: string = "sm") {
+
+    // Create an element for the icon, if one is provided
+    const iconElement = route.icon
+      ? <Box
+          color = { getRouteColorIfActive(route, activeIcon) }
+          me    = "12px"
+          mt    = "6px"
+        >
+          {route.icon}
+        </Box>
+      : <></>
+
+    // Wrap the optional icon and the text in a flexbox
+    return (
+      <Flex w="100%" alignItems="center" justifyContent="center">
+        { iconElement }
+        { linkText(route, fontSize) }
+      </Flex>
+    );
+  }
+
+
+  /**
+   * Render the route name as text with the appropriate styling.
+   */
+  function linkText(route: IRoute, fontSize: string = "sm") {
+    return (
+      <Text
+        me            = "auto"
+        fontWeight    = "500"
+        letterSpacing = "0px"
+        fontSize      = { fontSize }
+        color         = { getRouteColorIfActive(route, activeColor) }
+      >
+        {route.name}
+      </Text>
+    );
+  }
+
+
+
+  //
+  // Helper function for rendering routes / links.
+  //
+
+
+  /**
+   * Render a single route.
+   */
+  function linkContainer(route: IRoute, isHeader: boolean) {
+    return (
+      <Flex
+        w              = "100%"
+        maxW           = "100%"
+        pt             = {isHeader ? "14px" : "0px"}
+        pb             = "10px"
+        ps             = {isHeader ? "0px" : "17px"}
+        align          = "center"
+        alignItems     = "center"
+        justifyContent = "space-between"
+      >
+
+        {/* Render the route name itself */}
+        <HStack
+          spacing = { activeRoute(route.path.toLowerCase()) ? '22px' : '26px' }
+          w       = "100%"
+        >
+          { isHeader ? linkWithIcon(route) : linkWithHref(route) }
+        </HStack>
+
+        {/* If link is a header, render an accordion dropdown button next to it */}
+        { isHeader
+            ? <AccordionIcon
+                ms    = "auto"
+                color = {route.disabled ? gray : 'gray.500'}
+              />
+            : <></>
+        }
+      </Flex>
+    );
+  }
+
+
+
   // this function creates the links and collapses that appear in the sidebar (left menu)
   const createLinks = (routes: IRoute[]) => {
     return routes.map((route, key) => {
+
+      // If route is a header for multiple sub-pages,
+      // render the link as an accordion header
+      // and recursively render its children as a list in the accordion panels
       if (route.collapse && !route.invisible) {
         return (
           <Accordion defaultIndex={0} allowToggle key={key}>
             <Flex w="100%" justifyContent={'space-between'}>
-              <AccordionItem isDisabled border="none" mb="14px" key={key}>
+              <AccordionItem border="none" mb="14px" w="100%">
+
+                {/* The main route to render */}
                 <AccordionButton
                   display="flex"
                   alignItems="center"
@@ -74,83 +212,10 @@ export function SidebarLinks(props: SidebarLinksProps) {
                   py="0px"
                   ms={0}
                 >
-                  {route.icon ? (
-                    <Flex
-                      align="center"
-                      justifyContent="space-between"
-                      w="100%"
-                    >
-                      <HStack
-                        spacing={
-                          activeRoute(route.path.toLowerCase())
-                            ? '22px'
-                            : '26px'
-                        }
-                      >
-                        <Flex
-                          w="100%"
-                          alignItems="center"
-                          justifyContent="center"
-                        >
-                          <Box
-                            color={
-                              route.disabled
-                                ? gray
-                                : activeRoute(route.path.toLowerCase())
-                                ? activeIcon
-                                : inactiveColor
-                            }
-                            me="12px"
-                            mt="6px"
-                          >
-                            {route.icon}
-                          </Box>
-                          <Text
-                            cursor="not-allowed"
-                            me="auto"
-                            color={
-                              route.disabled
-                                ? gray
-                                : activeRoute(route.path.toLowerCase())
-                                ? activeColor
-                                : 'gray.500'
-                            }
-                            fontWeight="500"
-                            letterSpacing="0px"
-                            fontSize="sm"
-                          >
-                            {route.name}
-                          </Text>
-                        </Flex>
-                      </HStack>
-                    </Flex>
-                  ) : (
-                    <Flex pt="0px" pb="10px" alignItems="center" w="100%">
-                      <HStack
-                        spacing={
-                          activeRoute(route.path.toLowerCase())
-                            ? '22px'
-                            : '26px'
-                        }
-                        ps="32px"
-                      >
-                        <Text
-                          cursor="not-allowed"
-                          me="auto"
-                          fontWeight="500"
-                          letterSpacing="0px"
-                          fontSize="sm"
-                        >
-                          {route.name}
-                        </Text>
-                      </HStack>
-                      <AccordionIcon
-                        ms="auto"
-                        color={route.disabled ? gray : 'gray.500'}
-                      />
-                    </Flex>
-                  )}
+                  { linkContainer( route, true ) }
                 </AccordionButton>
+
+                {/* Recursively render the child routes */}
                 <AccordionPanel py="0px" ps={'8px'}>
                   <List>
                     {
@@ -162,114 +227,38 @@ export function SidebarLinks(props: SidebarLinksProps) {
                     }
                   </List>
                 </AccordionPanel>
+
               </AccordionItem>
-              <Link
-                isExternal
-                href="https://horizon-ui.com/ai-template"
-                mt="6px"
-              >
-                <Badge
-                  display={{ base: 'flex', lg: 'none', xl: 'flex' }}
-                  colorScheme="brand"
-                  borderRadius="25px"
-                  color="brand.500"
-                  textTransform={'none'}
-                  letterSpacing="0px"
-                  px="8px"
-                >
-                  PRO
-                </Badge>
-              </Link>
             </Flex>
           </Accordion>
         );
-      } else if (!route.invisible) {
-        return route.icon
+      }
+
+      // If route is top-level, render it in its own box
+      // If not (i.e. if route is nested), render it as a list item instead
+      else if (!route.invisible) {
+        return (route.icon && !route.secondary)
+
+          // Top-level route
           ? (
-              <Flex
-                key={key}
-                align="center"
-                justifyContent="space-between"
-                w="100%"
-                maxW="100%"
-                ps="17px"
-                mb="0px"
-              >
-                <HStack
-                  w="100%"
-                  mb="14px"
-                  spacing={
-                    activeRoute(route.path.toLowerCase()) ? '22px' : '26px'
-                  }
-                >
-                  {(
-                    <NavLink
-                      href={
-                        route.layout ? route.layout + route.path : route.path
-                      }
-                      key={key}
-                      styles={{ width: '100%' }}
-                    >
-                      <Flex
-                        w="100%"
-                        alignItems="center"
-                        justifyContent="center"
-                      >
-                        <Box
-                          color={
-                            route.disabled
-                              ? gray
-                              : activeRoute(route.path.toLowerCase())
-                              ? activeIcon
-                              : inactiveColor
-                          }
-                          me="12px"
-                          mt="6px"
-                        >
-                          {route.icon}
-                        </Box>
-                        <Text
-                          me="auto"
-                          color={
-                            route.disabled
-                              ? gray
-                              : activeRoute(route.path.toLowerCase())
-                              ? activeColor
-                              : 'gray.500'
-                          }
-                          fontWeight="500"
-                          letterSpacing="0px"
-                          fontSize="sm"
-                        >
-                          {route.name}
-                        </Text>
-                      </Flex>
-                    </NavLink>
-                  )}
-                </HStack>
-              </Flex>
-          ) : (
-              <ListItem key={key} ms={0} cursor="not-allowed" opacity={'0.4'}>
+              <Box key={key}>
+                { linkContainer(route, false) }
+              </Box>
+          )
+
+          // Secondary (nested) route
+          : (
+              <ListItem key={key} ms={0} opacity={'0.8'}>
                 <Flex ps="32px" alignItems="center" mb="8px">
-                  <Text
-                    color={
-                      route.disabled
-                        ? gray
-                        : activeRoute(route.path.toLowerCase())
-                        ? activeColor
-                        : inactiveColor
-                    }
-                    fontWeight="500"
-                    fontSize="xs"
-                  >
-                    {route.name}
-                  </Text>
+                  { linkWithHref(route, "xs") }
                 </Flex>
               </ListItem>
           )
       }
     });
   };
+
+
   // this function creates the links from the secondary accordions (for example auth -> sign-in -> default)
   const createAccordionLinks = (routes: IRoute[]) => {
     return routes.map((route: IRoute, key: number) => {
@@ -280,7 +269,6 @@ export function SidebarLinks(props: SidebarLinksProps) {
           alignItems="center"
           mb="10px"
           key={key}
-          cursor="not-allowed"
         >
           <Icon
             w="6px"
