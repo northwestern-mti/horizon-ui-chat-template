@@ -50,6 +50,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
   let activeIcon    = useColorModeValue('purple.500', 'white');
   let iconColor     = useColorModeValue('purple.700', 'white');
   let gray          = useColorModeValue('gray.500',   'gray.500');
+  let hoverColor    = useColorModeValue('purple.400',  'purple.200');
 
   // For secondary routes, use a default bullet-style arrow as the default icon
   const defaultSecondaryIcon = (
@@ -89,8 +90,8 @@ export function SidebarLinks(props: SidebarLinksProps) {
    * Return the given color if the route is currently active,
    * or the appropriate inactive / disabled color otherwise.
    */
-  function getRouteColorIfActive(route: IRoute, color: string) {
-    return route.disabled ? gray : activeRoute(route) ? color : inactiveColor
+  function getRouteColorIfActive(route: IRoute, color: string, hover: boolean = false) {
+    return route.disabled ? gray : (activeRoute(route) || hover) ? color : inactiveColor
   }
 
 
@@ -127,7 +128,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
     // Create an element for the icon, if applicable
     const iconElement = icon
       ? <Box
-          color = { getRouteColorIfActive(route, activeIcon) }
+          color = "inherit"
           me    = "12px"
           mt    = "6px"
         >
@@ -155,7 +156,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
         fontWeight    = "500"
         letterSpacing = "0px"
         fontSize      = { fontSize }
-        color         = { getRouteColorIfActive(route, activeColor) }
+        color         = "inherit"
       >
         {route.name}
       </Text>
@@ -170,7 +171,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
 
 
   /**
-   * Render a single route.
+   * Render a single primary route (top-level, visually).
    */
   function linkContainer(route: IRoute, isHeader: boolean) {
     return (
@@ -183,6 +184,10 @@ export function SidebarLinks(props: SidebarLinksProps) {
         align          = "center"
         alignItems     = "center"
         justifyContent = "space-between"
+        color          = { getRouteColorIfActive(route, activeColor) }
+        _hover = {{
+          "color":       getRouteColorIfActive(route, hoverColor, true),
+        }}
       >
 
         {/* Render the route name itself */}
@@ -203,6 +208,26 @@ export function SidebarLinks(props: SidebarLinksProps) {
         }
       </Flex>
     );
+  }
+
+
+  /**
+   * Render a single secondary route (nested under another header).
+   */
+  function linkContainerSecondary(route: IRoute) {
+    return (
+      <Flex
+        ps         = "32px"
+        alignItems = "center"
+        mb         = "4px"
+        color      = { getRouteColorIfActive(route, activeColor) }
+        _hover = {{
+          "color":   getRouteColorIfActive(route, hoverColor, true),
+        }}
+      >
+        { linkWithHref(route, "xs") }
+      </Flex>
+    )
   }
 
 
@@ -273,9 +298,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
           // Secondary (nested) route
           : (
               <ListItem key={key} ms={0} opacity={'0.8'}>
-                <Flex ps="32px" alignItems="center" mb="4px">
-                  { linkWithHref(route, "xs") }
-                </Flex>
+                { linkContainerSecondary(route) }
               </ListItem>
           )
       }
