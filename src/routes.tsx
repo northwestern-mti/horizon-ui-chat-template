@@ -8,6 +8,7 @@ import {
   MdOutlineManageAccounts,
   MdMessage,
   MdOutlineHelp,
+  MdPerson,
 } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
 import { IoIosHelpCircle } from "react-icons/io";
@@ -41,10 +42,20 @@ export const ROUTES: Record<string, IRoute> = {
     isPublic: true,
   },
 
-  // Login page
+  // Error page
   'error': {
     name: 'Error',
     path: '/error',
+  },
+
+  // Contacts page
+  'contacts': {
+    name: 'Contacts',
+    path: '/contacts',
+    icon: (
+      <Icon as={MdPerson} width="20px" height="20px" color="inherit" />
+    ),
+    collapse: false,
   },
 
   'instructions': {
@@ -266,6 +277,7 @@ export async function fetchRoutes(): Promise<IRoute[][]> {
   return [
     [
       ROUTES.home,
+      ROUTES.contacts,
     ],
     conversationRoutes,
   ];
