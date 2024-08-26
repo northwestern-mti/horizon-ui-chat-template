@@ -21,23 +21,26 @@ export type ChatMessageIconProps = {
   character?:   Character | string;
   icon?:        IconType;
   colorPalette: ColorPalette;
+  diameter?:    string;
 }
 
 /*
  * Chat Message Component
  */
-export function MessageIcon({ character, icon, colorPalette, ...props }: ChatMessageIconProps) {
+export function MessageIcon({ character, icon, colorPalette, diameter, ...props }: ChatMessageIconProps) {
 
   // Make sure the character is a Character object (or undefined)
   character = (character !== undefined) ? Character(character) : character;
 
+  diameter = diameter || "40px";
+
   const displayIcon = icon
     ? (
         <Icon
-          as={ icon }
-          width="20px"
-          height="20px"
-          color={ colorPalette.icon_text }
+          as     = { icon }
+          width  = {`calc(${diameter} - 20px)`}
+          height = {`calc(${diameter} - 20px)`}
+          color  = { colorPalette.icon_text }
         />
       )
     : (
@@ -69,10 +72,10 @@ export function MessageIcon({ character, icon, colorPalette, ...props }: ChatMes
         bg={ colorPalette.icon_bg }
         border="1px solid"
         borderColor={ colorPalette.icon_border }
-        h="40px"
-        w="40px"
-        minH="40px"
-        minW="40px"
+        h    = {diameter}
+        w    = {diameter}
+        minH = {diameter}
+        minW = {diameter}
         { ...props }
       >
         { displayIcon }
