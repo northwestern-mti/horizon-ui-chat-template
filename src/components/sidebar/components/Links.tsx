@@ -46,7 +46,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
   let activeColor   = useColorModeValue('purple.700', 'white');
   let inactiveColor = useColorModeValue('gray.500',   'gray.500');
   let borderColor   = useColorModeValue('gray.200',   'whiteAlpha.300');
-  let activeIcon    = useColorModeValue('brand.500',  'white');
+  let activeIcon    = useColorModeValue('purple.500', 'white');
   let iconColor     = useColorModeValue('purple.700', 'white');
   let gray          = useColorModeValue('gray.500',   'gray.500');
 
@@ -214,7 +214,6 @@ export function SidebarLinks(props: SidebarLinksProps) {
                 <AccordionButton
                   display="flex"
                   alignItems="center"
-                  mb="4px"
                   justifyContent="center"
                   _hover={{
                     bg: 'unset',
@@ -264,7 +263,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
           // Secondary (nested) route
           : (
               <ListItem key={key} ms={0} opacity={'0.8'}>
-                <Flex ps="32px" alignItems="center" mb="8px">
+                <Flex ps="32px" alignItems="center" mb="4px">
                   { linkWithHref(route, "xs") }
                 </Flex>
               </ListItem>
