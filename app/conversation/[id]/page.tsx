@@ -81,6 +81,9 @@ export default function Page() {
             return dialogue
           }));
         }
+
+        // Scroll to bottom (latest messages)
+        setTimeout(() => scrollToBottom('instant'), 250);
       });
   }, [])
 
@@ -131,6 +134,15 @@ export default function Page() {
   // Append a new message to the chat
   const appendMessage = async (newMessage: ChatMessage) => {
     setOutputCode((prevCode) => [...prevCode, newMessage]);
+    setTimeout(scrollToBottom, 100)
+  }
+
+  // Scroll to the bottom of the chat window
+  const scrollToBottom = (behavior: ScrollBehavior = "smooth") => {
+    const objDiv = document.getElementById("chatMessagesWindow");
+    if (objDiv) {
+      window.scrollTo({ top: objDiv.scrollHeight, behavior });
+    }
   }
 
   // Update the user message currently in the input bar
@@ -242,8 +254,10 @@ export default function Page() {
 
       {/* Chat window (scrollable) */}
       <Flex
+        id="chatMessagesWindow"
         direction="column"
         mx="auto"
+        pb="24px"
         w={{ base: '100%', md: '100%', xl: '100%' }}
         minH={{ base: '75vh', '2xl': '85vh' }}
         maxW="1000px"
