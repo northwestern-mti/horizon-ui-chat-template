@@ -83,7 +83,7 @@ export default function Page() {
         }
 
         // Scroll to bottom (latest messages)
-        setTimeout(() => scrollToBottom('instant'), 250);
+        setTimeout(() => scrollToBottom(), 250);
       });
   }, [])
 
