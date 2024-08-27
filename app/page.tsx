@@ -76,7 +76,7 @@ export default function Page() {
       </Flex>
 
       {/* Contacts Grid */}
-      <SimpleGrid columns={3} gap="32px" px="16px">
+      <SimpleGrid columns={{"base": 1, "sm": 1, "md": 2, "lg": 3, "2xl": 4}} gap="32px" px="16px">
 
         <ContactCard
           name         = "Dr. Olivia M. Gold"
