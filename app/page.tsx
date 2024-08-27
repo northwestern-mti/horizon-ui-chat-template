@@ -8,12 +8,15 @@ import {
   Flex,
   Heading,
   Icon,
+  Link,
   SimpleGrid,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 
 import { ContactCard } from '@/components/contacts/contactCard'
+
+import { ROUTES } from '@/routes';
 
 // React imports
 import { useEffect, useState } from 'react';
@@ -65,10 +68,12 @@ export default function Page() {
         Welcome to The Real Deal, <Text as="b" color="purple.700">{ username }</Text>!
       </Text>
 
-      <Heading as="h2" size="lg" mt="2em" mb="16px" color={headingColor}>
-        Contacts
-      </Heading>
-      <Box>See all...</Box>
+      <Flex justifyContent="space-between" alignItems="end" mb="16px">
+        <Heading as="h2" size="lg" mt="2em" mb="0px" color={headingColor}>
+          Contacts
+        </Heading>
+        <Link href={ROUTES.contacts.path}>See all...</Link>
+      </Flex>
 
       {/* Contacts Grid */}
       <SimpleGrid columns={3} gap="32px" px="16px">
