@@ -80,12 +80,14 @@ export default function Page() {
 
         <ContactCard
           name         = "Dr. Olivia M. Gold"
+          nickname     = "Dr. Gold"
           description  = "Research scientist in the Gene Lab at Kramer BioGenetics, Inc."
           colorPalette = {colorPalette.profile}
         ></ContactCard>
 
         <ContactCard
           name         = "Andrew Orlando"
+          nickname     = "Andy"
           description  = 'Brand Manager for "Clean Machine" at Life Line, Inc.'
           colorPalette = {colorPalette.profile}
         ></ContactCard>

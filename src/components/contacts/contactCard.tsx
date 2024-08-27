@@ -27,17 +27,27 @@ import { MdPerson } from 'react-icons/md';
 export type ContactCardProps = {
   // character:    Character | string | null;
   name:         string,
+  nickname:     string,
   description:  string,
   colorPalette: ColorPalette;
 } & TextProps
 
-export function ContactCard({ name, description, colorPalette, ...props }: ContactCardProps) {
+export function ContactCard({ name, nickname, description, colorPalette, ...props }: ContactCardProps) {
 
   return (
     <Card>
+
       <CardHeader>
-        <Heading size='md'>{ name }</Heading>
+        <Heading as="h4"
+          size='md'
+          color={colorPalette.text}
+        >{ name }</Heading>
+        <Text as="i"
+          size="sm"
+          color="gray.600"
+        >"{ nickname }"</Text>
       </CardHeader>
+
       <CardBody pt="0px">
 
         <MessageIcon
