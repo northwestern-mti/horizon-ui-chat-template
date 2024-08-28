@@ -73,12 +73,14 @@ export default function Page() {
 
         // Fill in the conversation history
         if (json.messages) {
-          setOutputCode(json.messages.map((msg: string) => {
-            const dialogue = JSON.parse(msg)
+          setOutputCode(json.messages.map((msg: {speaker: string, message: string}) => {
+            const dialogue: any = msg;
             if (dialogue.speaker === "user") {
               dialogue.speaker = Character("Me")
-            } else{
-              dialogue.speaker = Character(dialogue.speaker)
+            } else if (characters) {
+              dialogue.speaker = Character( characters[dialogue.speaker]?.name_full || dialogue.speaker )
+            } else {
+              dialogue.speaker = Character( dialogue.speaker )
             }
             return dialogue
           }));
