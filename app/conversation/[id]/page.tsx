@@ -77,6 +77,8 @@ export default function Page() {
             const dialogue = JSON.parse(msg)
             if (dialogue.speaker === "user") {
               dialogue.speaker = Character("Me")
+            } else{
+              dialogue.speaker = Character(dialogue.speaker)
             }
             return dialogue
           }));
