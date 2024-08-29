@@ -229,7 +229,7 @@ export async function fetchRoutes(): Promise<IRoute[][]> {
   try {
     conversations = await (
       await fetch(
-        `${API_URL}/${API_ROUTES.list_conversations()}`,
+        new URL( API_ROUTES.list_conversations(), API_URL ),
         {
           credentials: 'include',
         }

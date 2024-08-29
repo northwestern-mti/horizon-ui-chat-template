@@ -23,8 +23,8 @@ export default function Page() {
   // with the homepage as the ultimate return address
   const onClick = () => {
     login(
-      `${process.env.API_URL}/${API_ROUTES.login()}`,
-      `${window.location.origin}/${ROUTES.home.path}`
+      new URL(API_ROUTES.login(), process.env.API_URL),
+      new URL(ROUTES.home.path, window.location.origin),
     );
   };
 

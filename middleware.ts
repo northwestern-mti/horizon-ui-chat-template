@@ -35,7 +35,7 @@ export default async function middleware(req: NextRequest) {
   let userData = null
   try {
     userData = await (
-      await fetch(`${API_URL}/${API_ROUTES.get_user()}`, {
+      await fetch(new URL(API_ROUTES.get_user(), API_URL), {
         credentials: 'include',
         headers: {
           "Accept": "application/json",
