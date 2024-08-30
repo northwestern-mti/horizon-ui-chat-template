@@ -3,7 +3,8 @@
 // Project imports
 import LoginButton from '@/components/auth/LoginButton';
 
-import { ROUTES, API_ROUTES } from '@/routes';
+import { ROUTES } from '@/routes';
+import { API_ROUTES } from '@/route_spec';
 import { login } from '@/utils/auth';
 
 // Chakra imports
@@ -23,7 +24,7 @@ export default function Page() {
   // with the homepage as the ultimate return address
   const onClick = () => {
     login(
-      new URL(API_ROUTES.login(), process.env.API_URL),
+      new URL(API_ROUTES.login.makeURL(), process.env.API_URL),
       new URL(ROUTES.home.path, window.location.origin),
     );
   };

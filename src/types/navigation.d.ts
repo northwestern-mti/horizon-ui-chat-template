@@ -1,5 +1,10 @@
 import { ComponentType, Element } from 'react';
 
+export interface RouteSpec {
+  makeURL: (...urlVars: string[]) => string;
+  isPublic?: boolean;
+}
+
 export interface IRoute {
   path: string;
   name: string;

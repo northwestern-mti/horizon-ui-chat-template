@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
 // Project Imports
-import { ROUTES, API_ROUTES } from '@/routes';
+import { WEB_ROUTES, API_ROUTES } from '@/route_spec';
 
 
 
@@ -12,8 +12,8 @@ const API_URL = process.env.API_URL;
 
 // List of routes available to the public
 // Middleware function will not be called on these
-const publicRoutes = Object.entries(ROUTES).flatMap(([routeName, route]) => {
-  return route.isPublic ? [route.path] : []
+const publicRoutes = Object.entries(WEB_ROUTES).flatMap(([routeName, route]) => {
+  return route.isPublic ? [route.makeURL()] : []
 })
 
 
@@ -35,7 +35,7 @@ export default async function middleware(req: NextRequest) {
   let userData = null
   try {
     userData = await (
-      await fetch(new URL(API_ROUTES.get_user(), API_URL), {
+      await fetch(new URL(API_ROUTES.get_user.makeURL(), API_URL), {
         credentials: 'include',
         headers: {
           "Accept": "application/json",
@@ -48,19 +48,19 @@ export default async function middleware(req: NextRequest) {
 
   // If the API is not available, redirect to the error page
   catch (e) {
-    return (path === ROUTES.error.path)
+    return (path === WEB_ROUTES.error.makeURL())
       ? NextResponse.next()
-      : NextResponse.redirect(new URL(ROUTES.error.path, req.nextUrl))
+      : NextResponse.redirect(new URL(WEB_ROUTES.error.makeURL(), req.nextUrl))
   }
 
   // If user not logged in, redirect to the login route
   if (!isPublicRoute && !(userData)) {
-    return NextResponse.redirect(new URL(ROUTES.login.path, req.nextUrl))
+    return NextResponse.redirect(new URL(WEB_ROUTES.login.makeURL(), req.nextUrl))
   }
 
   // If user is logged in, redirect login page to default route
   const response = (isPublicRoute && userData)
-    ? NextResponse.redirect(new URL(ROUTES.home.path, req.nextUrl))
+    ? NextResponse.redirect(new URL(WEB_ROUTES.home.makeURL(), req.nextUrl))
     : NextResponse.next()
 
   // Add the retrieved user data to the response object, so we can use it to render the new page

@@ -15,8 +15,8 @@ import { IoIosHelpCircle } from "react-icons/io";
 import { LuHistory } from 'react-icons/lu';
 import { RoundedChart } from '@/components/icons/Icons';
 
-// Auth Imports
 import { IRoute } from './types/navigation';
+import { WEB_ROUTES, API_ROUTES } from './route_spec';
 
 
 
@@ -28,7 +28,8 @@ export const ROUTES: Record<string, IRoute> = {
   // Default homepage
   'home': {
     name: 'Home',
-    path: '/',
+    path: WEB_ROUTES.home.makeURL(),
+    isPublic: WEB_ROUTES.home.isPublic,
     icon: (
       <Icon as={MdHome} width="20px" height="20px" color="inherit" />
     ),
@@ -38,20 +39,22 @@ export const ROUTES: Record<string, IRoute> = {
   // Login page
   'login': {
     name: '',
-    path: '/auth/login',
-    isPublic: true,
+    path: WEB_ROUTES.login.makeURL(),
+    isPublic: WEB_ROUTES.login.isPublic,
   },
 
   // Error page
   'error': {
     name: 'Error',
-    path: '/error',
+    path: WEB_ROUTES.error.makeURL(),
+    isPublic: WEB_ROUTES.error.isPublic,
   },
 
   // Contacts page
   'contacts': {
     name: 'Contacts',
-    path: '/contacts',
+    path: WEB_ROUTES.contacts.makeURL(),
+    isPublic: WEB_ROUTES.contacts.isPublic,
     icon: (
       <Icon as={MdPerson} width="20px" height="20px" color="inherit" />
     ),
@@ -60,36 +63,14 @@ export const ROUTES: Record<string, IRoute> = {
 
   'instructions': {
     name: 'Instructions',
-    path: '/instructions',
+    path: WEB_ROUTES.instructions.makeURL(),
+    isPublic: WEB_ROUTES.instructions.isPublic,
     icon: (
       <Icon as={IoIosHelpCircle} width="20px" height="20px" color="inherit" />
     ),
     collapse: false,
   },
 };
-
-
-export const API_ROUTES: Record<string, (...urlVars: string[]) => string> = {
-  "login":
-    (continue_to?: string) => continue_to
-      ? `/auth/login?continue_to=${continue_to}`
-      : "/auth/login",
-
-  "get_user":
-    () => "/user",
-
-  "list_conversations":
-    () => "/conversations",
-
-  "list_all_conversations":
-    () => "/conversations/all",
-
-  "show_conversation":
-    (conversation_id: string) => `/conversation/${conversation_id}`,
-
-  "message":
-    (conversation_id: string) => `/conversation/${conversation_id}/message`,
-}
 
 
 
@@ -229,7 +210,7 @@ export async function fetchRoutes(): Promise<IRoute[][]> {
   try {
     conversations = await (
       await fetch(
-        new URL( API_ROUTES.list_conversations(), API_URL ),
+        new URL( API_ROUTES.list_conversations.makeURL(), API_URL ),
         {
           credentials: 'include',
         }
