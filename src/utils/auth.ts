@@ -9,12 +9,12 @@ export function login(gotoURL: RequestInfo | URL = '', returnURL: RequestInfo | 
 
   // Define the return URL on the API after successful authorization
   if (!gotoURL) {
-    gotoURL = `${process.env.API_URL}/auth/login`;
+    gotoURL = new URL(`/auth/login`, process.env.API_URL);
   }
 
   // Define the return URL on the client after a successful login
   if (!returnURL) {
-    returnURL = `${window.location.origin}/`;
+    returnURL = new URL('/', window.location.origin);
   }
 
   // Redirect to the SSO provider
