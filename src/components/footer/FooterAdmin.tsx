@@ -22,7 +22,7 @@ export default function Footer() {
       alignItems="center"
       justifyContent="space-between"
       px={{ base: '30px', md: '50px' }}
-      pb="30px"
+      pb="20px"
     >
       <Text
         color={textColor}

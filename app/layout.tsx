@@ -35,6 +35,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   const sidebarWidth = "325px";
 
+  const footerHeight = "60px";
+
 
   // Once loaded, fetch the list of routes
   const [routes, setRoutes] = useState<IRoute[][]>([])
@@ -88,7 +90,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   mx="auto"
                   p={{ base: '20px', md: '30px' }}
                   pe="20px"
-                  minH="100vh"
+                  minH={`calc(100vh - ${footerHeight} - 100px)`}
                   pt="50px"
                   w="100%"
                 >
