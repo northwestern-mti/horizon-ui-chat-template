@@ -222,12 +222,12 @@ function SidebarContent(props: SidebarContent) {
           {/* Settings Menu Popup */}
           <MenuList
             ms="-20px"
-            py="25px"
-            ps="20px"
-            pe="20px"
+            pt="25px"
+            pb="35px"
+            px="20px"
             w="246px"
             borderRadius="16px"
-            transform="translate(-19px, -12px)!important"
+            transform="translate(40px, -12px)!important"
             border="0px"
             boxShadow={shadow}
             bg={bgColor}
