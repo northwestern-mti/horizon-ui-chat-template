@@ -25,10 +25,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+
+  /* Control page layout measurements */
+
+  // The width of the left sidebar
   const sidebarWidth = "325px";
 
+  // The height of the sticky footer element
   const footerHeight = "60px";
 
+
+  /* Callbacks */
 
   // Once loaded, fetch the list of routes
   const [routes, setRoutes] = useState<IRoute[][]>([])
@@ -37,11 +44,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   }, [])
 
 
+  /* Main layout component */
+
   return (
     <html lang="en">
+
+      {/*
+        Header
+        TODO: NextJS might have a specific way to do this
+      */}
       <head>
         <title>The Real Deal</title>
       </head>
+
+      {/* Page Body */}
       <body id={'root'}>
         <AppWrappers>
           {/* <ChakraProvider theme={theme}> */}
@@ -49,7 +65,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             children
           ) : (
             <Box position="relative">
+
+              {/* Sidebar (left) */}
               <Sidebar routes={routes} width={sidebarWidth} />
+
+              {/* Main Content (right) */}
               <Box
                 pt={{ base: '60px', md: '100px' }}
                 float="right"
@@ -65,6 +85,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 transitionProperty="top, bottom, width"
                 transitionTimingFunction="linear, linear, ease"
               >
+
+                {/* Navbar (top) */}
                 <Portal>
                   <Box>
                     <Navbar
@@ -77,6 +99,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     />
                   </Box>
                 </Portal>
+
+                {/* Main page content (center) */}
                 <Box
                   mx="auto"
                   p={{ base: '20px', md: '30px' }}
@@ -85,6 +109,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   pt="50px"
                   w="100%"
                 >
+
+                  {/* Static background image */}
                   <Img
                     src={Bg.src}
                     position={'fixed'}
@@ -99,13 +125,22 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     userSelect="none"
                     zIndex="-99"
                   />
+
+                  {/* Child component(s) */}
                   {children}
                   {/* <Component {...pageProps} /> */}
+
                 </Box>
+                {/* End of main page content */}
+
+                {/* Footer (bottom) */}
                 <Box>
                   <Footer />
                 </Box>
+
               </Box>
+              {/* End of Main Content */}
+
             </Box>
           )}
           {/* </ChakraProvider> */}

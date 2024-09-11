@@ -68,12 +68,16 @@ export default function Page() {
         Welcome to The Real Deal, <Text as="b" color="purple.700">{ username }</Text>!
       </Text>
 
+
+      {/* Contacts Section Header */}
       <Flex justifyContent="space-between" alignItems="end" mb="16px">
         <Heading as="h2" size="lg" mt="2em" mb="0px" color={headingColor}>
           Contacts
         </Heading>
         <Link href={ROUTES.contacts.path}>See all...</Link>
       </Flex>
+      {/* End of Contacts Section Header */}
+
 
       {/* Contacts Grid */}
       <SimpleGrid columns={{"base": 1, "sm": 1, "md": 2, "lg": 3, "2xl": 4}} gap="32px" px="16px">
@@ -93,6 +97,7 @@ export default function Page() {
         ></ContactCard>
 
       </SimpleGrid>
+      {/* End of Contacts Grid */}
 
     </Flex>
   );

@@ -47,7 +47,14 @@ interface SidebarContent extends PropsWithChildren {
 }
 
 function SidebarContent(props: SidebarContent) {
+
+  /* Props */
+
   const { routes, width } = props;
+
+
+  /* Styling */
+
   const textColor = useColorModeValue('purple.700', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
   const bgColor = useColorModeValue('white', 'purple.700');
@@ -63,6 +70,8 @@ function SidebarContent(props: SidebarContent) {
   const gray = useColorModeValue('gray.500', 'white');
 
 
+  /* Callbacks */
+
   // Retrieve user data from cookie
   const userData = JSON.parse( getCookie('userData') || '{}' )
 
@@ -74,7 +83,8 @@ function SidebarContent(props: SidebarContent) {
   }, [ userData ])
 
 
-  // SIDEBAR
+  /* Component(s) */
+
   return (
     <Flex
       direction="column"
@@ -85,14 +95,18 @@ function SidebarContent(props: SidebarContent) {
       maxW={ width }
       px="20px"
     >
+
+      {/* Logo */}
       <Brand />
 
+      {/* Main Links */}
       <Stack direction="column" mb="auto" mt="8px">
         <Box ps="0px" pe={{ md: '0px', '2xl': '0px' }}>
           <Links routes={routes} />
         </Box>
       </Stack>
 
+      {/* User Account Bar */}
       <Flex
         mt="8px"
         justifyContent="center"
@@ -101,12 +115,19 @@ function SidebarContent(props: SidebarContent) {
         borderRadius="30px"
         p="14px"
       >
+
+        {/* User Icon and Name */}
         {/* <NextAvatar h="34px" w="34px" src={avatarNU} me="10px" /> */}
         <Text color={textColor} fontSize="xs" fontWeight="600" me="10px" flexGrow={1}>
           { username }
         </Text>
+        {/* End of User Icon and Name */}
 
+
+        {/* Settings Menu */}
         <Menu>
+
+          {/* Settings Menu Button */}
           <MenuButton
             as={Button}
             variant="transparent"
@@ -133,6 +154,9 @@ function SidebarContent(props: SidebarContent) {
               />
             </Flex>
           </MenuButton>
+          {/* End of Settings Menu Button */}
+
+          {/* Settings Menu Popup */}
           <MenuList
             ms="-20px"
             py="25px"
@@ -211,8 +235,13 @@ function SidebarContent(props: SidebarContent) {
               </Flex>
             </Box>
           </MenuList>
-        </Menu>
+          {/* End of Settings Menu Popup */}
 
+        </Menu>
+        {/* End of Settings Menu */}
+
+
+        {/* Logout Button */}
         <Button
           variant="transparent"
           border="1px solid"
@@ -227,7 +256,11 @@ function SidebarContent(props: SidebarContent) {
         >
           <Icon as={FiLogOut} width="16px" height="16px" color="inherit" />
         </Button>
+        {/* End of Logout Button */}
+
       </Flex>
+      {/* End of User Account Bar */}
+
     </Flex>
   );
 }
