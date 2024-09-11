@@ -47,7 +47,7 @@ interface SidebarContent extends PropsWithChildren {
 }
 
 function SidebarContent(props: SidebarContent) {
-  const { routes, setApiKey, width } = props;
+  const { routes, width } = props;
   const textColor = useColorModeValue('purple.700', 'white');
   const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
   const bgColor = useColorModeValue('white', 'purple.700');

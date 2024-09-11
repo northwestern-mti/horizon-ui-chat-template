@@ -23,15 +23,7 @@ import Bg from '../public/img/chat/Academic-N-transparent.png';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [apiKey, setApiKey] = useState('');
   const { isOpen, onOpen, onClose } = useDisclosure();
-  useEffect(() => {
-    const initialKey = localStorage.getItem('apiKey');
-    console.log(initialKey);
-    if (initialKey?.includes('sk-') && apiKey !== initialKey) {
-      setApiKey(initialKey);
-    }
-  }, [apiKey]);
 
   const sidebarWidth = "325px";
 
@@ -57,7 +49,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             children
           ) : (
             <Box position="relative">
-              <Sidebar setApiKey={setApiKey} routes={routes} width={sidebarWidth} />
+              <Sidebar routes={routes} width={sidebarWidth} />
               <Box
                 pt={{ base: '60px', md: '100px' }}
                 float="right"
@@ -77,7 +69,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                   <Box>
                     <Navbar
                       routes={routes}
-                      setApiKey={setApiKey}
                       onOpen={onOpen}
                       logoText={'Horizon UI Dashboard PRO'}
                       brandText={getActiveRoute(routes, pathname)}

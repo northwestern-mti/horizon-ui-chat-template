@@ -21,10 +21,9 @@ import { IRoute } from '@/types/navigation';
 export default function HeaderLinks(props: {
   routes:    IRoute[][];
   secondary: boolean;
-  setApiKey: any;
   sidebarWidth: string;
 }) {
-  const { routes, secondary, setApiKey, sidebarWidth } = props;
+  const { routes, secondary, sidebarWidth } = props;
   const { colorMode, toggleColorMode } = useColorMode();
 
   // Chakra Color Mode
