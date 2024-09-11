@@ -8,6 +8,7 @@ import { textareaStyles } from './components/textarea';
 import { switchStyles } from './components/switch';
 import { linkStyles } from './components/link';
 import { globalStyles } from './styles';
+import { semanticColors } from './semanticColors';
 
 export default extendTheme(
   globalStyles,
@@ -19,6 +20,13 @@ export default extendTheme(
   textareaStyles, // textarea styles
   switchStyles, // switch styles
   CardComponent, // card component
+
+  // Theme-specific semantic color tokens
+  {
+    semanticTokens: {
+      colors: semanticColors,
+    },
+  },
 );
 
 export interface CustomCardProps extends HTMLChakraProps<'div'>, ThemingProps {}

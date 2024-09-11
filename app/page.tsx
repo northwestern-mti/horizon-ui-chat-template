@@ -32,8 +32,6 @@ const API_URL = process.env.API_URL;
 
 export default function Page() {
 
-  const headingColor = useColorModeValue("purple.700", "purple.300")
-
   const colorPalette = {
     "profile": {
       bg:          useColorModeValue('white',       'purple.800'),
@@ -65,13 +63,13 @@ export default function Page() {
       position="relative"
     >
       <Text>
-        Welcome to The Real Deal, <Text as="b" color="purple.700">{ username }</Text>!
+        Welcome to The Real Deal, <Text as="b" color="text.emphasis">{ username }</Text>!
       </Text>
 
 
       {/* Contacts Section Header */}
       <Flex justifyContent="space-between" alignItems="end" mb="16px">
-        <Heading as="h2" size="lg" mt="2em" mb="0px" color={headingColor}>
+        <Heading as="h2" size="lg" mt="2em" mb="0px" color="heading">
           Contacts
         </Heading>
         <Link href={ROUTES.contacts.path}>See all...</Link>

@@ -40,7 +40,7 @@ export function ContactCard({ name, nickname, description, colorPalette, ...prop
       <CardHeader>
         <Heading as="h4"
           size='md'
-          color={colorPalette.text}
+          color="heading"
         >{ name }</Heading>
         <Text as="i"
           size="sm"
