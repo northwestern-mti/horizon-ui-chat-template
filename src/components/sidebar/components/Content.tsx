@@ -36,15 +36,69 @@ import { useEffect, useState } from 'react';
 // Cookies
 import { getCookie } from "cookies-next";
 
+import { MENU_ROUTES } from '@/routes';
+import { ColorPalette, UserRole } from '@/types/types';
+import { parseRolesList, hasAnyRole } from '@/utils/roles';
 
 
-// FUNCTIONS
+
+/* Helper Functions */
+
+
+/**
+ * Optionally render a button link in the settings menu, based on the user's roles.
+ *
+ * @param route      The route object to render.
+ * @param idx        The index in the list.
+ * @param userRoles  A list of the current user's access roles.
+ * @param colorPalette  Color palette to use for rendering.
+ *
+ * @returns
+ *    A menu button component, or an empty component if the current user
+ *    does not have access to this route.
+ */
+function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>, colorPalette: ColorPalette) {
+
+  // If the route requires a role but this user doesn't have any that match, return an empty element
+  if (route.requiredRole && !hasAnyRole(route.requiredRole, new Set(userRoles))) {
+    return (<></>)
+  }
+
+  return (
+    <Box key={idx} mt="30px">
+      <Link w="100%">
+        <Flex align="center" w="100%">
+          <Icon
+            as={route.icon}
+            width="24px"
+            height="24px"
+            color={colorPalette.text}
+            me="12px"
+          />
+          <Text
+            color={colorPalette.text}
+            fontWeight="500"
+            fontSize="sm"
+          >
+            {route.name}
+          </Text>
+        </Flex>
+      </Link>
+    </Box>
+  );
+}
+
+
+/* Type Interface */
 
 interface SidebarContent extends PropsWithChildren {
   routes: IRoute[][];
   width: string;
   [x: string]: any;
 }
+
+
+/* Primary Component */
 
 function SidebarContent(props: SidebarContent) {
 
@@ -69,11 +123,16 @@ function SidebarContent(props: SidebarContent) {
   );
   const gray = useColorModeValue('gray.500', 'white');
 
+  const colorPalette: ColorPalette = {
+    'text': useColorModeValue('purple.700', 'white'),
+  }
+
 
   /* Callbacks */
 
   // Retrieve user data from cookie
   const userData = JSON.parse( getCookie('userData') || '{}' )
+  const userDataRoles = parseRolesList(userData.user_roles);
 
   // Load username from cookies
   // Fill as an effect to avoid hydration error
@@ -81,6 +140,10 @@ function SidebarContent(props: SidebarContent) {
   useEffect(() => {
     setUsername( (userData?.name_first || ['']).join(' ') )
   }, [ userData ])
+
+  // Load user roles (i.e. permissions) from the user data cookie
+  const [ userRoles, setUserRoles ] = useState<Array<UserRole>>([]);
+  useEffect(() => { setUserRoles( [...userDataRoles] ) }, [])
 
 
   /* Component(s) */
@@ -169,71 +232,21 @@ function SidebarContent(props: SidebarContent) {
             boxShadow={shadow}
             bg={bgColor}
           >
-            <Box mb="30px">
-              <Flex align="center" w="100%">
-                <Icon
-                  as={MdOutlineManageAccounts}
-                  width="24px"
-                  height="24px"
-                  color={textColor}
-                  me="12px"
-                  opacity={'0.4'}
-                />
-                <Text
-                  color={textColor}
-                  fontWeight="500"
-                  fontSize="sm"
-                  opacity={'0.4'}
-                >
-                  Profile Settings
-                </Text>
-              </Flex>
-            </Box>
-            <Box mb="30px">
-              <Flex align="center">
-                <Icon
-                  as={LuHistory}
-                  width="24px"
-                  height="24px"
-                  color={textColor}
-                  opacity="0.4"
-                  me="12px"
-                />
-                <Text color={textColor} fontWeight="500" fontSize="sm" opacity="0.4">
-                  History
-                </Text>
-              </Flex>
-            </Box>
-            <Box mb="30px">
-              <Flex align="center">
-                <Icon
-                  as={RoundedChart}
-                  width="24px"
-                  height="24px"
-                  color={textColor}
-                  opacity="0.4"
-                  me="12px"
-                />
-                <Text color={textColor} fontWeight="500" fontSize="sm" opacity="0.4">
-                  Usage
-                </Text>
-              </Flex>
-            </Box>
             <Box>
-              <Flex align="center">
-                <Icon
-                  as={IoMdPerson}
-                  width="24px"
-                  height="24px"
-                  color={textColor}
-                  opacity="0.4"
-                  me="12px"
-                />
-                <Text color={textColor} fontWeight="500" fontSize="sm" opacity="0.4">
-                  My Plan
-                </Text>
-              </Flex>
+                {
+                  !userRoles.length ? <></> :
+                    <Text fontSize="sm">
+                      You have {userRoles[0].article} {' '}
+                      <Text as="b" color={colorPalette.text}>{userRoles[0].displayName}</Text> {' '}
+                      account.
+                    </Text>
+                }
             </Box>
+            {
+              Object.values(MENU_ROUTES).map((route, idx) =>
+                renderMenuButton(route, idx, userRoles, colorPalette)
+              )
+            }
           </MenuList>
           {/* End of Settings Menu Popup */}
 

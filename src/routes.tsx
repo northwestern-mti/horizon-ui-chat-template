@@ -9,6 +9,8 @@ import {
   MdMessage,
   MdOutlineHelp,
   MdPerson,
+  MdAdminPanelSettings,
+  MdOutlineClass,
 } from 'react-icons/md';
 import { IoMdPerson } from 'react-icons/io';
 import { IoIosHelpCircle } from "react-icons/io";
@@ -17,6 +19,7 @@ import { RoundedChart } from '@/components/icons/Icons';
 
 import { IRoute } from './types/navigation';
 import { WEB_ROUTES, API_ROUTES } from './route_spec';
+import { UserRoles } from '@/utils/roles';
 
 
 
@@ -71,6 +74,35 @@ export const ROUTES: Record<string, IRoute> = {
     collapse: false,
   },
 };
+
+
+
+export const MENU_ROUTES: Record<string, IRoute> = {
+
+  // Landing page for admin routes
+  'admin_pages': {
+    name: 'Admin Pages',
+    path: 'admin',
+    icon: MdAdminPanelSettings,
+    requiredRole: new Set([UserRoles.dev, UserRoles.admin]),
+  },
+
+  // User's content - scenarios, characters, etc.
+  'my_content': {
+    name: 'My Content',
+    path: 'content',
+    icon: MdOutlineClass,
+    requiredRole: new Set([UserRoles.dev, UserRoles.admin, UserRoles.professor]),
+  },
+
+  // View and edit user's profile
+  'my_profile': {
+    name: 'Profile Settings',
+    path: 'profile',
+    icon: MdOutlineManageAccounts,
+  },
+}
+
 
 
 
