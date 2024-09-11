@@ -3,7 +3,7 @@
 // Project imports
 import MessageBox  from '@/components/chat/MessageBox';
 import MessageIcon from '@/components/chat/MessageIcon';
-import { ChatMessageGroup, ColorPalette } from '@/types/types';
+import { ChatMessageGroup } from '@/types/types';
 
 // Chakra imports
 import {
@@ -23,11 +23,10 @@ import { MdPerson } from 'react-icons/md';
  */
 
 export type MessageGroupProps = {
-  messages:      ChatMessageGroup;
-  colorPalettes: Record<string, ColorPalette>;
+  messages: ChatMessageGroup;
 }
 
-export function MessageGroup({ messages, colorPalettes }: MessageGroupProps) {
+export function MessageGroup({ messages }: MessageGroupProps) {
 
   // Check whether the current speaker is the user
   const isUserMessage = messages.speaker.name == 'Me';
@@ -41,9 +40,8 @@ export function MessageGroup({ messages, colorPalettes }: MessageGroupProps) {
 
       {/* Icon */}
       <MessageIcon
-        character    = { messages.speaker }
-        icon         = { MdPerson }
-        colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
+        character = { messages.speaker }
+        icon      = { MdPerson }
       />
       {/* /Icon */}
 
@@ -51,9 +49,9 @@ export function MessageGroup({ messages, colorPalettes }: MessageGroupProps) {
 
         {/* Character name */}
         <Text
-          color={ colorPalettes.annotations.text }
-          fontSize="x-small"
-          mx="8px"
+          color    = "text.annotation"
+          fontSize = "x-small"
+          mx       = "8px"
         >
           { messages.speaker.name_full }
         </Text>
@@ -63,9 +61,9 @@ export function MessageGroup({ messages, colorPalettes }: MessageGroupProps) {
         {
           messages.messages.map((message, key) => 
             <MessageBox
-              key = { key }
-              output       = { message }
-              colorPalette = { isUserMessage ? colorPalettes.messages_user : colorPalettes.messages_ai }
+              key      = { key }
+              output   = { message }
+              fromUser = { isUserMessage }
             />
           )
         }

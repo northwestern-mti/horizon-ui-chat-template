@@ -34,17 +34,6 @@ const API_URL = process.env.API_URL;
 
 export default function Page() {
 
-  const colorPalette = {
-    "profile": {
-      bg:          useColorModeValue('white',       'purple.800'),
-      text:        useColorModeValue('purple.700',  'white'),
-      icon_bg:     "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
-      icon_border: "transparent",
-      icon_text:   "white",
-    }
-  }
-
-
   // -------------- Component(s) --------------
 
   return (
@@ -61,14 +50,12 @@ export default function Page() {
           name         = "Dr. Olivia M. Gold"
           nickname     = "Dr. Gold"
           description  = "Research scientist in the Gene Lab at Kramer BioGenetics, Inc."
-          colorPalette = {colorPalette.profile}
         ></ContactCard>
 
         <ContactCard
           name         = "Andrew Orlando"
           nickname     = "Andy"
           description  = 'Brand Manager for "Clean Machine" at Life Line, Inc.'
-          colorPalette = {colorPalette.profile}
         ></ContactCard>
 
       </SimpleGrid>

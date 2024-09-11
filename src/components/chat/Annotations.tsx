@@ -1,7 +1,7 @@
 'use client';
 
 // Project imports
-import { Character, ColorPalette } from '@/types/types';
+import { Character } from '@/types/types';
 
 // Chakra imports
 import {
@@ -16,11 +16,10 @@ import {
  */
 
 export type NowTypingProps = {
-  character:    Character | string | null;
-  colorPalette: ColorPalette;
+  character: Character | string | null;
 } & TextProps
 
-export function NowTyping({ character, colorPalette, ...props }: NowTypingProps) {
+export function NowTyping({ character, ...props }: NowTypingProps) {
 
   // If name is empty, no one is currently typing
   if (!character) {
@@ -33,7 +32,7 @@ export function NowTyping({ character, colorPalette, ...props }: NowTypingProps)
   return (
     <Text
       as='i'
-      color={colorPalette.text}
+      color="text.annotation"
       fontWeight="500"
       fontSize="sm"
       textAlign={'left'}
@@ -51,16 +50,15 @@ export function NowTyping({ character, colorPalette, ...props }: NowTypingProps)
  */
 
 export type ChatBeginningProps = {
-  characters:   Character[];
-  colorPalette: ColorPalette;
+  characters: Character[];
 } & TextProps
 
-export function ChatBeginning({ characters, colorPalette, ...props }: ChatBeginningProps) {
+export function ChatBeginning({ characters, ...props }: ChatBeginningProps) {
 
   // If no characters listed, print a default message
   if (!characters || !characters.length) {
     return (
-      <Text fontSize="xs" textAlign="center" color={colorPalette.text} {...props}>
+      <Text fontSize="xs" textAlign="center" color="text.annotation" {...props}>
         This is the beginning of your conversation.
       </Text>
     );
@@ -76,7 +74,7 @@ export function ChatBeginning({ characters, colorPalette, ...props }: ChatBeginn
     )
 
   return (
-    <Text fontSize="xs" textAlign="center" color={colorPalette.text} {...props}>
+    <Text fontSize="xs" textAlign="center" color="text.annotation" {...props}>
       This is the beginning of your conversation with { formatted_names }.
     </Text>
   );

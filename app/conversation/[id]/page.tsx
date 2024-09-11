@@ -101,35 +101,12 @@ export default function Page() {
 
   const colorPalettes: Record<string, ColorPalette> = {
 
-    // Chat annotations
-    annotations: {
-      text:        useColorModeValue('gray.500',  'white'),
-    },
-
     // Input bar
     input: {
       border:      useColorModeValue('gray.200',    'whiteAlpha.200'),
       text:        useColorModeValue('purple.700',  'white'),
       placeholder: useColorModeValue('gray.500',    'whiteAlpha.600'),
     },
-
-    // AI chat messages
-    messages_ai: {
-      bg:          useColorModeValue('white',       'purple.800'),
-      text:        useColorModeValue('purple.700',  'white'),
-      icon_bg:     "linear-gradient(15.46deg, #4A25E1 26.3%, #7B5AFF 86.4%)",
-      icon_border: "transparent",
-      icon_text:   "white",
-    },
-
-    // User chat messages
-    messages_user: {
-      bg:          useColorModeValue('purple.100',  'purple.100'),
-      text:        useColorModeValue('purple.700',  'purple.700'),
-      icon_bg:     "transparent",
-      icon_border: useColorModeValue('gray.200',    'whiteAlpha.600'),
-      icon_text:   useColorModeValue('brand.500',   'white'),
-    }
   }
 
 
@@ -278,19 +255,19 @@ export default function Page() {
         >
 
           {/* Beginning of conversation */}
-          <ChatBeginning colorPalette={colorPalettes.annotations} characters={Object.values(characters)} />
+          <ChatBeginning characters={Object.values(characters)} />
           <HSeparator mx="auto" my="8px" w="75%" />
 
           {/* Message history */}
           {
             // Group consecutive messages by speaker and render each group together
             groupMessages(outputCode).map((messageGroup: ChatMessageGroup, idx) => (
-              <MessageGroup key={idx} colorPalettes={colorPalettes} messages={messageGroup} />
+              <MessageGroup key={idx} messages={messageGroup} />
             ))
           }
 
           {/* "Now Typing" notification */}
-          <NowTyping colorPalette={colorPalettes.annotations} character={ nowTyping } />
+          <NowTyping character={ nowTyping } />
         </Flex>
 
       </Flex>

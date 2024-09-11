@@ -1,7 +1,7 @@
 'use client';
 
 // Project imports
-import { Character, ColorPalette } from '@/types/types';
+import { Character } from '@/types/types';
 
 // Chakra imports
 import {
@@ -18,19 +18,20 @@ import { IconType } from 'react-icons'
 
 
 export type ChatMessageIconProps = {
-  character?:   Character | string;
-  icon?:        IconType;
-  colorPalette: ColorPalette;
-  diameter?:    string;
+  character?: Character | string;
+  icon?:      IconType;
+  diameter?:  string;
 }
 
 /*
  * Chat Message Component
  */
-export function MessageIcon({ character, icon, colorPalette, diameter, ...props }: ChatMessageIconProps) {
+export function MessageIcon({ character, icon, diameter, ...props }: ChatMessageIconProps) {
 
   // Make sure the character is a Character object (or undefined)
   character = (character !== undefined) ? Character(character) : character;
+
+  const iconStyle = character !== undefined ? (character.name == 'Me' ? 'user' : 'character') : 'character';
 
   diameter = diameter || "40px";
 
@@ -40,15 +41,15 @@ export function MessageIcon({ character, icon, colorPalette, diameter, ...props 
           as     = { icon }
           width  = {`calc(${diameter} - 20px)`}
           height = {`calc(${diameter} - 20px)`}
-          color  = { colorPalette.icon_text }
+          color  = {`icon.${iconStyle}.text`}
         />
       )
     : (
         <Text
-          color={ colorPalette.icon_text }
-          fontWeight="600"
-          fontSize={{ base: 'sm', md: 'md' }}
-          lineHeight={{ base: '24px', md: '26px' }}
+          color      = {`icon.${iconStyle}.text`}
+          fontWeight = "600"
+          fontSize   = {{ base: 'sm', md: 'md' }}
+          lineHeight = {{ base: '24px', md: '26px' }}
         >
           { character ? character.name.slice(0, 1) : '' }
         </Text>
@@ -69,9 +70,9 @@ export function MessageIcon({ character, icon, colorPalette, diameter, ...props 
         borderRadius="full"
         justify="center"
         align="center"
-        bg={ colorPalette.icon_bg }
+        bg={`icon.${iconStyle}.fill`}
         border="1px solid"
-        borderColor={ colorPalette.icon_border }
+        borderColor={`icon.${iconStyle}.border`}
         h    = {diameter}
         w    = {diameter}
         minH = {diameter}

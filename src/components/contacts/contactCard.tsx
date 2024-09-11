@@ -2,7 +2,7 @@
 
 // Project imports
 import MessageIcon from '@/components/chat/MessageIcon';
-import { Character, ColorPalette } from '@/types/types';
+import { Character } from '@/types/types';
 
 // Chakra imports
 import {
@@ -29,10 +29,9 @@ export type ContactCardProps = {
   name:         string,
   nickname:     string,
   description:  string,
-  colorPalette: ColorPalette;
 } & TextProps
 
-export function ContactCard({ name, nickname, description, colorPalette, ...props }: ContactCardProps) {
+export function ContactCard({ name, nickname, description, ...props }: ContactCardProps) {
 
   return (
     <Card>
@@ -51,10 +50,9 @@ export function ContactCard({ name, nickname, description, colorPalette, ...prop
       <CardBody pt="0px">
 
         <MessageIcon
-          character    = ""
-          icon         = {MdPerson}
-          colorPalette = {colorPalette}
-          diameter     = "60px"
+          character = ""
+          icon      = {MdPerson}
+          diameter  = "60px"
         ></MessageIcon>
 
         <Text pt="20px" {...props}>
