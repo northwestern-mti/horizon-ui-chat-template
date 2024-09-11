@@ -1,4 +1,5 @@
 import { ComponentType, Element } from 'react';
+import { UserRole } from './types';
 
 export interface RouteSpec {
   makeURL: (...urlVars: string[]) => string;
@@ -20,4 +21,5 @@ export interface IRoute {
   invisible?: boolean;
   disabled?: boolean;
   isPublic?: boolean;
+  requiredRole?: Set<UserRole>;
 }

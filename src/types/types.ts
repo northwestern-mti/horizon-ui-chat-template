@@ -53,3 +53,12 @@ export interface DialogueInstance extends DialogueToken {
   type:    "DialogueInstance"
   message: string,
 }
+
+
+
+export interface UserRole {
+  id:          string;
+  displayName: string;
+  article:     string;
+  order:       number;
+}
