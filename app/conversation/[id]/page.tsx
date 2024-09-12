@@ -18,8 +18,10 @@ import {
   Flex,
   Icon,
   Input,
+  Spinner,
   Text,
   useColorModeValue,
+  useBoolean,
 } from '@chakra-ui/react';
 
 // React imports
@@ -41,6 +43,9 @@ export default function Page() {
 
   // Path parameters
   const params = useParams<{ id: string }>()
+
+  // Whether the chat has been loaded from the API
+  const [ chatLoaded, setChatLoaded ] = useBoolean();
 
   // Input text
   const [ inputCode,  setInputCode  ] = useState<string>('');
@@ -85,6 +90,9 @@ export default function Page() {
             return dialogue
           }));
         }
+
+        // Show the conversation now that it's loaded
+        setChatLoaded.on();
 
         // Scroll to bottom (latest messages)
         setTimeout(() => scrollToBottom(), 250);
@@ -224,6 +232,27 @@ export default function Page() {
 
 
   // -------------- Component(s) --------------
+
+  if (!chatLoaded) {
+    return (
+      <Flex
+        w="100%"
+        h={{ base: '75vh', '2xl': '85vh' }}
+        pt={{ base: '70px', md: '0px' }}
+        justifyContent = "center"
+        alignItems     = "center"
+      >
+        <Spinner
+          w          = "72px"
+          h          = "72px"
+          thickness  = "4px"
+          speed      = "1.2s"
+          emptyColor = "white.200"
+          color      = "purple.400"
+        />
+      </Flex>
+    );
+  }
 
   return (
     <Flex
