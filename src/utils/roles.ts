@@ -56,7 +56,9 @@ export function getRouteFromPath(possibleRoutes: Record<any, RouteSpec>, path: s
  * Sorts by precedence: the first element will be the highest role in the array, for display purposes.
  */
 export function parseRolesList(rolesList: Array<string>) {
-  return rolesList.map(role => UserRoles[role.toLowerCase()]).sort((a, b) => a.order - b.order)
+  return rolesList
+    ? rolesList.map(role => UserRoles[role.toLowerCase()]).sort((a, b) => a.order - b.order)
+    : []
 }
 
 
