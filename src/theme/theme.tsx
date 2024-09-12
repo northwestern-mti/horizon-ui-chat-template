@@ -11,15 +11,19 @@ import { globalStyles } from './styles';
 import { semanticColors } from './semanticColors';
 
 export default extendTheme(
+
+  // Theme-specific global styling
   globalStyles,
-  badgeStyles, // badge styles
-  buttonStyles, // button styles
-  linkStyles, // link styles
-  progressStyles, // progress styles
-  inputStyles, // input styles
-  textareaStyles, // textarea styles
-  switchStyles, // switch styles
-  CardComponent, // card component
+
+  // Theme-specific styling for component types
+  badgeStyles,
+  buttonStyles,
+  linkStyles,
+  progressStyles,
+  inputStyles,
+  textareaStyles,
+  switchStyles,
+  CardComponent,
 
   // Theme-specific semantic color tokens
   {
