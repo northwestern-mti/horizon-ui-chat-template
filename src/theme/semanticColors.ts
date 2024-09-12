@@ -37,4 +37,18 @@ export const semanticColors = {
       text: { default: "purple.700",     _dark: "purple.700" },
     },
   },
+
+  // Route links in the sidebar
+  sidebarLink: {
+    active:   { default: "purple.500",     _dark: "white" },
+    focused:  { default: "purple.400",     _dark: "purple.200" },
+    inactive: { default: "gray.500",       _dark: "gray.500" },
+    disabled: { default: "gray.500",       _dark: "gray.500" },
+  },
+
+  // Menu buttons in the sidebar
+  menuIcon: {
+    border:   { default: 'gray.200',       _dark: 'whiteAlpha.300' },
+    icon:     { default: 'purple.700',     _dark: 'white' },
+  },
 }

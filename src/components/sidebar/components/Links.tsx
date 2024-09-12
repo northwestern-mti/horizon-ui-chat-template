@@ -46,13 +46,9 @@ export function SidebarLinks(props: SidebarLinksProps) {
   const pathname    = usePathname();
 
   // Chakra color mode
-  let activeColor   = useColorModeValue('purple.700', 'white');
-  let inactiveColor = useColorModeValue('gray.500',   'gray.500');
-  let borderColor   = useColorModeValue('gray.200',   'whiteAlpha.300');
-  let activeIcon    = useColorModeValue('purple.500', 'white');
-  let iconColor     = useColorModeValue('purple.700', 'white');
-  let gray          = useColorModeValue('gray.500',   'gray.500');
-  let hoverColor    = useColorModeValue('purple.400',  'purple.200');
+  const activeColor   = "sidebarLink.active";
+  const inactiveColor = "sidebarLink.inactive";
+  const hoverColor    = "sidebarLink.focused";
 
   // For secondary routes, use a default bullet-style arrow as the default icon
   const defaultSecondaryIcon = (
@@ -93,7 +89,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
    * or the appropriate inactive / disabled color otherwise.
    */
   function getRouteColorIfActive(route: IRoute, color: string, hover: boolean = false) {
-    return route.disabled ? gray : (activeRoute(route) || hover) ? color : inactiveColor
+    return route.disabled ? "sidebarLink.disabled" : (activeRoute(route) || hover) ? color : inactiveColor
   }
 
 
@@ -204,7 +200,7 @@ export function SidebarLinks(props: SidebarLinksProps) {
         { isHeader
             ? <AccordionIcon
                 ms    = "auto"
-                color = {route.disabled ? gray : 'gray.500'}
+                color = "gray.500"
               />
             : <></>
         }
@@ -318,16 +314,15 @@ export function SidebarLinks(props: SidebarLinksProps) {
           alignItems="center"
           mb="10px"
           key={key}
+          color = { getRouteColorIfActive(route, activeColor) }
         >
           <Icon
-            w="6px"
-            h="6px"
-            me="8px"
-            as={FaCircle}
-            color={route.disabled ? gray : activeIcon}
+            w  = "6px"
+            h  = "6px"
+            me = "8px"
+            as = {FaCircle}
           />
           <Text
-            color      = { getRouteColorIfActive(route, activeColor) }
             fontWeight = { activeRoute(route) ? 'bold' : 'normal' }
             fontSize   = "sm"
           >

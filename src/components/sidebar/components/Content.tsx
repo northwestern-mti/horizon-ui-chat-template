@@ -51,13 +51,12 @@ import { parseRolesList, hasAnyRole } from '@/utils/roles';
  * @param route      The route object to render.
  * @param idx        The index in the list.
  * @param userRoles  A list of the current user's access roles.
- * @param colorPalette  Color palette to use for rendering.
  *
  * @returns
  *    A menu button component, or an empty component if the current user
  *    does not have access to this route.
  */
-function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>, colorPalette: ColorPalette) {
+function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>) {
 
   // If the route requires a role but this user doesn't have any that match, return an empty element
   if (route.requiredRole && !hasAnyRole(route.requiredRole, new Set(userRoles))) {
@@ -66,17 +65,21 @@ function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>
 
   return (
     <Box key={idx} mt="30px">
-      <Link w="100%">
+      <Link
+        w="100%"
+        color="sidebarLink.inactive"
+        _hover = {{
+          "color": "sidebarLink.focused",
+        }}
+      >
         <Flex align="center" w="100%">
           <Icon
             as={route.icon}
             width="24px"
             height="24px"
-            color={colorPalette.text}
             me="12px"
           />
           <Text
-            color={colorPalette.text}
             fontWeight="500"
             fontSize="sm"
           >
@@ -109,23 +112,15 @@ function SidebarContent(props: SidebarContent) {
 
   /* Styling */
 
-  const textColor = useColorModeValue('purple.700', 'white');
-  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.300');
   const bgColor = useColorModeValue('white', 'purple.700');
   const shadow = useColorModeValue(
     '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
     '14px 17px 40px 4px rgba(12, 44, 55, 0.18)',
   );
-  const iconColor = useColorModeValue('purple.700', 'white');
   const shadowPillBar = useColorModeValue(
     '4px 17px 40px 4px rgba(112, 144, 176, 0.08)',
     'none',
   );
-  const gray = useColorModeValue('gray.500', 'white');
-
-  const colorPalette: ColorPalette = {
-    'text': useColorModeValue('purple.700', 'white'),
-  }
 
 
   /* Callbacks */
@@ -181,7 +176,7 @@ function SidebarContent(props: SidebarContent) {
 
         {/* User Icon and Name */}
         {/* <NextAvatar h="34px" w="34px" src={avatarNU} me="10px" /> */}
-        <Text color={textColor} fontSize="xs" fontWeight="600" me="10px" flexGrow={1}>
+        <Text color="heading" fontSize="xs" fontWeight="600" me="10px" flexGrow={1}>
           { username }
         </Text>
         {/* End of User Icon and Name */}
@@ -195,8 +190,9 @@ function SidebarContent(props: SidebarContent) {
             as={Button}
             variant="transparent"
             aria-label=""
+            color="menuIcon.icon"
             border="1px solid"
-            borderColor={borderColor}
+            borderColor="menuIcon.border"
             borderRadius="full"
             w="34px"
             h="34px"
@@ -206,7 +202,6 @@ function SidebarContent(props: SidebarContent) {
             me="10px"
             justifyContent={'center'}
             alignItems="center"
-            color={iconColor}
           >
             <Flex align="center" justifyContent="center">
               <Icon
@@ -237,15 +232,13 @@ function SidebarContent(props: SidebarContent) {
                   !userRoles.length ? <></> :
                     <Text fontSize="sm">
                       You have {userRoles[0].article} {' '}
-                      <Text as="b" color={colorPalette.text}>{userRoles[0].displayName}</Text> {' '}
+                      <Text as="b" color="text.emphasis">{userRoles[0].displayName}</Text> {' '}
                       account.
                     </Text>
                 }
             </Box>
             {
-              Object.values(MENU_ROUTES).map((route, idx) =>
-                renderMenuButton(route, idx, userRoles, colorPalette)
-              )
+              Object.values(MENU_ROUTES).map((route, idx) => renderMenuButton(route, idx, userRoles) )
             }
           </MenuList>
           {/* End of Settings Menu Popup */}
@@ -257,14 +250,15 @@ function SidebarContent(props: SidebarContent) {
         {/* Logout Button */}
         <Button
           variant="transparent"
+          color="menuIcon.icon"
           border="1px solid"
-          borderColor={borderColor}
+          borderColor="menuIcon.border"
           borderRadius="full"
           w="34px"
           h="34px"
           px="0px"
           minW="34px"
-          justifyContent={'center'}
+          justifyContent='center'
           alignItems="center"
         >
           <Icon as={FiLogOut} width="16px" height="16px" color="inherit" />
