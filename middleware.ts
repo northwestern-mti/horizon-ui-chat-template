@@ -4,17 +4,12 @@ import { cookies } from 'next/headers'
 
 // Project Imports
 import { WEB_ROUTES, API_ROUTES } from '@/route_spec';
+import { getRouteFromPath, parseRolesList, hasAnyRole } from '@/utils/roles';
 
 
 
 // The domain of the API
 const API_URL = process.env.API_URL;
-
-// List of routes available to the public
-// Middleware function will not be called on these
-const publicRoutes = Object.entries(WEB_ROUTES).flatMap(([routeName, route]) => {
-  return route.isPublic ? [route.makeURL()] : []
-})
 
 
 
@@ -27,8 +22,11 @@ const publicRoutes = Object.entries(WEB_ROUTES).flatMap(([routeName, route]) => 
 export default async function middleware(req: NextRequest) {
 
   // Check the intended next URL
-  const path = req.nextUrl.pathname
-  const isPublicRoute = publicRoutes.includes(path)
+  const path  = req.nextUrl.pathname;
+  const route = getRouteFromPath(WEB_ROUTES, path);
+
+  // Check whether the route is public (defaults to False)
+  const isPublicRoute = route?.isPublic;
 
   // Try getting a user object from the current session cookie
   // This involves calling the API and forwarding all cookies
@@ -56,6 +54,15 @@ export default async function middleware(req: NextRequest) {
   // If user not logged in, redirect to the login route
   if (!isPublicRoute && !(userData)) {
     return NextResponse.redirect(new URL(WEB_ROUTES.login.makeURL(), req.nextUrl))
+  }
+
+  // If the current route requires a role, check for one in the user data
+  // If not found, show the 404 Not Found page instead
+  if (route?.requiredRole) {
+    const userRoles = parseRolesList(userData?.user_roles || []);
+    if (!hasAnyRole(route.requiredRole, new Set(userRoles))) {
+      return NextResponse.rewrite(new URL("/not-found", req.nextUrl));
+    }
   }
 
   // If user is logged in, redirect login page to default route

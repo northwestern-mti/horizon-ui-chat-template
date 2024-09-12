@@ -4,6 +4,7 @@ import { UserRole } from './types';
 export interface RouteSpec {
   makeURL: (...urlVars: string[]) => string;
   isPublic?: boolean;
+  requiredRole?: Set<UserRole>;
 }
 
 export interface IRoute {
