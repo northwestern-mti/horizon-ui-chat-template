@@ -30,6 +30,8 @@ import { FiLogOut } from 'react-icons/fi';
 import { LuHistory } from 'react-icons/lu';
 import { MdOutlineManageAccounts, MdOutlineSettings } from 'react-icons/md';
 
+import SidebarMenuButton from '@/components/sidebar/components/SidebarMenuButton';
+
 // React imports
 import { useEffect, useState } from 'react';
 
@@ -112,11 +114,6 @@ function SidebarContent(props: SidebarContent) {
 
   /* Styling */
 
-  const bgColor = useColorModeValue('white', 'purple.700');
-  const shadow = useColorModeValue(
-    '14px 17px 40px 4px rgba(112, 144, 176, 0.18)',
-    '14px 17px 40px 4px rgba(12, 44, 55, 0.18)',
-  );
   const shadowPillBar = useColorModeValue(
     '4px 17px 40px 4px rgba(112, 144, 176, 0.08)',
     'none',
@@ -181,52 +178,7 @@ function SidebarContent(props: SidebarContent) {
         </Text>
         {/* End of User Icon and Name */}
 
-
-        {/* Settings Menu */}
-        <Menu>
-
-          {/* Settings Menu Button */}
-          <MenuButton
-            as={Button}
-            variant="transparent"
-            aria-label=""
-            color="menuIcon.icon"
-            border="1px solid"
-            borderColor="menuIcon.border"
-            borderRadius="full"
-            w="34px"
-            h="34px"
-            px="0px"
-            p="0px"
-            minW="34px"
-            me="10px"
-            justifyContent={'center'}
-            alignItems="center"
-          >
-            <Flex align="center" justifyContent="center">
-              <Icon
-                as={MdOutlineSettings}
-                width="18px"
-                height="18px"
-                color="inherit"
-              />
-            </Flex>
-          </MenuButton>
-          {/* End of Settings Menu Button */}
-
-          {/* Settings Menu Popup */}
-          <MenuList
-            ms="-20px"
-            pt="25px"
-            pb="35px"
-            px="20px"
-            w="246px"
-            borderRadius="16px"
-            transform="translate(40px, -12px)!important"
-            border="0px"
-            boxShadow={shadow}
-            bg={bgColor}
-          >
+        <SidebarMenuButton icon={MdOutlineSettings}>
             <Box>
                 {
                   !userRoles.length ? <></> :
@@ -240,30 +192,10 @@ function SidebarContent(props: SidebarContent) {
             {
               Object.values(MENU_ROUTES).map((route, idx) => renderMenuButton(route, idx, userRoles) )
             }
-          </MenuList>
-          {/* End of Settings Menu Popup */}
-
-        </Menu>
-        {/* End of Settings Menu */}
-
+        </SidebarMenuButton>
 
         {/* Logout Button */}
-        <Button
-          variant="transparent"
-          color="menuIcon.icon"
-          border="1px solid"
-          borderColor="menuIcon.border"
-          borderRadius="full"
-          w="34px"
-          h="34px"
-          px="0px"
-          minW="34px"
-          justifyContent='center'
-          alignItems="center"
-        >
-          <Icon as={FiLogOut} width="16px" height="16px" color="inherit" />
-        </Button>
-        {/* End of Logout Button */}
+        <SidebarMenuButton icon={FiLogOut} />
 
       </Flex>
       {/* End of User Account Bar */}
