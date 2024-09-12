@@ -65,6 +65,10 @@ export function parseRolesList(rolesList: Array<string>) {
 /**
  * Check whether any of the required roles are possessed by the user in question.
  */
-export function hasAnyRole(requiredRoles: Set<UserRole>, userRoles: Set<UserRole>) {
-  return requiredRoles.intersection( userRoles ).size > 0
+export function hasAnyRole(requiredRoles: Set<UserRole>, userRoles: Set<UserRole>): boolean {
+  // return requiredRoles.intersection( userRoles ).size > 0
+  for (let role of requiredRoles.values()) {
+    if (userRoles.has(role)) return true;
+  }
+  return false;
 }
