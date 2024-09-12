@@ -4,6 +4,7 @@ import { buttonStyles } from './components/button';
 import { badgeStyles } from './components/badge';
 import { inputStyles } from './components/input';
 import { progressStyles } from './components/progress';
+import { skeletonStyles } from './components/skeleton';
 import { textareaStyles } from './components/textarea';
 import { switchStyles } from './components/switch';
 import { linkStyles } from './components/link';
@@ -20,6 +21,7 @@ export default extendTheme(
   buttonStyles,
   linkStyles,
   progressStyles,
+  skeletonStyles,
   inputStyles,
   textareaStyles,
   switchStyles,

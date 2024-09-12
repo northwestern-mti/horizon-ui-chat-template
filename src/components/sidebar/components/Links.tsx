@@ -12,6 +12,7 @@ import {
   Box,
   Flex,
   HStack,
+  SkeletonText,
   Text,
   List,
   Icon,
@@ -333,19 +334,29 @@ export function SidebarLinks(props: SidebarLinksProps) {
     });
   };
 
-  // Return each set of links
+  // Return each set of links as a new group
+  // Shows skeleton text loader if routes are not yet loaded
   return (
-    <VStack spacing="20px" divider={<HSeparator></HSeparator>}>
-      {routes.map((routesGroup, key) => (
-        <Box
-          key={key}
-          w="100%"
-          alignContent="left"
-        >
-          {createLinks(routesGroup)}
-        </Box>
-      ))}
-    </VStack>
+    <SkeletonText
+      isLoaded  = {!!routes.length}
+      noOfLines = {7}
+      spacing   = {8}
+      skeletonHeight = '3'
+      mt = {!routes.length ? "16px" : 0}
+      px = {!routes.length ? "32px" : 0}
+    >
+      <VStack spacing="20px" divider={<HSeparator></HSeparator>}>
+        {routes.map((routesGroup, key) => (
+          <Box
+            key={key}
+            w="100%"
+            alignContent="left"
+          >
+            {createLinks(routesGroup)}
+          </Box>
+        ))}
+      </VStack>
+    </SkeletonText>
   );
 }
 

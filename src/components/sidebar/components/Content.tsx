@@ -10,6 +10,7 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  SkeletonText,
   Stack,
   Text,
   useColorModeValue,
@@ -179,19 +180,21 @@ function SidebarContent(props: SidebarContent) {
         {/* End of User Icon and Name */}
 
         <SidebarMenuButton icon={MdOutlineSettings}>
+          <SkeletonText isLoaded={!!userRoles.length} noOfLines={3} spacing={4}>
             <Box>
-                {
-                  !userRoles.length ? <></> :
-                    <Text fontSize="sm">
-                      You have {userRoles[0].article} {' '}
-                      <Text as="b" color="text.emphasis">{userRoles[0].displayName}</Text> {' '}
-                      account.
-                    </Text>
-                }
+              {
+                !userRoles.length ? <></> :
+                  <Text fontSize="sm">
+                    You have {userRoles[0].article} {' '}
+                    <Text as="b" color="text.emphasis">{userRoles[0].displayName}</Text> {' '}
+                    account.
+                  </Text>
+              }
             </Box>
             {
               Object.values(MENU_ROUTES).map((route, idx) => renderMenuButton(route, idx, userRoles) )
             }
+          </SkeletonText>
         </SidebarMenuButton>
 
         {/* Logout Button */}
