@@ -1,4 +1,5 @@
 import { RouteSpec } from './types/navigation';
+import { UserRoles } from './utils/roles';
 
 
 
@@ -27,6 +28,11 @@ export const WEB_ROUTES: Record<string, RouteSpec> = {
 
   'instructions': {
     makeURL: () => '/instructions',
+  },
+
+  'admin_pages': {
+    makeURL: () => '/admin',
+    requiredRole: new Set([UserRoles.dev, UserRoles.admin]),
   },
 };
 

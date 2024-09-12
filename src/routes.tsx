@@ -82,9 +82,9 @@ export const MENU_ROUTES: Record<string, IRoute> = {
   // Landing page for admin routes
   'admin_pages': {
     name: 'Admin Pages',
-    path: 'admin',
+    path: WEB_ROUTES.admin_pages.makeURL(),
     icon: MdAdminPanelSettings,
-    requiredRole: new Set([UserRoles.dev, UserRoles.admin]),
+    requiredRole: WEB_ROUTES.admin_pages.requiredRole,
   },
 
   // User's content - scenarios, characters, etc.
