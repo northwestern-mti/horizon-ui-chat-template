@@ -126,7 +126,7 @@ function SidebarContent(props: SidebarContent) {
 
   // Retrieve user data from cookie
   const userData = JSON.parse( getCookie('userData') || '{}' )
-  const userDataRoles = parseRolesList(userData.user_roles);
+  const userDataRoles = parseRolesList(userData?.user_roles);
 
   // Load username from cookies
   // Fill as an effect to avoid hydration error
