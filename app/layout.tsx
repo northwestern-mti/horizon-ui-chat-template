@@ -1,7 +1,7 @@
 'use client';
 import React, { ReactNode } from 'react';
 import type { AppProps } from 'next/app';
-import { ChakraProvider, Box, Img, Portal, useDisclosure } from '@chakra-ui/react';
+import { ChakraProvider, Box, Img, Portal, useBoolean, useDisclosure } from '@chakra-ui/react';
 import theme from '@/theme/theme';
 import { fetchRoutes } from '@/routes';
 import Sidebar from '@/components/sidebar/Sidebar';
@@ -39,8 +39,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   // Once loaded, fetch the list of routes
   const [routes, setRoutes] = useState<IRoute[][]>([])
+  const [routesLoaded, setRoutesLoaded] = useBoolean();
   useEffect(() => {
-    fetchRoutes().then(routes => setRoutes(routes))
+    fetchRoutes().then(routes => {
+      setRoutes(routes);
+      setRoutesLoaded.on();
+    })
   }, [])
 
 
@@ -67,7 +71,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <Box position="relative">
 
               {/* Sidebar (left) */}
-              <Sidebar routes={routes} width={sidebarWidth} />
+              <Sidebar isLoaded={routesLoaded} routes={routes} width={sidebarWidth} />
 
               {/* Main Content (right) */}
               <Box

@@ -28,12 +28,13 @@ import { isWindowAvailable } from '@/utils/navigation';
 
 export interface SidebarProps extends PropsWithChildren {
   routes: IRoute[][];
+  isLoaded?: boolean;
   width: string;
   [x: string]: any;
 }
 
 function Sidebar(props: SidebarProps) {
-  const { routes, width } = props;
+  const { routes, isLoaded, width } = props;
   // this is for the rest of the collapses
   let variantChange = '0.2s linear';
   let shadow = useColorModeValue(
@@ -70,7 +71,7 @@ function Sidebar(props: SidebarProps) {
           renderThumbVertical={renderThumb}
           renderView={renderView}
         >
-          <Content routes={routes} width={width} />
+          <Content isLoaded={isLoaded} routes={routes} width={width} />
         </Scrollbars>
       </Box>
     </Box>
@@ -78,13 +79,14 @@ function Sidebar(props: SidebarProps) {
 }
 
 // FUNCTIONS
-export function SidebarResponsive(props: { routes: IRoute[][], width: string }) {
+export function SidebarResponsive(props: SidebarProps) {
+
   let sidebarBackgroundColor = useColorModeValue('white', 'purple.800');
   let menuColor = useColorModeValue('gray.400', 'white');
   // // SIDEBAR
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const { routes, width } = props;
+  const { routes, isLoaded, width } = props;
   return (
     <Flex display={{ sm: 'flex', xl: 'none' }} alignItems="center">
       <Flex w="max-content" h="max-content" onClick={onOpen}>
@@ -133,7 +135,7 @@ export function SidebarResponsive(props: { routes: IRoute[][], width: string }) 
               renderThumbVertical={renderThumb}
               renderView={renderView}
             >
-              <Content routes={routes} width={width} />
+              <Content isLoaded={isLoaded} routes={routes} width={width} />
             </Scrollbars>
           </DrawerBody>
         </DrawerContent>

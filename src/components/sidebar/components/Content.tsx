@@ -99,6 +99,7 @@ function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>
 
 interface SidebarContent extends PropsWithChildren {
   routes: IRoute[][];
+  isLoaded?: boolean;
   width: string;
   [x: string]: any;
 }
@@ -110,7 +111,7 @@ function SidebarContent(props: SidebarContent) {
 
   /* Props */
 
-  const { routes, width } = props;
+  const { routes, isLoaded, width } = props;
 
 
   /* Styling */
@@ -158,7 +159,7 @@ function SidebarContent(props: SidebarContent) {
       {/* Main Links */}
       <Stack direction="column" mb="auto" mt="8px">
         <Box ps="0px" pe={{ md: '0px', '2xl': '0px' }}>
-          <Links routes={routes} />
+          <Links isLoaded={isLoaded} routes={routes} />
         </Box>
       </Stack>
 
@@ -180,7 +181,7 @@ function SidebarContent(props: SidebarContent) {
         {/* End of User Icon and Name */}
 
         <SidebarMenuButton icon={MdOutlineSettings}>
-          <SkeletonText isLoaded={!!userRoles.length} noOfLines={3} spacing={4}>
+          <SkeletonText isLoaded={isLoaded} noOfLines={3} spacing={4}>
             <Box>
               {
                 !userRoles.length ? <></> :

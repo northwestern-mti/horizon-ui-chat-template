@@ -34,6 +34,7 @@ import { usePathname } from 'next/navigation';
 
 interface SidebarLinksProps extends PropsWithChildren {
   routes: IRoute[][];
+  isLoaded?: boolean;
 }
 
 
@@ -41,7 +42,7 @@ interface SidebarLinksProps extends PropsWithChildren {
 export function SidebarLinks(props: SidebarLinksProps) {
 
   // Extract routes from props
-  const { routes }  = props;
+  const { routes, isLoaded }  = props;
 
   // Get the current browser path
   const pathname    = usePathname();
@@ -338,12 +339,12 @@ export function SidebarLinks(props: SidebarLinksProps) {
   // Shows skeleton text loader if routes are not yet loaded
   return (
     <SkeletonText
-      isLoaded  = {!!routes.length}
+      isLoaded  = {isLoaded}
       noOfLines = {7}
       spacing   = {8}
       skeletonHeight = '3'
-      mt = {!routes.length ? "16px" : 0}
-      px = {!routes.length ? "32px" : 0}
+      mt = {!isLoaded ? "16px" : 0}
+      px = {!isLoaded ? "32px" : 0}
     >
       <VStack spacing="20px" divider={<HSeparator></HSeparator>}>
         {routes.map((routesGroup, key) => (
