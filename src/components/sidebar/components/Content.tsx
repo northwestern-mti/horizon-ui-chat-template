@@ -67,13 +67,16 @@ function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>
   }
 
   return (
-    <Box key={idx} mt="30px">
-      <Link
-        w="100%"
-        color="sidebarLink.inactive"
-        _hover = {{
-          "color": "sidebarLink.focused",
-        }}
+    <Box key={idx}
+      mt="30px"
+      color  = "sidebarLink.inactive"
+      _hover = {{
+        "color": "sidebarLink.focused",
+      }}
+    >
+      <NavLink
+        href   = {route.path}
+        styles = {{ width: "100%" }}
       >
         <Flex align="center" w="100%">
           <Icon
@@ -89,7 +92,7 @@ function renderMenuButton(route: IRoute, idx: number, userRoles: Array<UserRole>
             {route.name}
           </Text>
         </Flex>
-      </Link>
+      </NavLink>
     </Box>
   );
 }
