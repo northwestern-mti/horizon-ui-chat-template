@@ -67,6 +67,10 @@ export const API_ROUTES: Record<string, RouteSpec> = {
   "message": {
     makeURL: (conversation_id: string) => `/conversation/${conversation_id}/message`,
   },
+
+  "create_user": {
+    makeURL: () => `/user/create`,
+  },
 }
 
 

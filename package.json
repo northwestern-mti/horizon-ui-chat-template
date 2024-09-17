@@ -38,6 +38,7 @@
     "react-build-sitemap": "^0.2.2",
     "react-custom-scrollbars-2": "^4.2.1",
     "react-dom": "18.2.0",
+    "react-hook-form": "^7.53.0",
     "react-icons": "^4.9.0",
     "react-is": "^18.0.0",
     "react-markdown": "^8.0.6",
